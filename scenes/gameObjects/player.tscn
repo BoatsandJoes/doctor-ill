@@ -1,0 +1,15 @@
+[gd_scene load_steps=3 format=3 uid="uid://bp7hqibsq37vu"]
+
+[ext_resource type="Script" uid="uid://jnf47t47pqsf" path="res://scenes/gameObjects/player.gd" id="1_vihax"]
+[ext_resource type="Texture2D" uid="uid://badurden33ec3" path="res://assets/sprites/MouseSpritesheet.png" id="2_xdgp7"]
+
+[node name="Player" type="Node2D"]
+script = ExtResource("1_vihax")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_xdgp7")
+hframes = 4
+vframes = 9
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

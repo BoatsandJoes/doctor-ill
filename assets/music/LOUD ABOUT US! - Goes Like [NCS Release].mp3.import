@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://3hwwddinyaui"
+path="res://.godot/imported/LOUD ABOUT US! - Goes Like [NCS Release].mp3-ce3e4860c195d798f58a7c8ad284d3fc.mp3str"
+
+[deps]
+
+source_file="res://assets/music/LOUD ABOUT US! - Goes Like [NCS Release].mp3"
+dest_files=["res://.godot/imported/LOUD ABOUT US! - Goes Like [NCS Release].mp3-ce3e4860c195d798f58a7c8ad284d3fc.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

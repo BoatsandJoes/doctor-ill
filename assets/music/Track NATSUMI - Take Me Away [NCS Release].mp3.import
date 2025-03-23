@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://twi0ni0b0u6t"
+path="res://.godot/imported/Track NATSUMI - Take Me Away [NCS Release].mp3-bf76294c839b140203da91e8b89f5a93.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Track NATSUMI - Take Me Away [NCS Release].mp3"
+dest_files=["res://.godot/imported/Track NATSUMI - Take Me Away [NCS Release].mp3-bf76294c839b140203da91e8b89f5a93.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

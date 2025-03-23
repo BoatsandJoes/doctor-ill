@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dn28mngek0ayt"
+path="res://.godot/imported/NOYSE & ÆSTRØ - La Manera De Vivir [NCS Release] (instrumental).mp3-1f5ba1a04c75928732a42626f65fdc20.mp3str"
+
+[deps]
+
+source_file="res://assets/music/NOYSE & ÆSTRØ - La Manera De Vivir [NCS Release] (instrumental).mp3"
+dest_files=["res://.godot/imported/NOYSE & ÆSTRØ - La Manera De Vivir [NCS Release] (instrumental).mp3-1f5ba1a04c75928732a42626f65fdc20.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

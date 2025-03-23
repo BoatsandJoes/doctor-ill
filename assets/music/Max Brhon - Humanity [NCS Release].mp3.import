@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://npsicqvkenh5"
+path="res://.godot/imported/Max Brhon - Humanity [NCS Release].mp3-d1cd066f8a1b0b3756c3c54be0673806.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Max Brhon - Humanity [NCS Release].mp3"
+dest_files=["res://.godot/imported/Max Brhon - Humanity [NCS Release].mp3-d1cd066f8a1b0b3756c3c54be0673806.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

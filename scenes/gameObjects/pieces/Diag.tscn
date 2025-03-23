@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgtxgq00j1723"]
+
+[ext_resource type="Script" uid="uid://bu20jrnpuv42c" path="res://scenes/gameObjects/pieces/diag.gd" id="1_hektf"]
+
+[node name="Diag" type="Node2D"]
+script = ExtResource("1_hektf")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

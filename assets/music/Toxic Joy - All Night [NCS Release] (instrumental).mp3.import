@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://b0m5sqci4al2q"
+path="res://.godot/imported/Toxic Joy - All Night [NCS Release] (instrumental).mp3-3e58136e320c37a0d67bc85513f5da82.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Toxic Joy - All Night [NCS Release] (instrumental).mp3"
+dest_files=["res://.godot/imported/Toxic Joy - All Night [NCS Release] (instrumental).mp3-3e58136e320c37a0d67bc85513f5da82.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

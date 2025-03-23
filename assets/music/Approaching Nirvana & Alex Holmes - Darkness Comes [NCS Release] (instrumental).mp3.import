@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://dbnwgugpy5b2f"
+path="res://.godot/imported/Approaching Nirvana & Alex Holmes - Darkness Comes [NCS Release] (instrumental).mp3-d36f5fecd67d5cf11a144942a207d140.mp3str"
+
+[deps]
+
+source_file="res://assets/music/Approaching Nirvana & Alex Holmes - Darkness Comes [NCS Release] (instrumental).mp3"
+dest_files=["res://.godot/imported/Approaching Nirvana & Alex Holmes - Darkness Comes [NCS Release] (instrumental).mp3-d36f5fecd67d5cf11a144942a207d140.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

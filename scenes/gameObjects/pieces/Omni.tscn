@@ -1,0 +1,13 @@
+[gd_scene load_steps=3 format=3 uid="uid://dg6glvodmagm8"]
+
+[ext_resource type="Script" uid="uid://7sbngdenvm5v" path="res://scenes/gameObjects/pieces/omni.gd" id="1_nqqi1"]
+[ext_resource type="Texture2D" uid="uid://b0r7gu5vlxslp" path="res://assets/sprites/dino.png" id="2_he0yv"]
+
+[node name="Omni" type="Node2D"]
+script = ExtResource("1_nqqi1")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)
+texture = ExtResource("2_he0yv")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]

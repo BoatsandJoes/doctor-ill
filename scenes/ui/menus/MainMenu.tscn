@@ -1,0 +1,62 @@
+[gd_scene load_steps=2 format=3 uid="uid://b432ko5y5en5f"]
+
+[ext_resource type="Script" uid="uid://cqrre3mxtlgdi" path="res://scenes/ui/menus/main_menu.gd" id="1_s63no"]
+
+[node name="MainMenu" type="CanvasLayer"]
+script = ExtResource("1_s63no")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 128
+text = "doctor ill"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Buttons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Play" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "play"
+
+[node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "settings"
+
+[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "credits"
+
+[node name="Exit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "exit"
+
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Settings" to="." method="_on_settings_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Credits" to="." method="_on_credits_pressed"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Exit" to="." method="_on_exit_pressed"]
