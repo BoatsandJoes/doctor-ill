@@ -8,7 +8,7 @@ var generator: Generator = Generator.new()
 var players: Array[Player] = []
 var depth: int = -1
 var board: Array
-var tilePixels: int = 32
+var tilePixels: int = 16
 var paramsList: Array[Dictionary] = [
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3}
 ]
@@ -87,6 +87,7 @@ func _physics_process(delta: float) -> void:
 		var piece: Piece = board[i]
 		var belowIndex: int = i + currentParams[&"width"]
 		if piece != null:
+			#todo delay fall if player is moving under or away. If away, stack fall timer
 			if belowIndex < board.size() && board[belowIndex] == null:
 				piece.fallingCounter = piece.fallingCounter - delta
 				if piece.fallingCounter <= 0:

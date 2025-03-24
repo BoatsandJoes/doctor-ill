@@ -11,6 +11,7 @@ const defaultPosition: Vector2i = Vector2i(0,0)
 var bufferedPickUpOne: bool = false
 var bufferedPickUpStack: bool = false
 var bufferedCycle: bool = false
+var bufferedKick: bool = false
 
 func _ready() -> void:
 	$Sprite2D.position = defaultPosition
@@ -22,3 +23,5 @@ func _input(event: InputEvent) -> void:
 		bufferedPickUpStack = true
 	elif(event.is_action_pressed("cycle")):
 		bufferedCycle = true
+	elif(event.is_action_pressed("kick")):
+		bufferedKick = true;

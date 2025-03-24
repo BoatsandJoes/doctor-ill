@@ -11,6 +11,8 @@ func generateLevel(params: Dictionary) -> Array:
 	for typeIndex in range(params[&"types"].size()):
 		for i in range(numEachMonster):
 			var monster: Piece = params[&"types"][typeIndex].instantiate()
+			#todo use distinct colors if there are two instances of the same monster type
+			# (maybe change input format to take a different number of colors for each type. That would be best)
 			monster.set_type(i % params[&"colors"])
 			bag.append(monster)
 	for rowIndex in range(params[&"buffer"]):

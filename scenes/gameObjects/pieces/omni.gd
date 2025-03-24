@@ -3,7 +3,8 @@ class_name Omni
 
 var monsterSkins: Array[Dictionary] = [{&"name": "frog", &"frames": 3},
 {&"name": "dino", &"frames": 4},
-{&"name": "skeleton", &"frames": 4}]
+{&"name": "skeleton", &"frames": 4},
+{&"name": "slime", &"frames": 3}]
 
 func _ready() -> void:
 	pass
