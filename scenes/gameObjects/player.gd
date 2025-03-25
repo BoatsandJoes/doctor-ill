@@ -29,7 +29,16 @@ func walk(tileWidth: int, delta: float) -> bool:
 		return true
 	return false
 
-func idle():
+func climb(tileWidth: int, delta: float) -> bool:
+	$Sprite2D.position.y = $Sprite2D.position.y - (tileWidth * delta) / defaultWalkCounter
+	if abs($Sprite2D.position.y) >= tileWidth / 2:
+		$Sprite2D.position.y = $Sprite2D.position.y * -1
+		if abs($Sprite2D.position.y) > tileWidth / 2:
+			pass # todo correct position if needed
+		return true
+	return false
+
+func idle_state():
 	state = stateType.IDLE
 	stateCountdown = 0
 	$Sprite2D.position = Vector2i(0,0)

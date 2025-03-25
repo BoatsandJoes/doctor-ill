@@ -25,8 +25,10 @@ alignment = 1
 
 [node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 128
-text = "doctor ill"
+theme_override_font_sizes/font_size = 64
+text = "Down the
+Match"
+horizontal_alignment = 1
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -39,22 +41,22 @@ layout_mode = 2
 [node name="Play" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "play"
+text = "Play"
 
 [node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "settings"
+text = "Settings"
 
 [node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "credits"
+text = "Credits"
 
 [node name="Exit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "exit"
+text = "Exit"
 
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Settings" to="." method="_on_settings_pressed"]

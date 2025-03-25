@@ -112,11 +112,22 @@ func handle_direction(player: Player, direction: Vector2i):
 			if player.gridIndex - currentParams[&"width"] >= 0:
 				# no block above
 				if board[player.gridIndex - currentParams[&"width"]] == null:
-					# climb
-					#todo check facing
-					# todo check what's in front
-					# todo check what's behind
-					pass
+					# look for wall to climb
+					# check front
+					if ((direction.x == -1 && (player.gridIndex % currentParams[&"width"] == 0
+					|| board[player.gridIndex - 1] != null))
+					|| (direction.x == 1
+					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
+					|| board[player.gridIndex + 1] != null))):
+						player.state = player.stateType.CLIMBING
+					# check back
+					elif ((direction.x == 1 && (player.gridIndex % currentParams[&"width"] == 0
+					|| board[player.gridIndex - 1] != null))
+					|| (direction.x == -1
+					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
+					|| board[player.gridIndex + 1] != null))):
+						player.turn_around()
+						player.state = player.stateType.CLIMBING
 				else:
 					# todo leap to top of stack
 					pass
@@ -131,9 +142,13 @@ func handle_player_state(player: Player, delta: float):
 		if player.walk(tilePixels, delta):
 			# cross tile boundary
 			move(player, player.gridIndex + player.facing)
+	elif player.state == player.stateType.CLIMBING:
+		if player.climb(tilePixels, delta):
+			# cross tile boundary
+			move(player, player.gridIndex - currentParams[&"width"])
 	player.stateCountdown = player.stateCountdown - delta
 	if player.stateCountdown <= 0:
-		player.idle()
+		player.idle_state()
 
 func run_up(player: Player):
 	pass
