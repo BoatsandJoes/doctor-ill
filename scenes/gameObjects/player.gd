@@ -24,8 +24,6 @@ func walk(tileWidth: int, delta: float) -> bool:
 	$Sprite2D.position.x = $Sprite2D.position.x + (tileWidth * facing * delta) / defaultWalkCounter
 	if abs($Sprite2D.position.x) >= tileWidth / 2:
 		$Sprite2D.position.x = $Sprite2D.position.x * -1
-		if abs($Sprite2D.position.x) > tileWidth / 2:
-			pass # todo correct position if needed
 		return true
 	return false
 
@@ -33,9 +31,17 @@ func climb(tileWidth: int, delta: float) -> bool:
 	$Sprite2D.position.y = $Sprite2D.position.y - (tileWidth * delta) / defaultWalkCounter
 	if abs($Sprite2D.position.y) >= tileWidth / 2:
 		$Sprite2D.position.y = $Sprite2D.position.y * -1
-		if abs($Sprite2D.position.y) > tileWidth / 2:
-			pass # todo correct position if needed
 		return true
+	return false
+
+func fall(tileWidth: int, delta: float, stopAtMiddleOfTile: bool) -> bool:
+	if !stopAtMiddleOfTile || $Sprite2D.position.y < 0:
+		$Sprite2D.position.y = $Sprite2D.position.y + (tileWidth * delta) / defaultFallingCounter
+		if abs($Sprite2D.position.y) >= tileWidth / 2:
+			$Sprite2D.position.y = $Sprite2D.position.y * -1
+			return true
+	else:
+		$Sprite2D.position.y = 0
 	return false
 
 func climb_state():
@@ -51,6 +57,9 @@ func idle_state():
 	stateCountdown = 0
 	$Sprite2D.position = Vector2i(0, $Sprite2D.position.y)
 	$Sprite2D.rotation = 0
+
+func vertically_centered() -> bool:
+	return $Sprite2D.position.y == 0
 
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("pick_up_one")):

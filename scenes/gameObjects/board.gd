@@ -98,11 +98,11 @@ func handle_direction(player: Player, direction: Vector2i):
 			|| board[player.gridIndex + 1] != null)))):
 				# climb
 				player.climb_state()
-			# holding forward into empty space
+			# we are holding forward into empty space, and are grounded
 			elif (((direction.x == -1 && player.gridIndex % currentParams[&"width"] != 0
 			&& board[player.gridIndex - 1] == null)
 			|| (direction.x == 1 && (player.gridIndex + 1) % currentParams[&"width"] != 0
-			&& board[player.gridIndex + 1] == null))
+			&& board[player.gridIndex + 1] == null)) && player.vertically_centered()
 			&& (player.gridIndex + currentParams[&"width"] > board.size()
 			|| board[player.gridIndex + currentParams[&"width"]] != null)):
 				#walk
@@ -114,18 +114,18 @@ func handle_direction(player: Player, direction: Vector2i):
 			if player.gridIndex - currentParams[&"width"] >= 0:
 				# no block above
 				if board[player.gridIndex - currentParams[&"width"]] == null:
-					# look for wall to climb
+					# look for wall to climb todo broken
 					# check front
-					if ((direction.x == -1 && (player.gridIndex % currentParams[&"width"] == 0
+					if ((player.facing == -1 && (player.gridIndex % currentParams[&"width"] == 0
 					|| board[player.gridIndex - 1] != null))
-					|| (direction.x == 1
+					|| (player.facing == 1
 					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 					|| board[player.gridIndex + 1] != null))):
 						player.climb_state()
 					# check back
-					elif ((direction.x == 1 && (player.gridIndex % currentParams[&"width"] == 0
+					elif ((player.facing == 1 && (player.gridIndex % currentParams[&"width"] == 0
 					|| board[player.gridIndex - 1] != null))
-					|| (direction.x == -1
+					|| (player.facing == -1
 					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 					|| board[player.gridIndex + 1] != null))):
 						player.turn_around()
@@ -134,16 +134,29 @@ func handle_direction(player: Player, direction: Vector2i):
 					# todo leap to top of stack
 					pass
 	elif player.state == player.stateType.CLIMBING:
-		pass # todo
+		if direction.y != -1 && !((direction.x == -1 && (player.gridIndex % currentParams[&"width"] == 0
+					|| board[player.gridIndex - 1] != null))
+					|| (direction.x == 1
+					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
+					|| board[player.gridIndex + 1] != null))):
+			player.idle_state()
+		else:
+			player.stateCountdown = player.defaultWalkCounter
 
 func handle_player_state(player: Player, delta: float):
 	if player.state == player.stateType.TURNING:
 		if player.stateCountdown == player.defaultTurnaroundCounter:
 			player.turn_around()
 	elif player.state == player.stateType.WALKING:
+		# todo make stack have smooth movement too
 		if player.walk(tilePixels, delta):
 			# cross tile boundary
 			move(player, player.gridIndex + player.facing)
+			var aboveIndex: int = player.gridIndex - player.facing - currentParams[&"width"]
+			while (aboveIndex >= 0 && board[aboveIndex] != null
+			&& board[aboveIndex + player.facing] == null):
+				# Bring stack too
+				move(board[aboveIndex], aboveIndex + player.facing)
 	elif player.state == player.stateType.CLIMBING:
 		if player.climb(tilePixels, delta):
 			# cross tile boundary
@@ -173,11 +186,20 @@ func _physics_process(delta: float) -> void:
 		if piece != null:
 			#todo delay fall if player is moving under or away. If away, stack fall timer
 			if (belowIndex < board.size() && board[belowIndex] == null
-			&& !(piece is Player && piece.state == players[0].stateType.CLIMBING)):
-				#todo player smooth fall + inherit climbing position
-				piece.fallingCounter = piece.fallingCounter - delta
-				if piece.fallingCounter <= 0:
-					fall(piece, i, belowIndex, piece.fastFall)
+			&& !(piece is Player && (piece.state == piece.stateType.CLIMBING
+			|| piece.state == piece.stateType.WALKING))):
+				#player smooth fall + inherit climbing position
+				if piece is Player:
+					if piece.fall(tilePixels, delta, false):
+						fall(piece, i, belowIndex, piece.fastFall)
+				else:
+					piece.fallingCounter = piece.fallingCounter - delta
+					if piece.fallingCounter <= 0:
+						fall(piece, i, belowIndex, piece.fastFall)
 			else:
 				piece.fallingCounter = piece.defaultFallingCounter
 				piece.fastFall = false
+				if (piece is Player && piece.state != piece.stateType.CLIMBING
+				&& piece.state != piece.stateType.WALKING && (belowIndex >= board.size()
+				|| board[belowIndex] != null)):
+					piece.fall(tilePixels, delta, true)
