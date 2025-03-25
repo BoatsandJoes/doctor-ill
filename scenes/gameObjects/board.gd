@@ -66,18 +66,67 @@ func move(piece: Piece, toIndex: int):
 		piece.gridIndex = toIndex
 		updateVisualPosition(toIndex)
 
-func fall(piece: Piece, pieceIndex: int, belowIndex: int):
-	if piece.fastFall:
-		piece.fallingCounter = piece.defaultFastFallCounter
-	else:
-		piece.fallingCounter = piece.defaultFallingCounter
-	move(piece, belowIndex)
-	#make stack above fall, if piece is in stack
-	if(pieceIndex - currentParams[&"width"] >= 0 && board[pieceIndex - currentParams[&"width"]] != null):
-		fall(board[pieceIndex - currentParams[&"width"]], pieceIndex - currentParams[&"width"], pieceIndex)
+func fall(piece: Piece, pieceIndex: int, belowIndex: int, isFast: bool):
+	# Player never falls fast.
+	if !isFast || !(piece is Player):
+		if piece.fastFall:
+			piece.fallingCounter = piece.defaultFastFallCounter
+		else:
+			piece.fallingCounter = piece.defaultFallingCounter
+		move(piece, belowIndex)
+		#make stack above fall, if piece is in stack
+		if(pieceIndex - currentParams[&"width"] >= 0 && board[pieceIndex - currentParams[&"width"]] != null):
+			fall(board[pieceIndex - currentParams[&"width"]], pieceIndex - currentParams[&"width"],
+			pieceIndex, isFast)
 
 func handle_direction(player: Player, direction: Vector2i):
-	pass #todo
+	if player.state == player.stateType.IDLE:
+		#holding left or right
+		if direction.x != 0:
+			#holding backward
+			if player.facing != direction.x:
+				#turn around
+				player.state = player.stateType.TURNING
+				player.stateCountdown = player.defaultTurnaroundCounter
+			#tile above is empty and we're holding into wall
+			elif (player.gridIndex - currentParams[&"width"] >= 0
+			&& board[player.gridIndex - currentParams[&"width"]] == null
+			&& ((direction.x == -1 && (player.gridIndex % currentParams[&"width"] == 0
+			|| board[player.gridIndex - 1] != null))
+			|| (direction.x == 1
+			&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
+			|| board[player.gridIndex + 1] != null)))):
+				#todo climb
+				pass
+			# todo holding forward into empty space
+			if false:
+				#todo walk
+				pass
+		# holding up
+		elif direction.y == -1:
+			#not on ceiling
+			if player.gridIndex - currentParams[&"width"] >= 0:
+				# no block above
+				if board[player.gridIndex - currentParams[&"width"]] == null:
+					# climb
+					#todo check facing
+					# todo check what's in front
+					# todo check what's behind
+					pass
+				else:
+					# todo leap to top of stack
+					pass
+	elif player.state == player.stateType.CLIMBING:
+		pass # todo
+
+func handle_player_state(player: Player, delta: float):
+	if player.state == player.stateType.TURNING:
+		if player.stateCountdown == player.defaultTurnaroundCounter:
+			player.turn_around()
+	player.stateCountdown = player.stateCountdown - delta
+	if player.stateCountdown <= 0:
+		player.stateCountdown = 0
+		player.state = player.stateType.IDLE
 
 func run_up(player: Player):
 	pass
@@ -91,7 +140,7 @@ func _physics_process(delta: float) -> void:
 			if belowIndex < board.size() && board[belowIndex] == null:
 				piece.fallingCounter = piece.fallingCounter - delta
 				if piece.fallingCounter <= 0:
-					fall(piece, i, belowIndex)
+					fall(piece, i, belowIndex, piece.fastFall)
 			else:
 				piece.fallingCounter = piece.defaultFallingCounter
 				piece.fastFall = false
@@ -107,3 +156,4 @@ func _physics_process(delta: float) -> void:
 			if Input.is_action_pressed("down"):
 				directionPressed = directionPressed + Vector2i(0,1)
 			handle_direction(piece, directionPressed)
+			handle_player_state(piece, delta)
