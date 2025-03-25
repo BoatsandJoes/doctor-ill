@@ -97,12 +97,14 @@ func handle_direction(player: Player, direction: Vector2i):
 			&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 			|| board[player.gridIndex + 1] != null)))):
 				# climb
-				player.state = player.stateType.CLIMBING
+				player.climb_state()
 			# holding forward into empty space
-			elif ((direction.x == -1 && player.gridIndex % currentParams[&"width"] != 0
+			elif (((direction.x == -1 && player.gridIndex % currentParams[&"width"] != 0
 			&& board[player.gridIndex - 1] == null)
 			|| (direction.x == 1 && (player.gridIndex + 1) % currentParams[&"width"] != 0
-			&& board[player.gridIndex + 1] == null)):
+			&& board[player.gridIndex + 1] == null))
+			&& (player.gridIndex + currentParams[&"width"] > board.size()
+			|| board[player.gridIndex + currentParams[&"width"]] != null)):
 				#walk
 				player.state = player.stateType.WALKING
 				player.stateCountdown = player.defaultWalkCounter
@@ -119,7 +121,7 @@ func handle_direction(player: Player, direction: Vector2i):
 					|| (direction.x == 1
 					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 					|| board[player.gridIndex + 1] != null))):
-						player.state = player.stateType.CLIMBING
+						player.climb_state()
 					# check back
 					elif ((direction.x == 1 && (player.gridIndex % currentParams[&"width"] == 0
 					|| board[player.gridIndex - 1] != null))
@@ -127,7 +129,7 @@ func handle_direction(player: Player, direction: Vector2i):
 					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 					|| board[player.gridIndex + 1] != null))):
 						player.turn_around()
-						player.state = player.stateType.CLIMBING
+						player.climb_state()
 				else:
 					# todo leap to top of stack
 					pass
@@ -170,7 +172,9 @@ func _physics_process(delta: float) -> void:
 		var belowIndex: int = i + currentParams[&"width"]
 		if piece != null:
 			#todo delay fall if player is moving under or away. If away, stack fall timer
-			if belowIndex < board.size() && board[belowIndex] == null:
+			if (belowIndex < board.size() && board[belowIndex] == null
+			&& !(piece is Player && piece.state == players[0].stateType.CLIMBING)):
+				#todo player smooth fall + inherit climbing position
 				piece.fallingCounter = piece.fallingCounter - delta
 				if piece.fallingCounter <= 0:
 					fall(piece, i, belowIndex, piece.fastFall)

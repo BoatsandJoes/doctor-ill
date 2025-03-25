@@ -38,10 +38,19 @@ func climb(tileWidth: int, delta: float) -> bool:
 		return true
 	return false
 
+func climb_state():
+	state = stateType.CLIMBING
+	stateCountdown = defaultWalkCounter
+	if facing == -1:
+		$Sprite2D.rotation = PI / 2
+	else:
+		$Sprite2D.rotation = 3 * PI / 2
+
 func idle_state():
 	state = stateType.IDLE
 	stateCountdown = 0
-	$Sprite2D.position = Vector2i(0,0)
+	$Sprite2D.position = Vector2i(0, $Sprite2D.position.y)
+	$Sprite2D.rotation = 0
 
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("pick_up_one")):
