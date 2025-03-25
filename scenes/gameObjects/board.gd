@@ -103,7 +103,7 @@ func handle_direction(player: Player, direction: Vector2i):
 			&& board[player.gridIndex - 1] == null)
 			|| (direction.x == 1 && (player.gridIndex + 1) % currentParams[&"width"] != 0
 			&& board[player.gridIndex + 1] == null)) && player.vertically_centered()
-			&& (player.gridIndex + currentParams[&"width"] > board.size()
+			&& (player.gridIndex + currentParams[&"width"] >= board.size()
 			|| board[player.gridIndex + currentParams[&"width"]] != null)):
 				#walk
 				player.state = player.stateType.WALKING
@@ -114,34 +114,47 @@ func handle_direction(player: Player, direction: Vector2i):
 			if player.gridIndex - currentParams[&"width"] >= 0:
 				# no block above
 				if board[player.gridIndex - currentParams[&"width"]] == null:
-					# look for wall to climb todo broken
-					# check front
+					# look in front for wall to climb
 					if ((player.facing == -1 && (player.gridIndex % currentParams[&"width"] == 0
 					|| board[player.gridIndex - 1] != null))
 					|| (player.facing == 1
 					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 					|| board[player.gridIndex + 1] != null))):
 						player.climb_state()
-					# check back
-					elif ((player.facing == 1 && (player.gridIndex % currentParams[&"width"] == 0
-					|| board[player.gridIndex - 1] != null))
-					|| (player.facing == -1
-					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
-					|| board[player.gridIndex + 1] != null))):
-						player.turn_around()
-						player.climb_state()
-				else:
+				elif !player.leftoverClimb:
 					# todo leap to top of stack
 					pass
 	elif player.state == player.stateType.CLIMBING:
-		if direction.y != -1 && !((direction.x == -1 && (player.gridIndex % currentParams[&"width"] == 0
-					|| board[player.gridIndex - 1] != null))
-					|| (direction.x == 1
-					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
-					|| board[player.gridIndex + 1] != null))):
-			player.idle_state()
+		#if not holding up and holding horizonally neutral or backwards
+		if (direction.y != -1 && (direction.x == 0 || direction.x != 0 && direction.x != player.facing)):
+			player.idle_state() #idle for 1 frame, turn around next frame if conditions are right.
+		# holding forward or up, but no block in front of us
+		elif ((player.facing == -1 && (player.gridIndex % currentParams[&"width"] != 0
+		&& board[player.gridIndex - 1] == null))
+		|| (player.facing == 1
+		&& ((player.gridIndex + 1) % currentParams[&"width"] != 0
+		&& board[player.gridIndex + 1] == null))):
+			var belowAndInFront = player.gridIndex + player.facing + currentParams[&"width"]
+			# there is a piece by our feet
+			if (belowAndInFront < board.size() && board[belowAndInFront] != null):
+				# if at/above the center of the block, walk forward, otherwise keep climbing
+				if player.above_vertically_centered():
+					player.walk_state()
+			# no piece by our feet. Fall
+			else:
+				player.idle_state()
+		# holding forward or up and there is a block in front of us. Keep climbing (with some exceptions)
 		else:
 			player.stateCountdown = player.defaultWalkCounter
+			if player.above_vertically_centered():
+				# ceiling
+				if player.gridIndex - currentParams[&"width"] < 0:
+					#trot in place
+					player.center()
+				#piece landed on us
+				elif board[player.gridIndex - currentParams[&"width"]] != null:
+					player.idle_state()
+					player.leftoverClimb = true
 
 func handle_player_state(player: Player, delta: float):
 	if player.state == player.stateType.TURNING:
@@ -164,9 +177,6 @@ func handle_player_state(player: Player, delta: float):
 	player.stateCountdown = player.stateCountdown - delta
 	if player.stateCountdown <= 0:
 		player.idle_state()
-
-func run_up(player: Player):
-	pass
 
 func _physics_process(delta: float) -> void:
 	var directionPressed: Vector2i = Vector2i(0,0)

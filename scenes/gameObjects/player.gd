@@ -12,6 +12,7 @@ var bufferedPickUpOne: bool = false
 var bufferedPickUpStack: bool = false
 var bufferedCycle: bool = false
 var bufferedKick: bool = false
+var leftoverClimb: bool = false
 
 func _ready() -> void:
 	pass
@@ -58,8 +59,20 @@ func idle_state():
 	$Sprite2D.position = Vector2i(0, $Sprite2D.position.y)
 	$Sprite2D.rotation = 0
 
+func walk_state():
+	state = stateType.WALKING
+	stateCountdown = defaultWalkCounter
+	$Sprite2D.position = Vector2i(0, 0)
+	$Sprite2D.rotation = 0
+
+func center():
+	$Sprite2D.position = Vector2i(0,0)
+
 func vertically_centered() -> bool:
 	return $Sprite2D.position.y == 0
+
+func above_vertically_centered() -> bool:
+	return $Sprite2D.position.y <= 0
 
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("pick_up_one")):
@@ -70,3 +83,5 @@ func _input(event: InputEvent) -> void:
 		bufferedCycle = true
 	elif(event.is_action_pressed("kick")):
 		bufferedKick = true;
+	elif(event.is_action_pressed("up")):
+		leftoverClimb = false
