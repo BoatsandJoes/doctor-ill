@@ -9,14 +9,7 @@ var MainMenu = preload("res://scenes/ui/menus/MainMenu.tscn")
 var Credits = preload("res://scenes/ui/menus/Credits.tscn")
 
 func _ready():
-	get_tree().get_root().size_changed.connect(_on_root_size_changed)
-	resize_window(640, 360)
 	go_to_main_menu()
-
-func resize_window(width: int, height: int):
-	var newSize: Vector2i = Vector2i(width, height)
-	get_window().position = get_window().position + (get_tree().get_root().size - newSize) / 2
-	get_tree().get_root().size = newSize
 
 func go_to_main_menu():
 	remove_children()
@@ -56,6 +49,3 @@ func _on_main_menu_play():
 
 func _on_main_menu_exit():
 	get_tree().quit()
-
-func _on_root_size_changed():
-	pass

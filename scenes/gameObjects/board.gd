@@ -96,12 +96,16 @@ func handle_direction(player: Player, direction: Vector2i):
 			|| (direction.x == 1
 			&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 			|| board[player.gridIndex + 1] != null)))):
-				#todo climb
-				pass
-			# todo holding forward into empty space
-			if false:
-				#todo walk
-				pass
+				# climb
+				player.state = player.stateType.CLIMBING
+			# holding forward into empty space
+			elif ((direction.x == -1 && player.gridIndex % currentParams[&"width"] != 0
+			&& board[player.gridIndex - 1] == null)
+			|| (direction.x == 1 && (player.gridIndex + 1) % currentParams[&"width"] != 0
+			&& board[player.gridIndex + 1] == null)):
+				#walk
+				player.state = player.stateType.WALKING
+				player.stateCountdown = player.defaultWalkCounter
 		# holding up
 		elif direction.y == -1:
 			#not on ceiling
@@ -123,15 +127,29 @@ func handle_player_state(player: Player, delta: float):
 	if player.state == player.stateType.TURNING:
 		if player.stateCountdown == player.defaultTurnaroundCounter:
 			player.turn_around()
+	elif player.state == player.stateType.WALKING:
+		if player.walk(tilePixels, delta):
+			# cross tile boundary
+			move(player, player.gridIndex + player.facing)
 	player.stateCountdown = player.stateCountdown - delta
 	if player.stateCountdown <= 0:
-		player.stateCountdown = 0
-		player.state = player.stateType.IDLE
+		player.idle()
 
 func run_up(player: Player):
 	pass
 
 func _physics_process(delta: float) -> void:
+	var directionPressed: Vector2i = Vector2i(0,0)
+	if Input.is_action_pressed("left"):
+		directionPressed = directionPressed + Vector2i(-1,0)
+	if Input.is_action_pressed("right"):
+		directionPressed = directionPressed + Vector2i(1,0)
+	if Input.is_action_pressed("up"):
+		directionPressed = directionPressed + Vector2i(0,-1)
+	if Input.is_action_pressed("down"):
+		directionPressed = directionPressed + Vector2i(0,1)
+	handle_direction(players[0], directionPressed)
+	handle_player_state(players[0], delta)
 	for i in range(board.size()):
 		var piece: Piece = board[i]
 		var belowIndex: int = i + currentParams[&"width"]
@@ -144,16 +162,3 @@ func _physics_process(delta: float) -> void:
 			else:
 				piece.fallingCounter = piece.defaultFallingCounter
 				piece.fastFall = false
-		if piece is Player:
-			# walking
-			var directionPressed: Vector2i = Vector2i(0,0)
-			if Input.is_action_pressed("left"):
-				directionPressed = directionPressed + Vector2i(-1,0)
-			if Input.is_action_pressed("right"):
-				directionPressed = directionPressed + Vector2i(1,0)
-			if Input.is_action_pressed("up"):
-				directionPressed = directionPressed + Vector2i(0,-1)
-			if Input.is_action_pressed("down"):
-				directionPressed = directionPressed + Vector2i(0,1)
-			handle_direction(piece, directionPressed)
-			handle_player_state(piece, delta)
