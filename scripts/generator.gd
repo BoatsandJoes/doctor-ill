@@ -23,4 +23,5 @@ func generateLevel(params: Dictionary) -> Array:
 			var bagIndex: int = randi_range(0, bag.size() - 1)
 			result.append(bag[bagIndex])
 			bag.remove_at(bagIndex)
+			result[result.size() - 1].gridIndex = result.size() - 1
 	return result

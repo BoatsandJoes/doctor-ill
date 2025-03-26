@@ -42,7 +42,6 @@ func generateNextFloor() -> void:
 		win()
 	for piece in board:
 		if piece != null:
-			remove_child(piece)
 			if !players.has(piece):
 				piece.queue_free()
 	var params: Dictionary = paramsList[depth]
@@ -52,6 +51,8 @@ func generateNextFloor() -> void:
 			add_child(piece)
 	#place players
 	for player in players:
+		# remove and add to change processing order to last
+		remove_child(player)
 		add_child(player)
 		player.gridIndex = player.gridIndex % currentParams[&"width"]
 		board[player.gridIndex] = player
@@ -60,15 +61,18 @@ func win():
 	emit_signal("exit")
 
 func move(piece: Piece, toIndex: int):
+	#var fromIndex = piece.gridIndex
 	if board[toIndex] == null:
 		board[piece.gridIndex] = null
 		board[toIndex] = piece
 		piece.gridIndex = toIndex
 		updateVisualPosition(toIndex)
+	#print("From " + str(fromIndex) + " " + str(board[fromIndex]) + " to " + str(toIndex) + " "
+	#+ str(board[toIndex]))
 
 func fall(piece: Piece, pieceIndex: int, belowIndex: int, startingFallValue: float):
 	# Player never falls fast.
-	if !startingFallValue == piece.defaultFastFallCounter || !(piece is Player):
+	if startingFallValue > piece.defaultFastFallCounter || !(piece is Player):
 		piece.fallingCounter = startingFallValue
 		move(piece, belowIndex)
 		#make stack above fall, if piece is in stack
@@ -127,9 +131,11 @@ func handle_direction(player: Player, direction: Vector2i):
 					var above = player.gridIndex - currentParams[&"width"]
 					while above >= 0 && board[above] != null:
 						move(board[above], target)
+						board[target].fall_fast()
 						target = above
 						above = above - currentParams[&"width"]
-					board[target] = player
+					player.gridIndex = target #set index early, still call move for other updates
+					move(player, target)
 	elif player.state == player.stateType.CLIMBING:
 		#if not holding up and holding horizonally neutral or backwards
 		if (direction.y != -1 && (direction.x == 0 || direction.x != 0 && direction.x != player.facing)):
@@ -166,7 +172,7 @@ func toggle_bomb(target: int):
 		#turn piece into bomb
 		board[target].toggle_bomb()
 		#recurse whole stack
-		toggle_bomb(target - currentParams[&"width"])
+		#toggle_bomb(target - currentParams[&"width"])
 
 func handle_buffered_input(player: Player):
 	if (player.bufferedCycle && player.state != player.stateType.GRABBING_ONE
@@ -226,6 +232,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 			if !stack:
 				#perform move
 				move(board[source], target)
+				board[target].fall_fast()
 				# there is a stack and we are putting
 				if (above >= 0 && board[above] != null && !pick):
 					# make rest of stack fall
@@ -235,7 +242,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				var passed = true
 				var testTarget = target
 				while above >= 0 && board[above] != null && !(board[above] is Player):
-					testTarget = testTarget - 1
+					testTarget = testTarget - currentParams[&"width"]
 					#target out of bounds or piece is occupying our target
 					if testTarget < 0 || board[testTarget] != null:
 						passed = false
@@ -246,6 +253,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 					above = source
 					while above >= 0 && board[above] != null && !(board[above] is Player):
 						move(board[above], target)
+						board[target].fall_fast()
 						above = above - currentParams[&"width"]
 						target = target - currentParams[&"width"]
 
@@ -263,6 +271,7 @@ func handle_player_state(player: Player, delta: float):
 			&& board[aboveIndex + player.facing] == null):
 				# Bring stack too
 				move(board[aboveIndex], aboveIndex + player.facing)
+				aboveIndex = aboveIndex - currentParams[&"width"]
 	elif player.state == player.stateType.CLIMBING:
 		if player.climb(tilePixels, delta):
 			# cross tile boundary
