@@ -300,7 +300,25 @@ func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 	&& (board[down].state == board[down].stateType.GRABBING_ONE
 	|| board[down].state == board[down].stateType.GRABBING_STACK)))))
 
+func check_clears():
+	for cell in range(board.size()):
+		if board[cell] != null && board[cell].bomb:
+			#check for stability
+			var stable = true
+			var ground = cell + currentParams[&"width"]
+			while ground < board.size():
+				if board[ground] == null:
+					stable = false
+					break
+				elif board[ground] is Player:
+					break
+				ground = ground + currentParams[&"width"]
+			if stable:
+				#todo check for matches
+				pass
+
 func _physics_process(delta: float) -> void:
+	check_clears()
 	var directionPressed: Vector2i = Vector2i(0,0)
 	if Input.is_action_pressed("left"):
 		directionPressed = directionPressed + Vector2i(-1,0)

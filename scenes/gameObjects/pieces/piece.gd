@@ -19,6 +19,6 @@ func off_center(direction: int) -> bool:
 func toggle_bomb():
 	bomb = !bomb
 	if bomb:
-		$Sprite2D.modulate = Color(3,3,3)
+		$Sprite2D.modulate = Color(5,5,5)
 	else:
 		$Sprite2D.modulate = Color(1,1,1)
