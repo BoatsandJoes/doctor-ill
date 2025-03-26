@@ -1,7 +1,7 @@
 extends Piece
 class_name Player
 
-enum stateType {IDLE, WALKING, TURNING, GRABBING, CLIMBING}
+enum stateType {IDLE, WALKING, TURNING, GRABBING_ONE, GRABBING_STACK, CLIMBING, KICKING}
 var state = stateType.IDLE
 var facing: int = 1 # 1 == right, -1 == left
 var defaultTurnaroundCounter: float = 0.15
@@ -12,7 +12,7 @@ var bufferedPickUpOne: bool = false
 var bufferedPickUpStack: bool = false
 var bufferedCycle: bool = false
 var bufferedKick: bool = false
-var leftoverClimb: bool = false
+var nonBufferedClimb: bool = false
 
 func _ready() -> void:
 	pass
@@ -58,12 +58,20 @@ func idle_state():
 	stateCountdown = 0
 	$Sprite2D.position = Vector2i(0, $Sprite2D.position.y)
 	$Sprite2D.rotation = 0
+	nonBufferedClimb = false
 
 func walk_state():
 	state = stateType.WALKING
 	stateCountdown = defaultWalkCounter
 	$Sprite2D.position = Vector2i(0, 0)
 	$Sprite2D.rotation = 0
+
+func grabbing_state(stack: bool):
+	if stack:
+		state = stateType.GRABBING_STACK
+	else:
+		state = stateType.GRABBING_ONE
+	stateCountdown = defaultPickupCounter
 
 func center():
 	$Sprite2D.position = Vector2i(0,0)
@@ -84,4 +92,5 @@ func _input(event: InputEvent) -> void:
 	elif(event.is_action_pressed("kick")):
 		bufferedKick = true;
 	elif(event.is_action_pressed("up")):
-		leftoverClimb = false
+		if state != stateType.CLIMBING:
+			nonBufferedClimb = true

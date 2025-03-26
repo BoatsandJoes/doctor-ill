@@ -118,9 +118,18 @@ func handle_direction(player: Player, direction: Vector2i):
 					&& ((player.gridIndex + 1) % currentParams[&"width"] == 0
 					|| board[player.gridIndex + 1] != null))):
 						player.climb_state()
-				elif !player.leftoverClimb:
-					# todo leap to top of stack
-					pass
+				elif player.nonBufferedClimb:
+					player.nonBufferedClimb = false
+					# leap to top of stack
+					# todo delay, maybe
+					board[player.gridIndex] = null
+					var target = player.gridIndex
+					var above = player.gridIndex - currentParams[&"width"]
+					while above >= 0 && board[above] != null:
+						move(board[above], target)
+						target = above
+						above = above - currentParams[&"width"]
+					board[target] = player
 	elif player.state == player.stateType.CLIMBING:
 		#if not holding up and holding horizonally neutral or backwards
 		if (direction.y != -1 && (direction.x == 0 || direction.x != 0 && direction.x != player.facing)):
@@ -151,7 +160,73 @@ func handle_direction(player: Player, direction: Vector2i):
 				#piece landed on us
 				elif board[player.gridIndex - currentParams[&"width"]] != null:
 					player.idle_state()
-					player.leftoverClimb = true
+
+func toggle_bomb(target: int):
+	if (target >= 0 && board[target] != null && !(board[target] is Player)):
+		#turn piece into bomb
+		board[target].toggleBomb()
+		#recurse whole stack
+		toggle_bomb(target - currentParams[&"width"])
+
+func handle_buffered_input(player: Player):
+	if player.bufferedCycle:
+		player.bufferedCycle = false
+		#not climbing
+		if player.state != player.stateType.CLIMBING:
+			#toggle piece above
+			toggle_bomb(player.gridIndex - currentParams[&"width"])
+	if (player.state == player.stateType.IDLE || player.state == player.stateType.CLIMBING
+	|| player.state == player.stateType.TURNING):
+		if player.bufferedPickUpStack:
+			pick_or_put(player, true)
+		elif player.bufferedPickUpOne:
+			pick_or_put(player, false)
+		elif player.bufferedKick:
+			player.bufferedKick = false
+
+func pick_or_put(player: Player, stack: bool):
+	player.bufferedPickUpStack = false
+	player.bufferedPickUpOne = false
+	player.bufferedKick = false
+	if (player.gridIndex - currentParams[&"width"] >= 0
+	&& board[player.gridIndex - currentParams[&"width"]] != null):
+		# attempt placement
+		if ((player.facing == -1 && player.gridIndex % currentParams[&"width"] != 0)
+		|| (player.facing == 1 && (player.gridIndex + 1) % currentParams[&"width"] != 0)):
+			var target = player.gridIndex + player.facing
+			for i in range(3):
+				if target >= 0 && board[target] == null:
+					#placement of bottom piece successful
+					var above = player.gridIndex - currentParams[&"width"] - currentParams[&"width"]
+					if !stack:
+						move(board[player.gridIndex - currentParams[&"width"]], target)
+						if (above >= 0 && board[above] != null):
+							# make rest of stack fall
+							fall(board[above], above, player.gridIndex - currentParams[&"width"],
+							player.defaultFastFallCounter)
+					else:
+						# test for rest of stack
+						var passed = true
+						var testTarget = target
+						while above >= 0 && board[above] != null && !(board[above] is Player):
+							testTarget = testTarget - 1
+							#piece is occupying our target
+							if testTarget < 0 || board[testTarget] != null:
+								passed = false
+								break
+							above = above - currentParams[&"width"]
+						if passed:
+							#move whole stack
+							above = player.gridIndex - currentParams[&"width"]
+							while above >= 0 && board[above] != null && !(board[above] is Player):
+								move(board[above], target)
+								above = above - currentParams[&"width"]
+								target = target - currentParams[&"width"]
+					break
+				# try next cell up
+				target = target - currentParams[&"width"]
+	else:
+		player.grabbing_state(stack)
 
 func handle_player_state(player: Player, delta: float):
 	if player.state == player.stateType.TURNING:
@@ -173,6 +248,11 @@ func handle_player_state(player: Player, delta: float):
 			move(player, player.gridIndex - currentParams[&"width"])
 	player.stateCountdown = player.stateCountdown - delta
 	if player.stateCountdown <= 0:
+		#todo attempt grab
+		if player.state == player.stateType.GRABBING_ONE:
+			pass
+		elif player.state == player.stateType.GRABBING_STACK:
+			pass
 		player.idle_state()
 
 func checkSurroundingCellsForFall(fallTarget: int) -> bool:
@@ -185,7 +265,10 @@ func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 	# right
 	&& (right % currentParams[&"width"] == 0 || board[right] == null || !board[right].off_center(-1))
 	# below
-	&& (down >= board.size() || board[down] == null || !board[down].off_center(0)))
+	&& (down >= board.size() || board[down] == null
+	|| (!board[down].off_center(0) && !(board[down] is Player
+	&& (board[down].state == board[down].stateType.GRABBING_ONE
+	|| board[down].state == board[down].stateType.GRABBING_STACK)))))
 
 func _physics_process(delta: float) -> void:
 	var directionPressed: Vector2i = Vector2i(0,0)
@@ -198,6 +281,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("down"):
 		directionPressed = directionPressed + Vector2i(0,1)
 	handle_direction(players[0], directionPressed)
+	handle_buffered_input(players[0])
 	handle_player_state(players[0], delta)
 	for i in range(board.size()):
 		var piece: Piece = board[i]
