@@ -66,18 +66,15 @@ func move(piece: Piece, toIndex: int):
 		piece.gridIndex = toIndex
 		updateVisualPosition(toIndex)
 
-func fall(piece: Piece, pieceIndex: int, belowIndex: int, isFast: bool):
+func fall(piece: Piece, pieceIndex: int, belowIndex: int, startingFallValue: float):
 	# Player never falls fast.
-	if !isFast || !(piece is Player):
-		if piece.fastFall:
-			piece.fallingCounter = piece.defaultFastFallCounter
-		else:
-			piece.fallingCounter = piece.defaultFallingCounter
+	if !startingFallValue == piece.defaultFastFallCounter || !(piece is Player):
+		piece.fallingCounter = startingFallValue
 		move(piece, belowIndex)
 		#make stack above fall, if piece is in stack
 		if(pieceIndex - currentParams[&"width"] >= 0 && board[pieceIndex - currentParams[&"width"]] != null):
 			fall(board[pieceIndex - currentParams[&"width"]], pieceIndex - currentParams[&"width"],
-			pieceIndex, isFast)
+			pieceIndex, startingFallValue)
 
 func handle_direction(player: Player, direction: Vector2i):
 	if player.state == player.stateType.IDLE:
@@ -178,6 +175,18 @@ func handle_player_state(player: Player, delta: float):
 	if player.stateCountdown <= 0:
 		player.idle_state()
 
+func checkSurroundingCellsForFall(fallTarget: int) -> bool:
+	#return true if piece is good to fall into the target, false otherwise
+	var left: int = fallTarget - 1
+	var right: int = fallTarget + 1
+	var down: int = fallTarget + currentParams[&"width"]
+	# left
+	return ((fallTarget % currentParams[&"width"] == 0 || board[left] == null || !board[left].off_center(1))
+	# right
+	&& (right % currentParams[&"width"] == 0 || board[right] == null || !board[right].off_center(-1))
+	# below
+	&& (down >= board.size() || board[down] == null || !board[down].off_center(0)))
+
 func _physics_process(delta: float) -> void:
 	var directionPressed: Vector2i = Vector2i(0,0)
 	if Input.is_action_pressed("left"):
@@ -194,18 +203,24 @@ func _physics_process(delta: float) -> void:
 		var piece: Piece = board[i]
 		var belowIndex: int = i + currentParams[&"width"]
 		if piece != null:
-			#todo delay fall if player is moving under or away. If away, stack fall timer
 			if (belowIndex < board.size() && board[belowIndex] == null
 			&& !(piece is Player && (piece.state == piece.stateType.CLIMBING
 			|| piece.state == piece.stateType.WALKING))):
 				#player smooth fall + inherit climbing position
 				if piece is Player:
 					if piece.fall(tilePixels, delta, false):
-						fall(piece, i, belowIndex, piece.fastFall)
+						fall(piece, i, belowIndex, piece.defaultFallingCounter)
 				else:
 					piece.fallingCounter = piece.fallingCounter - delta
-					if piece.fallingCounter <= 0:
-						fall(piece, i, belowIndex, piece.fastFall)
+					#todo delay fall if player is moving under or away.
+					if piece.fallingCounter <= 0 && checkSurroundingCellsForFall(belowIndex):
+						#Fall, and carry over fall timer if stacked because of player movement or dropped frames
+						var nextFall: float = piece.fallingCounter
+						if piece.fastFall:
+							nextFall = nextFall + piece.defaultFastFallCounter
+						else:
+							nextFall = nextFall + piece.defaultFallingCounter
+						fall(piece, i, belowIndex, nextFall)
 			else:
 				piece.fallingCounter = piece.defaultFallingCounter
 				piece.fastFall = false
