@@ -1,6 +1,8 @@
 extends Node2D
 class_name Board
 
+signal finished
+
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
@@ -10,7 +12,8 @@ var depth: int = -1
 var board: Array
 var tilePixels: int = 16
 var paramsList: Array[Dictionary] = [
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3}
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 1}
 ]
 var currentParams: Dictionary = paramsList[0]
 
@@ -21,7 +24,6 @@ func _ready() -> void:
 		# evenly distribute the players
 		players[playerNum].gridIndex = (currentParams[&"width"] * (playerNum + 1)) / (players.size() * 2)
 	generateNextFloor()
-	updateVisualPositions()
 
 func updateVisualPositions() -> void:
 	for i in range(board.size()):
@@ -40,25 +42,26 @@ func generateNextFloor() -> void:
 	depth = depth + 1
 	if depth >= paramsList.size():
 		win()
-	for piece in board:
-		if piece != null:
-			if !players.has(piece):
+	else:
+		for piece in board:
+			if piece != null && !(piece is Player):
 				piece.queue_free()
-	var params: Dictionary = paramsList[depth]
-	board = generator.generateLevel(params)
-	for piece in board:
-		if piece != null:
-			add_child(piece)
-	#place players
-	for player in players:
-		# remove and add to change processing order to last
-		remove_child(player)
-		add_child(player)
-		player.gridIndex = player.gridIndex % currentParams[&"width"]
-		board[player.gridIndex] = player
+		var params: Dictionary = paramsList[depth]
+		board = generator.generateLevel(params)
+		for piece in board:
+			if piece != null:
+				add_child(piece)
+		#place players
+		for player in players:
+			# remove and add to change processing order to last
+			remove_child(player)
+			add_child(player)
+			player.gridIndex = player.gridIndex % currentParams[&"width"]
+			board[player.gridIndex] = player
+		updateVisualPositions()
 
 func win():
-	emit_signal("exit")
+	emit_signal("finished")
 
 func move(piece: Piece, toIndex: int):
 	#var fromIndex = piece.gridIndex
@@ -223,7 +226,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 	#player is not facing wall
 	&& ((player.facing == -1 && player.gridIndex % currentParams[&"width"] != 0)
 	|| (player.facing == 1 && (player.gridIndex + 1) % currentParams[&"width"] != 0))):
-		if target >= board.size():
+		if source >= board.size():
 			#down the match
 			generateNextFloor()
 		# first piece can move successfully
@@ -263,6 +266,7 @@ func handle_player_state(player: Player, delta: float):
 			player.turn_around()
 	elif player.state == player.stateType.WALKING:
 		# todo make stack have smooth movement too OR have falling check scan down for player
+		# (only important if rain exists)
 		if player.walk(tilePixels, delta):
 			# cross tile boundary
 			move(player, player.gridIndex + player.facing)
@@ -300,21 +304,24 @@ func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 	&& (board[down].state == board[down].stateType.GRABBING_ONE
 	|| board[down].state == board[down].stateType.GRABBING_STACK)))))
 
+func check_stable(cell: int) -> bool:
+	var stable = true
+	var ground = cell + currentParams[&"width"]
+	while ground < board.size():
+		if board[ground] == null:
+			stable = false
+			break
+		elif board[ground] is Player:
+			break
+		ground = ground + currentParams[&"width"]
+	return stable
+
 func check_clears():
 	var clearDicts: Array[Dictionary] = []
 	for cell in range(board.size()):
 		if board[cell] != null && board[cell].bomb:
 			#check for stability
-			var stable = true
-			var ground = cell + currentParams[&"width"]
-			while ground < board.size():
-				if board[ground] == null:
-					stable = false
-					break
-				elif board[ground] is Player:
-					break
-				ground = ground + currentParams[&"width"]
-			if stable:
+			if check_stable(cell):
 				#check for matches in the directions in which this piece can match
 				var clears: Array[int] = []
 				var breakfast: bool = false
@@ -329,6 +336,7 @@ func check_clears():
 						if clears.size() > 0:
 							breakfast = true
 						clears.append_array(matches)
+						clears.append(cell)
 						largestClear = max(largestClear, matches.size() + 1)
 				#look through existing clears this frame
 				var modified: bool = false
@@ -337,22 +345,37 @@ func check_clears():
 					var has: bool = false
 					var hasNot: bool = false
 					for i in clears:
-						if dict.has(i):
+						if dict[&"cells"].has(i):
 							has = true
 						else:
 							hasNot = true
 					if has:
 						if hasNot:
-							#todo
+							#combine these clears
 							dict[&"breakfast"] = true
+							dict[&"size"]= max(clears.size(), dict[&"size"])
+							for i in clears:
+								dict[i] = true
 							modified = true
-						break
+						#break #could be okay but the benefit is marginal, so why risk it
 				if !modified:
-					var dict: Dictionary = {&"size": largestClear,
-					&"breakfast": breakfast}
+					# new clear
+					var dict: Dictionary = {&"size": largestClear, &"breakfast": breakfast, &"cells": {}}
 					for i in clears:
-						dict[i] = true
+						dict[&"cells"][i] = true
 					clearDicts.append(dict)
+	clear(clearDicts)
+
+func clear(clearDicts: Array[Dictionary]):
+	#todo additional consequences based on clear size/type
+	for dict in clearDicts:
+		for cell in dict[&"cells"]:
+			clear_cell(cell)
+
+func clear_cell(cell: int) -> void:
+	#todo pretty
+	board[cell].queue_free()
+	board[cell] = null
 
 func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
 	# does not cross a left/right board boundary
@@ -361,8 +384,8 @@ func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
 		var testCell: int = cell + vector.x + vector.y * currentParams[&"width"]
 		#not out of bounds above or below 
 		if testCell < board.size() && testCell >= 0:
-			# It's a match made in heaven! todo check stability
-			if board[testCell] != null && board[testCell].matches(board[cell]):
+			# It's a match made in heaven!
+			if board[testCell] != null && board[testCell].matches(board[cell]) && check_stable(testCell):
 				# Keep checking that direction and return all matches together
 				var result: Array[int] = get_matches_in_direction(testCell, vector)
 				result.append(testCell)

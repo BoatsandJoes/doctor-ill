@@ -33,7 +33,11 @@ func _ready() -> void:
 		add_child(boards[i])
 		#todo handle multiple boards
 		boards[i].position = Vector2i(boards[i].tilePixels / 2, boards[i].tilePixels / 2)
+		boards[i].finished.connect(_on_board_finished)
 	play_random_song()
+
+func _on_board_finished():
+	emit_signal("exit", currentTrack)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc"):

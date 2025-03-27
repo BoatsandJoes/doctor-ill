@@ -15,7 +15,8 @@ var bufferedKick: bool = false
 var nonBufferedClimb: bool = false
 
 func _ready() -> void:
-	pass
+	type = -1
+	variety = -1
 
 func turn_around():
 	$Sprite2D.scale = $Sprite2D.scale * Vector2(-1, 1)
