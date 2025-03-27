@@ -262,7 +262,7 @@ func handle_player_state(player: Player, delta: float):
 		if player.stateCountdown == player.defaultTurnaroundCounter:
 			player.turn_around()
 	elif player.state == player.stateType.WALKING:
-		# todo make stack have smooth movement too
+		# todo make stack have smooth movement too OR have falling check scan down for player
 		if player.walk(tilePixels, delta):
 			# cross tile boundary
 			move(player, player.gridIndex + player.facing)
@@ -314,8 +314,39 @@ func check_clears():
 					break
 				ground = ground + currentParams[&"width"]
 			if stable:
-				#todo check for matches
-				pass
+				#check for matches in the directions in which this piece can match
+				var clears: Array[int] = []
+				var breakfast: bool = false
+				var largestClear: int = 0
+				for vector in board[cell].matchVecs:
+					var matches = get_matches_in_direction(cell, vector)
+					# check opposite direction (only half of the directions are listed by design)
+					matches.append_array(get_matches_in_direction(cell, vector * -1))
+					# 3 pieces including current piece
+					if matches.size() >= 2:
+						# We will clear this line. Check for breakfast too
+						if clears.size() > 0:
+							breakfast = true
+						clears.append_array(matches)
+						largestClear = max(largestClear, matches.size() + 1)
+				#todo do something with the clear
+				#todo prevent double count
+
+func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
+	# does not cross a left/right board boundary
+	if (vector.x == 0 || !((vector.x == -1 && cell % currentParams[&"width"] == 0) 
+	|| (vector.x == 1 && (cell + 1) % currentParams[&"width"] == 0))):
+		var testCell: int = cell + vector.x + vector.y * currentParams[&"width"]
+		#not out of bounds above or below 
+		if testCell < board.size() && testCell >= 0:
+			# It's a match made in heaven! todo check stability
+			if board[testCell] != null && board[testCell].matches(board[cell]):
+				# Keep checking that direction and return all matches together
+				var result: Array[int] = get_matches_in_direction(testCell, vector)
+				result.append(testCell)
+				return result
+	# Base case: no match
+	return []
 
 func _physics_process(delta: float) -> void:
 	check_clears()

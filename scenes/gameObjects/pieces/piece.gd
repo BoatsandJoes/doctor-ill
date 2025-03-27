@@ -7,6 +7,9 @@ var fallingCounter: float = defaultFallingCounter
 var fastFall: bool = false
 var gridIndex: int
 var bomb: bool = false
+var matchVecs: Array[Vector2i] = []
+var type: int
+var variety: int
 
 func fall_fast():
 	fastFall = true
@@ -22,3 +25,6 @@ func toggle_bomb():
 		$Sprite2D.modulate = Color(5,5,5)
 	else:
 		$Sprite2D.modulate = Color(1,1,1)
+
+func matches(piece: Piece) -> bool:
+	return piece.type == type && piece.variety == variety
