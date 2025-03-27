@@ -168,6 +168,8 @@ func handle_direction(player: Player, direction: Vector2i):
 				#piece landed on us
 				elif board[player.gridIndex - currentParams[&"width"]] != null:
 					player.idle_state()
+					#todo do this same thing when player didn't climb into the piece
+					board[player.gridIndex - currentParams[&"width"]].set_bomb()
 
 func toggle_bomb(target: int):
 	if (target >= 0 && board[target] != null && !(board[target] is Player)):
@@ -255,13 +257,15 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				if passed:
 					#move whole stack
 					above = source
+					var i: int = 0
 					while above >= 0 && board[above] != null && !(board[above] is Player):
 						move(board[above], target)
 						board[target].fall_fast()
-						if pick:
+						if pick && i == 0:
 							board[target].set_bomb()
 						above = above - currentParams[&"width"]
 						target = target - currentParams[&"width"]
+						i = i + 1
 
 func handle_player_state(player: Player, delta: float):
 	if player.state == player.stateType.TURNING:
@@ -291,6 +295,9 @@ func handle_player_state(player: Player, delta: float):
 		elif player.state == player.stateType.GRABBING_STACK:
 			pick_or_put(player, true, true)
 		player.idle_state()
+		var above: int = player.gridIndex - currentParams[&"width"]
+		if above >= 0 && board[above] != null:
+			board[above].set_bomb()
 
 func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 	#return true if piece is good to fall into the target, false otherwise

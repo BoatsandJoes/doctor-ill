@@ -58,6 +58,9 @@ func fall(tileWidth: int, delta: float, stopAtMiddleOfTile: bool) -> bool:
 		$Sprite2D.position.y = 0
 	return false
 
+func set_bomb():
+	pass
+
 func climb_state():
 	state = stateType.CLIMBING
 	stateCountdown = defaultWalkCounter
