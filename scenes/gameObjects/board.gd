@@ -301,6 +301,7 @@ func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 	|| board[down].state == board[down].stateType.GRABBING_STACK)))))
 
 func check_clears():
+	var clearDicts: Array[Dictionary] = []
 	for cell in range(board.size()):
 		if board[cell] != null && board[cell].bomb:
 			#check for stability
@@ -329,8 +330,29 @@ func check_clears():
 							breakfast = true
 						clears.append_array(matches)
 						largestClear = max(largestClear, matches.size() + 1)
-				#todo do something with the clear
-				#todo prevent double count
+				#look through existing clears this frame
+				var modified: bool = false
+				for dict in clearDicts:
+					#piggyback existing clear, if exists
+					var has: bool = false
+					var hasNot: bool = false
+					for i in clears:
+						if dict.has(i):
+							has = true
+						else:
+							hasNot = true
+					if has:
+						if hasNot:
+							#todo
+							dict[&"breakfast"] = true
+							modified = true
+						break
+				if !modified:
+					var dict: Dictionary = {&"size": largestClear,
+					&"breakfast": breakfast}
+					for i in clears:
+						dict[i] = true
+					clearDicts.append(dict)
 
 func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
 	# does not cross a left/right board boundary
