@@ -12,8 +12,7 @@ var depth: int = -1
 var board: Array
 var tilePixels: int = 16
 var paramsList: Array[Dictionary] = [
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2},
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 1}
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 3}
 ]
 var currentParams: Dictionary = paramsList[0]
 
@@ -240,6 +239,8 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				if (above >= 0 && board[above] != null && !pick):
 					# make rest of stack fall
 					fall(board[above], above, source, player.defaultFastFallCounter)
+				elif pick:
+					board[target].set_bomb()
 			else:
 				# test rest of stack
 				var passed = true
@@ -257,6 +258,8 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 					while above >= 0 && board[above] != null && !(board[above] is Player):
 						move(board[above], target)
 						board[target].fall_fast()
+						if pick:
+							board[target].set_bomb()
 						above = above - currentParams[&"width"]
 						target = target - currentParams[&"width"]
 
@@ -340,6 +343,7 @@ func check_clears():
 						largestClear = max(largestClear, matches.size() + 1)
 				#look through existing clears this frame
 				var modified: bool = false
+				var duplicate: bool = false
 				for dict in clearDicts:
 					#piggyback existing clear, if exists
 					var has: bool = false
@@ -350,7 +354,9 @@ func check_clears():
 						else:
 							hasNot = true
 					if has:
+						duplicate = true
 						if hasNot:
+							duplicate = false
 							#combine these clears
 							dict[&"breakfast"] = true
 							dict[&"size"]= max(clears.size(), dict[&"size"])
@@ -358,7 +364,7 @@ func check_clears():
 								dict[i] = true
 							modified = true
 						#break #could be okay but the benefit is marginal, so why risk it
-				if !modified:
+				if !modified && !duplicate:
 					# new clear
 					var dict: Dictionary = {&"size": largestClear, &"breakfast": breakfast, &"cells": {}}
 					for i in clears:

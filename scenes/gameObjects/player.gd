@@ -100,8 +100,6 @@ func _input(event: InputEvent) -> void:
 		bufferedPickUpOne = true
 	elif(event.is_action_pressed("pick_up_stack")):
 		bufferedPickUpStack = true
-	elif(event.is_action_pressed("cycle")):
-		bufferedCycle = true
 	elif(event.is_action_pressed("kick")):
 		bufferedKick = true;
 	elif(event.is_action_pressed("up")):

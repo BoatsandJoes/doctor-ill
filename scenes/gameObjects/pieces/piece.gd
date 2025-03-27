@@ -26,5 +26,9 @@ func toggle_bomb():
 	else:
 		$Sprite2D.modulate = Color(1,1,1)
 
+func set_bomb():
+	$Sprite2D.modulate = Color(5,5,5)
+	bomb = true
+
 func matches(piece: Piece) -> bool:
 	return piece.type == type && piece.variety == variety
