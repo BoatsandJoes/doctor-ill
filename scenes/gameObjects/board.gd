@@ -12,9 +12,12 @@ var depth: int = -1
 var board: Array
 var tilePixels: int = 16
 var paramsList: Array[Dictionary] = [
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 3}
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2}
 ]
 var currentParams: Dictionary = paramsList[0]
+var secondsElapsed: float = 0.0
 
 func _ready() -> void:
 	players.append(Player.instantiate())
@@ -60,6 +63,9 @@ func generateNextFloor() -> void:
 		updateVisualPositions()
 
 func win():
+	emit_signal("finished")
+
+func lose():
 	emit_signal("finished")
 
 func move(piece: Piece, toIndex: int):
@@ -169,12 +175,12 @@ func handle_direction(player: Player, direction: Vector2i):
 				elif board[player.gridIndex - currentParams[&"width"]] != null:
 					player.idle_state()
 					#todo do this same thing when player didn't climb into the piece
-					board[player.gridIndex - currentParams[&"width"]].set_bomb()
+					board[player.gridIndex - currentParams[&"width"]].set_bomb(secondsElapsed)
 
 func toggle_bomb(target: int):
 	if (target >= 0 && board[target] != null && !(board[target] is Player)):
 		#turn piece into bomb
-		board[target].toggle_bomb()
+		board[target].toggle_bomb(secondsElapsed)
 		#recurse whole stack
 		#toggle_bomb(target - currentParams[&"width"])
 
@@ -241,8 +247,6 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				if (above >= 0 && board[above] != null && !pick):
 					# make rest of stack fall
 					fall(board[above], above, source, player.defaultFastFallCounter)
-				elif pick:
-					board[target].set_bomb()
 			else:
 				# test rest of stack
 				var passed = true
@@ -257,15 +261,11 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				if passed:
 					#move whole stack
 					above = source
-					var i: int = 0
 					while above >= 0 && board[above] != null && !(board[above] is Player):
 						move(board[above], target)
 						board[target].fall_fast()
-						if pick && i == 0:
-							board[target].set_bomb()
 						above = above - currentParams[&"width"]
 						target = target - currentParams[&"width"]
-						i = i + 1
 
 func handle_player_state(player: Player, delta: float):
 	if player.state == player.stateType.TURNING:
@@ -297,7 +297,7 @@ func handle_player_state(player: Player, delta: float):
 		player.idle_state()
 		var above: int = player.gridIndex - currentParams[&"width"]
 		if above >= 0 && board[above] != null:
-			board[above].set_bomb()
+			board[above].set_bomb(secondsElapsed)
 
 func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 	#return true if piece is good to fall into the target, false otherwise
@@ -380,15 +380,81 @@ func check_clears():
 	clear(clearDicts)
 
 func clear(clearDicts: Array[Dictionary]):
-	#todo additional consequences based on clear size/type
+	#additional consequences based on clear size/type
+	var cellsToClear: Array[int] = []
 	for dict in clearDicts:
+		var latestBomb: int
+		var time: float = 0.0
 		for cell in dict[&"cells"]:
+			if board[cell].bombCreationTime >= time:
+				time = board[cell].bombCreationTime
+				latestBomb = cell
+		for cell in dict[&"cells"]:
+			if cell == latestBomb && (dict[&"breakfast"] || dict[&"size"] > 3):
+				if(dict[&"breakfast"]):
+					board[cell].set_lightning()
+				if(dict[&"size"] > 3):
+					board[cell].set_flame(dict[&"size"])
+			else:
+				cellsToClear.append(cell)
+	var furtherClears: Array[int] = []
+	while cellsToClear.size() > 0:
+		var cell = cellsToClear[0]
+		if board[cell] != null:
+			#todo activate flame/lightning
+			if board[cell].lightning:
+				#left
+				var scan: int = cell - 1
+				while (scan + 1) % currentParams[&"width"] != 0:
+					cellsToClear.append(scan)
+					scan = scan - 1
+				#right
+				scan = cell + 1
+				while scan % currentParams[&"width"] != 0:
+					cellsToClear.append(scan)
+					scan = scan + 1
+				#up
+				scan = cell - currentParams[&"width"]
+				while scan >= 0:
+					cellsToClear.append(scan)
+					scan = scan - currentParams[&"width"]
+				#down
+				scan = cell + currentParams[&"width"]
+				while scan < board.size():
+					cellsToClear.append(scan)
+					scan = scan + currentParams[&"width"]
+			if board[cell].flame:
+				var onLeftWall: bool = cell % currentParams[&"width"] == 0
+				var onRightWall: bool = (cell + 1) % currentParams[&"width"] == 0
+				var onCeiling: bool = cell - currentParams[&"width"] < 0
+				var onFloor: bool = cell + currentParams[&"width"] >= board.size()
+				if !onLeftWall:
+					cellsToClear.append(cell - 1)
+					if !onFloor:
+						cellsToClear.append(cell - 1 + currentParams[&"width"])
+					if !onCeiling:
+						cellsToClear.append(cell - 1 - currentParams[&"width"])
+				if !onRightWall:
+					cellsToClear.append(cell + 1)
+					if !onFloor:
+						cellsToClear.append(cell + 1 + currentParams[&"width"])
+					if !onCeiling:
+						cellsToClear.append(cell + 1 - currentParams[&"width"])
+				if !onCeiling:
+					cellsToClear.append(cell - currentParams[&"width"])
+				if !onFloor:
+					cellsToClear.append(cell + currentParams[&"width"])
 			clear_cell(cell)
+		cellsToClear.remove_at(0)
 
 func clear_cell(cell: int) -> void:
 	#todo pretty
-	board[cell].queue_free()
-	board[cell] = null
+	if board[cell] != null:
+		if board[cell] is Player:
+			lose()
+		else:
+			board[cell].queue_free()
+			board[cell] = null
 
 func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
 	# does not cross a left/right board boundary
@@ -449,3 +515,4 @@ func _physics_process(delta: float) -> void:
 				&& piece.state != piece.stateType.WALKING && (belowIndex >= board.size()
 				|| board[belowIndex] != null)):
 					piece.fall(tilePixels, delta, true)
+	secondsElapsed = secondsElapsed + delta

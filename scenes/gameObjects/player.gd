@@ -58,7 +58,7 @@ func fall(tileWidth: int, delta: float, stopAtMiddleOfTile: bool) -> bool:
 		$Sprite2D.position.y = 0
 	return false
 
-func set_bomb():
+func set_bomb(secondsElapsed: float):
 	pass
 
 func climb_state():
