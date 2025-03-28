@@ -2,6 +2,7 @@ extends Node2D
 class_name Board
 
 signal finished
+signal collect_air
 
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")

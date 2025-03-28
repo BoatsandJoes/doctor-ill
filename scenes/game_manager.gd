@@ -3,6 +3,8 @@ class_name GameManager
 
 signal exit(track: int)
 
+var HUD = preload("res://scenes/ui/HUD.tscn")
+var hud: HUD
 var Board = preload("res://scenes/gameObjects/board.tscn")
 var boards: Array[Board] = []
 
@@ -24,6 +26,9 @@ var musicTracks: Array[String] = [
 var currentTrack: int
 
 func _ready() -> void:
+	hud = HUD.instantiate()
+	add_child(hud)
+	hud.out_of_air.connect(_on_hud_out_of_air)
 	music = AudioStreamPlayer.new()
 	music.set_bus("Reduce")
 	music.finished.connect(_on_music_finished)
@@ -34,7 +39,14 @@ func _ready() -> void:
 		#todo handle multiple boards
 		boards[i].position = Vector2i(boards[i].tilePixels / 2, boards[i].tilePixels / 2)
 		boards[i].finished.connect(_on_board_finished)
+		boards[i].collect_air.connect(_on_board_collect_air)
 	play_random_song()
+
+func _on_board_collect_air(quantity: float):
+	hud.update_air(quantity)
+
+func _on_hud_out_of_air():
+	emit_signal("exit", currentTrack)
 
 func _on_board_finished():
 	emit_signal("exit", currentTrack)
