@@ -27,9 +27,9 @@ func walk(tileWidth: int, delta: float) -> bool:
 	if abs($Sprite2D.position.x) >= tileWidth / 2:
 		#clamp and flip to other side
 		if $Sprite2D.position.x > 0:
-			$Sprite2D.position.x = -tileWidth / 2
+			$Sprite2D.position.x = $Sprite2D.position.x - tileWidth
 		else:
-			$Sprite2D.position.x = tileWidth / 2
+			$Sprite2D.position.x = $Sprite2D.position.x + tileWidth
 		return true
 	return false
 
@@ -38,9 +38,9 @@ func climb(tileWidth: int, delta: float) -> bool:
 	if abs($Sprite2D.position.y) >= tileWidth / 2:
 		#clamp and flip to other side
 		if $Sprite2D.position.y > 0:
-			$Sprite2D.position.y = -tileWidth / 2
+			$Sprite2D.position.y = $Sprite2D.position.y - tileWidth
 		else:
-			$Sprite2D.position.y = tileWidth / 2
+			$Sprite2D.position.y = $Sprite2D.position.y + tileWidth
 		return true
 	return false
 
@@ -50,9 +50,9 @@ func fall(tileWidth: int, delta: float, stopAtMiddleOfTile: bool) -> bool:
 		if abs($Sprite2D.position.y) >= tileWidth / 2:
 			#clamp and flip to other side
 			if $Sprite2D.position.y > 0:
-				$Sprite2D.position.y = -tileWidth / 2
+				$Sprite2D.position.y = $Sprite2D.position.y - tileWidth
 			else:
-				$Sprite2D.position.y = tileWidth / 2
+				$Sprite2D.position.y = $Sprite2D.position.y + tileWidth
 			return true
 	else:
 		$Sprite2D.position.y = 0

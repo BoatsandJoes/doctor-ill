@@ -6,3 +6,4 @@
 script = ExtResource("1_oaht3")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(2, 2)

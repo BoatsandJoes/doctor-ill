@@ -11,7 +11,7 @@ var generator: Generator = Generator.new()
 var players: Array[Player] = []
 var depth: int = -1
 var board: Array
-var tilePixels: int = 16
+var tilePixels: int = 32
 var paramsList: Array[Dictionary] = [
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3},
@@ -76,8 +76,6 @@ func move(piece: Piece, toIndex: int):
 		board[toIndex] = piece
 		piece.gridIndex = toIndex
 		updateVisualPosition(toIndex)
-	#print("From " + str(fromIndex) + " " + str(board[fromIndex]) + " to " + str(toIndex) + " "
-	#+ str(board[toIndex]))
 
 func fall(piece: Piece, pieceIndex: int, belowIndex: int, startingFallValue: float):
 	# Player never falls fast.
