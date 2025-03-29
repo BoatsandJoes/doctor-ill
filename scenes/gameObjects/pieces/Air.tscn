@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://pcns3o84pj4s"]
+
+[ext_resource type="Script" uid="uid://cb1pc5c3i6m0g" path="res://scenes/gameObjects/pieces/air.gd" id="1_oaht3"]
+
+[node name="Air" type="Node2D"]
+script = ExtResource("1_oaht3")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
