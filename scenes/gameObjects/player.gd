@@ -7,7 +7,8 @@ var facing: int = 1 # 1 == right, -1 == left
 var defaultTurnaroundCounter: float = 0.15
 var defaultWalkCounter: float = 0.2
 var defaultPickupCounter: float = 0.06
-var stateCountdown: float = 0
+var defaultKickCounter: float = 0.15
+var kickPoint: float = 0.09
 var bufferedPickUpOne: bool = false
 var bufferedPickUpStack: bool = false
 var bufferedCycle: bool = false
@@ -88,6 +89,10 @@ func grabbing_state(stack: bool):
 	else:
 		state = stateType.GRABBING_ONE
 	stateCountdown = defaultPickupCounter
+
+func is_this_the_part_where_we_start_kicking():
+	state = stateType.KICKING
+	stateCountdown = defaultKickCounter
 
 func center():
 	$Sprite2D.position = Vector2i(0,0)

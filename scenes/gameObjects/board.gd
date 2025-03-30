@@ -14,9 +14,9 @@ var board: Array
 var tilePixels: int = 32
 # airHeight is 1-indexed from the bottom of the stack
 var paramsList: Array[Dictionary] = [
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4,
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 3,
 	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0},
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3,
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 2,
 	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2,
 	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0}
@@ -203,7 +203,7 @@ func handle_buffered_input(player: Player):
 			pick_or_put(player, false, false)
 		elif player.bufferedKick:
 			player.bufferedKick = false
-			#todo kick
+			player.is_this_the_part_where_we_start_kicking()
 
 func pick_or_put(player: Player, stack: bool, pick: bool):
 	var overhead: int = player.gridIndex - currentParams[&"width"]
@@ -268,7 +268,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				if passed:
 					#move whole stack
 					above = source
-					while above >= 0 && board[above] != null && !(board[above] is Player):
+					while above >= 0 && board[above] != null && !(board[above] is Player) && !board[above].ice:
 						move(board[above], target)
 						board[target].fall_fast()
 						above = above - currentParams[&"width"]
@@ -286,7 +286,7 @@ func handle_player_state(player: Player, delta: float):
 			move(player, player.gridIndex + player.facing)
 			var aboveIndex: int = player.gridIndex - player.facing - currentParams[&"width"]
 			while (aboveIndex >= 0 && board[aboveIndex] != null
-			&& board[aboveIndex + player.facing] == null):
+			&& board[aboveIndex + player.facing] == null && ! board[aboveIndex].ice):
 				# Bring stack too
 				move(board[aboveIndex], aboveIndex + player.facing)
 				aboveIndex = aboveIndex - currentParams[&"width"]
@@ -294,6 +294,11 @@ func handle_player_state(player: Player, delta: float):
 		if player.climb(tilePixels, delta):
 			# cross tile boundary
 			move(player, player.gridIndex - currentParams[&"width"])
+	elif (player.state == player.stateType.KICKING && player.stateCountdown <= player.kickPoint
+	&& !(player.facing == -1 && player.gridIndex % currentParams[&"width"] == 0)
+	&& !(player.facing == 1 && (player.gridIndex + 1) % currentParams[&"width"] == 0)
+	&& board[player.gridIndex + player.facing] != null):
+		board[player.gridIndex + player.facing].kick(player.facing)
 	player.stateCountdown = player.stateCountdown - delta
 	if player.stateCountdown <= 0:
 		#attempt grab
@@ -321,7 +326,9 @@ func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 	&& (board[down].state == board[down].stateType.GRABBING_ONE
 	|| board[down].state == board[down].stateType.GRABBING_STACK)))))
 
-func check_stable(cell: int) -> bool:
+func check_stable(cell: int, ignoreKicked: bool) -> bool:
+	if board[cell] == null || (!ignoreKicked && board[cell].kicked != 0):
+		return false
 	var stable = true
 	var ground = cell + currentParams[&"width"]
 	while ground < board.size():
@@ -338,7 +345,7 @@ func check_clears():
 	for cell in range(board.size()):
 		if board[cell] != null && board[cell].bomb:
 			#check for stability
-			if check_stable(cell):
+			if check_stable(cell, false):
 				#check for matches in the directions in which this piece can match
 				var clears: Array[int] = []
 				var breakfast: bool = false
@@ -484,7 +491,7 @@ func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
 		#not out of bounds above or below 
 		if testCell < board.size() && testCell >= 0:
 			# It's a match made in heaven!
-			if board[testCell] != null && board[testCell].matches(board[cell]) && check_stable(testCell):
+			if board[testCell] != null && board[testCell].matches(board[cell]) && check_stable(testCell, false):
 				# Keep checking that direction and return all matches together
 				var result: Array[int] = get_matches_in_direction(testCell, vector)
 				result.append(testCell)
@@ -510,6 +517,17 @@ func _physics_process(delta: float) -> void:
 		var piece: Piece = board[i]
 		var belowIndex: int = i + currentParams[&"width"]
 		if piece != null:
+			if piece.kicked != 0:
+				var target: int = i + piece.kicked
+				if (!(piece.kicked == -1 && i % currentParams[&"width"] == 0)
+				&& !(piece.kicked == 1 && (i + 1) % currentParams[&"width"] == 0)
+				&& board[target] == null && check_stable(i, true)):
+					piece.stateCountdown = piece.stateCountdown - delta
+					if piece.stateCountdown <= 0:
+						move(piece, target)
+						piece.stateCountdown = piece.defaultSlideCounter
+				else:
+					piece.bonk()
 			if (belowIndex < board.size() && board[belowIndex] == null
 			&& !(piece is Player && (piece.state == piece.stateType.CLIMBING
 			|| piece.state == piece.stateType.WALKING))):

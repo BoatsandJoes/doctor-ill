@@ -4,6 +4,8 @@ class_name Piece
 var defaultFastFallCounter: float = 0.03
 var defaultFallingCounter: float = 0.25
 var fallingCounter: float = defaultFallingCounter
+var defaultSlideCounter: float = 0.03
+var stateCountdown: float = 0
 var fastFall: bool = false
 var gridIndex: int
 var bomb: bool = false
@@ -15,6 +17,7 @@ var flame: bool = false
 var flameSize: int = 4
 var lightning: bool = false
 var ice: bool = false
+var kicked: int = 0
 
 func set_ice():
 	ice = true
@@ -63,3 +66,12 @@ func set_bomb(secondsElapsed: float):
 
 func matches(piece: Piece) -> bool:
 	return piece.type == type && piece.variety == variety && !ice && !piece.ice
+
+func kick(facing: int):
+	if !ice:
+		kicked = facing
+		stateCountdown = defaultSlideCounter
+
+func bonk():
+	kicked = 0
+	fall_fast()
