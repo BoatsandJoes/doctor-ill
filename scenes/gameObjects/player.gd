@@ -14,6 +14,7 @@ var bufferedPickUpStack: bool = false
 var bufferedCycle: bool = false
 var bufferedKick: bool = false
 var nonBufferedClimb: bool = false
+var didAKick: bool = false
 
 func _ready() -> void:
 	type = -1
@@ -93,6 +94,7 @@ func grabbing_state(stack: bool):
 func is_this_the_part_where_we_start_kicking():
 	state = stateType.KICKING
 	stateCountdown = defaultKickCounter
+	didAKick = false
 
 func center():
 	$Sprite2D.position = Vector2i(0,0)
@@ -105,9 +107,15 @@ func above_vertically_centered() -> bool:
 
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("pick_up_one")):
-		bufferedPickUpOne = true
+		if Input.is_action_pressed("down") && !Input.is_action_pressed("up"):
+			bufferedKick = true
+		else:
+			bufferedPickUpOne = true
 	elif(event.is_action_pressed("pick_up_stack")):
-		bufferedPickUpStack = true
+		if Input.is_action_pressed("down") && !Input.is_action_pressed("up"):
+			bufferedKick = true
+		else:
+			bufferedPickUpStack = true
 	elif(event.is_action_pressed("kick")):
 		bufferedKick = true;
 	elif(event.is_action_pressed("up")):

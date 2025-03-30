@@ -42,6 +42,11 @@ func set_lightning():
 	else:
 		$Sprite2D.rotation = PI
 
+func revert_special():
+	lightning = false
+	flame = false
+	$Sprite2D.rotation = 0
+
 func fall_fast():
 	fastFall = true
 	fallingCounter = defaultFastFallCounter

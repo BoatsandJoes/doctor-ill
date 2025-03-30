@@ -294,11 +294,13 @@ func handle_player_state(player: Player, delta: float):
 		if player.climb(tilePixels, delta):
 			# cross tile boundary
 			move(player, player.gridIndex - currentParams[&"width"])
-	elif (player.state == player.stateType.KICKING && player.stateCountdown <= player.kickPoint
+	elif (player.state == player.stateType.KICKING && !player.didAKick
+	&& player.stateCountdown <= player.kickPoint
 	&& !(player.facing == -1 && player.gridIndex % currentParams[&"width"] == 0)
 	&& !(player.facing == 1 && (player.gridIndex + 1) % currentParams[&"width"] == 0)
 	&& board[player.gridIndex + player.facing] != null):
 		board[player.gridIndex + player.facing].kick(player.facing)
+		player.didAKick = true
 	player.stateCountdown = player.stateCountdown - delta
 	if player.stateCountdown <= 0:
 		#attempt grab
@@ -396,6 +398,7 @@ func check_clears():
 func clear(clearDicts: Array[Dictionary]):
 	#additional consequences based on clear size/type
 	var cellsToClear: Dictionary[int,bool] = {}
+	var cellsToPreserve: Dictionary[int,int] = {}
 	for dict in clearDicts:
 		var latestBomb: int
 		var time: float = 0.0
@@ -404,15 +407,16 @@ func clear(clearDicts: Array[Dictionary]):
 				time = board[cell].bombCreationTime
 				latestBomb = cell
 		for cell in dict[&"cells"]:
+			cellsToClear[cell] = true
 			if cell == latestBomb && (dict[&"breakfast"] || dict[&"size"] > 3):
-				if(dict[&"breakfast"]):
-					board[cell].set_lightning()
-				if(dict[&"size"] > 3):
-					board[cell].set_flame(dict[&"size"])
-			else:
-				cellsToClear[cell] = true
+				if dict[&"breakfast"] && dict[&"size"] > 3:
+					cellsToPreserve[cell] = 3
+				elif(dict[&"breakfast"]):
+					cellsToPreserve[cell] = 2
+				elif(dict[&"size"] > 3):
+					cellsToPreserve[cell] = 1
 	var furtherClears: Array[int] = []
-	#todo clear + replace lightning/fire
+	# Actually clear
 	while !cellsToClear.is_empty():
 		var cell = cellsToClear.keys()[0]
 		if board[cell] != null:
@@ -467,7 +471,17 @@ func clear(clearDicts: Array[Dictionary]):
 					cellsToClear[cell - currentParams[&"width"]] = true
 				if !onFloor:
 					cellsToClear[cell + currentParams[&"width"]] = true
-			clear_cell(cell)
+			if !cellsToPreserve.has(cell):
+				clear_cell(cell)
+			else:
+				board[cell].revert_special()
+				if cellsToPreserve[cell] == 1:
+					board[cell].set_flame(4)
+				elif cellsToPreserve[cell] == 2:
+					board[cell].set_lightning()
+				elif cellsToPreserve[cell] == 3:
+					board[cell].set_flame(4)
+					board[cell].set_lightning()
 		cellsToClear.erase(cell)
 
 func clear_cell(cell: int) -> void:
