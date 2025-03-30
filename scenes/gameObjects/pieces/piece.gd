@@ -14,6 +14,15 @@ var bombCreationTime: float = 0.0
 var flame: bool = false
 var flameSize: int = 4
 var lightning: bool = false
+var ice: bool = false
+
+func set_ice():
+	ice = true
+	$Ice.visible = true
+
+func melt_ice():
+	ice = false
+	$Ice.visible = false
 
 func set_flame(size: int):
 	flame = true
@@ -47,9 +56,10 @@ func toggle_bomb(secondsElapsed: float):
 		$Sprite2D.modulate = Color(1,1,1)
 
 func set_bomb(secondsElapsed: float):
-	$Sprite2D.modulate = Color(5,5,5)
-	bomb = true
-	bombCreationTime = secondsElapsed
+	if !ice:
+		$Sprite2D.modulate = Color(5,5,5)
+		bomb = true
+		bombCreationTime = secondsElapsed
 
 func matches(piece: Piece) -> bool:
-	return piece.type == type && piece.variety == variety
+	return piece.type == type && piece.variety == variety && !ice && !piece.ice

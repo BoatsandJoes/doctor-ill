@@ -1,9 +1,0 @@
-[gd_scene load_steps=2 format=3 uid="uid://bqqkkyd07ar6e"]
-
-[ext_resource type="Script" uid="uid://wmneym5ccdab" path="res://scenes/gameObjects/pieces/trash.gd" id="1_24dh2"]
-
-[node name="Trash" type="Node2D"]
-script = ExtResource("1_24dh2")
-
-[node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(2, 2)

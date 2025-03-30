@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgtxgq00j1723"]
+[gd_scene load_steps=3 format=3 uid="uid://cgtxgq00j1723"]
 
 [ext_resource type="Script" uid="uid://bu20jrnpuv42c" path="res://scenes/gameObjects/pieces/diag.gd" id="1_hektf"]
+[ext_resource type="Texture2D" uid="uid://bnnduyqdk8pqq" path="res://assets/sprites/ice is nice.png" id="2_b0s54"]
 
 [node name="Diag" type="Node2D"]
 script = ExtResource("1_hektf")
@@ -9,3 +10,12 @@ script = ExtResource("1_hektf")
 scale = Vector2(2, 2)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+
+[node name="Ice" type="Sprite2D" parent="."]
+visible = false
+modulate = Color(1, 1, 1, 0.666667)
+scale = Vector2(2, 2)
+texture = ExtResource("2_b0s54")
+hframes = 6
+vframes = 5
+frame = 12

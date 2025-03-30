@@ -8,7 +8,7 @@ var monsterSkins: Array[Dictionary] = [{&"name": "frog", &"frames": 3},
 
 func _ready() -> void:
 	matchVecs = [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0)]
-	variety = 0
+	variety = 1
 
 func set_type(type: int):
 	$Sprite2D.texture = load("res://assets/sprites/" + monsterSkins[type][&"name"] + ".png")

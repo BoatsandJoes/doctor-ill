@@ -42,8 +42,8 @@ func _ready() -> void:
 		boards[i].collect_air.connect(_on_board_collect_air)
 	play_random_song()
 
-func _on_board_collect_air(quantity: float):
-	hud.update_air(quantity)
+func _on_board_collect_air(quantity: float, max: float):
+	hud.update_air(quantity, max)
 
 func _on_hud_out_of_air():
 	emit_signal("exit", currentTrack)

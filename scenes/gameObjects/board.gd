@@ -2,7 +2,7 @@ extends Node2D
 class_name Board
 
 signal finished
-signal collect_air
+signal collect_air(airContent: float, maxAir: float)
 
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
@@ -12,10 +12,14 @@ var players: Array[Player] = []
 var depth: int = -1
 var board: Array
 var tilePixels: int = 32
+# airHeight is 1-indexed from the bottom of the stack
 var paramsList: Array[Dictionary] = [
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4},
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3},
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2}
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4,
+	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3,
+	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2,
+	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0}
 ]
 var currentParams: Dictionary = paramsList[0]
 var secondsElapsed: float = 0.0
@@ -236,9 +240,13 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 			#down the match
 			generateNextFloor()
 		# first piece can move successfully
-		elif (board[source] != null && board[target] == null):
+		elif (board[source] != null && board[target] == null && !board[source].ice):
 			var above = source - currentParams[&"width"]
-			if !stack:
+			if board[source] is Air && pick:
+				board[source].queue_free()
+				board[source] = null
+				emit_signal("collect_air", currentParams[&"airContent"], currentParams[&"maxAir"])
+			elif !stack:
 				#perform move
 				move(board[source], target)
 				board[target].fall_fast()
@@ -250,7 +258,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				# test rest of stack
 				var passed = true
 				var testTarget = target
-				while above >= 0 && board[above] != null && !(board[above] is Player):
+				while above >= 0 && board[above] != null && !board[above] is Player && !board[above].ice:
 					testTarget = testTarget - currentParams[&"width"]
 					#target out of bounds or piece is occupying our target
 					if testTarget < 0 || board[testTarget] != null:
@@ -380,7 +388,7 @@ func check_clears():
 
 func clear(clearDicts: Array[Dictionary]):
 	#additional consequences based on clear size/type
-	var cellsToClear: Array[int] = []
+	var cellsToClear: Dictionary[int,bool] = {}
 	for dict in clearDicts:
 		var latestBomb: int
 		var time: float = 0.0
@@ -395,32 +403,41 @@ func clear(clearDicts: Array[Dictionary]):
 				if(dict[&"size"] > 3):
 					board[cell].set_flame(dict[&"size"])
 			else:
-				cellsToClear.append(cell)
+				cellsToClear[cell] = true
 	var furtherClears: Array[int] = []
-	while cellsToClear.size() > 0:
-		var cell = cellsToClear[0]
+	#todo clear + replace lightning/fire
+	while !cellsToClear.is_empty():
+		var cell = cellsToClear.keys()[0]
 		if board[cell] != null:
-			#todo activate flame/lightning
+			#activate flame/lightning
 			if board[cell].lightning:
 				#left
 				var scan: int = cell - 1
 				while (scan + 1) % currentParams[&"width"] != 0:
-					cellsToClear.append(scan)
+					cellsToClear[scan] = true
+					if board[scan] != null && board[scan].ice:
+						break
 					scan = scan - 1
 				#right
 				scan = cell + 1
 				while scan % currentParams[&"width"] != 0:
-					cellsToClear.append(scan)
+					cellsToClear[scan] = true
+					if board[scan] != null && board[scan].ice:
+						break
 					scan = scan + 1
 				#up
 				scan = cell - currentParams[&"width"]
 				while scan >= 0:
-					cellsToClear.append(scan)
+					cellsToClear[scan] = true
+					if board[scan] != null && board[scan].ice:
+						break
 					scan = scan - currentParams[&"width"]
 				#down
 				scan = cell + currentParams[&"width"]
 				while scan < board.size():
-					cellsToClear.append(scan)
+					cellsToClear[scan] = true
+					if board[scan] != null && board[scan].ice:
+						break
 					scan = scan + currentParams[&"width"]
 			if board[cell].flame:
 				var onLeftWall: bool = cell % currentParams[&"width"] == 0
@@ -428,30 +445,34 @@ func clear(clearDicts: Array[Dictionary]):
 				var onCeiling: bool = cell - currentParams[&"width"] < 0
 				var onFloor: bool = cell + currentParams[&"width"] >= board.size()
 				if !onLeftWall:
-					cellsToClear.append(cell - 1)
+					cellsToClear[cell - 1] = true
 					if !onFloor:
-						cellsToClear.append(cell - 1 + currentParams[&"width"])
+						cellsToClear[cell - 1 + currentParams[&"width"]] = true
 					if !onCeiling:
-						cellsToClear.append(cell - 1 - currentParams[&"width"])
+						cellsToClear[cell - 1 - currentParams[&"width"]] = true
 				if !onRightWall:
-					cellsToClear.append(cell + 1)
+					cellsToClear[cell + 1] = true
 					if !onFloor:
-						cellsToClear.append(cell + 1 + currentParams[&"width"])
+						cellsToClear[cell + 1 + currentParams[&"width"]] = true
 					if !onCeiling:
-						cellsToClear.append(cell + 1 - currentParams[&"width"])
+						cellsToClear[cell + 1 - currentParams[&"width"]] = true
 				if !onCeiling:
-					cellsToClear.append(cell - currentParams[&"width"])
+					cellsToClear[cell - currentParams[&"width"]] = true
 				if !onFloor:
-					cellsToClear.append(cell + currentParams[&"width"])
+					cellsToClear[cell + currentParams[&"width"]] = true
 			clear_cell(cell)
-		cellsToClear.remove_at(0)
+		cellsToClear.erase(cell)
 
 func clear_cell(cell: int) -> void:
 	#todo pretty
 	if board[cell] != null:
 		if board[cell] is Player:
 			lose()
+		elif board[cell].ice:
+			board[cell].melt_ice()
 		else:
+			if board[cell] is Air:
+				pass #todo score
 			board[cell].queue_free()
 			board[cell] = null
 
