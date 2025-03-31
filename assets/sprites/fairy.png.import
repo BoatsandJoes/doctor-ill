@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c4jjkniq03r2n"
-path="res://.godot/imported/rpgcritter update formatted transparent.png-dff1375b1465ff2b8d977eb83d5ab4eb.ctex"
+uid="uid://cgiiskwtgkgoa"
+path="res://.godot/imported/fairy.png-af3b0a54e54abdc3430070c5fd8e50c3.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/rpgcritter update formatted transparent.png"
-dest_files=["res://.godot/imported/rpgcritter update formatted transparent.png-dff1375b1465ff2b8d977eb83d5ab4eb.ctex"]
+source_file="res://assets/sprites/fairy.png"
+dest_files=["res://.godot/imported/fairy.png-af3b0a54e54abdc3430070c5fd8e50c3.ctex"]
 
 [params]
 

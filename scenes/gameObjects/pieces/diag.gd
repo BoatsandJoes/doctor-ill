@@ -1,9 +1,13 @@
 extends Piece
 class_name Diag
 
-var monsterSkins: Array[Dictionary] = [{&"name": "ghost", &"frames": 3},
-{&"name": "bat", &"frames": 3},
-{&"name": "eye", &"frames": 3}]
+var monsterSkins: Array[Dictionary] = [
+{&"name": "fairy", &"hFrames": 4, &"vFrames": 1},
+{&"name": "ghost", &"hFrames": 3, &"vFrames": 1},
+{&"name": "eye", &"hFrames": 3, &"vFrames": 1},
+{&"name": "imp", &"hFrames": 3, &"vFrames": 1},
+{&"name": "bat", &"hFrames": 2, &"vFrames": 1},
+{&"name": "whirlwind", &"hFrames": 4, &"vFrames": 1}]
 
 func _ready() -> void:
 	matchVecs = [Vector2i(-1, -1), Vector2i(1, -1)]
@@ -11,5 +15,6 @@ func _ready() -> void:
 
 func set_type(type: int):
 	$Sprite2D.texture = load("res://assets/sprites/" + monsterSkins[type][&"name"] + ".png")
-	$Sprite2D.hframes = monsterSkins[type][&"frames"]
+	$Sprite2D.hframes = monsterSkins[type][&"hFrames"]
+	$Sprite2D.vframes = monsterSkins[type][&"vFrames"]
 	self.type = type

@@ -9,20 +9,41 @@ var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
 var generator: Generator = Generator.new()
 var players: Array[Player] = []
-var depth: int = -1
+var depth: int = 9
 var board: Array
 var tilePixels: int = 32
 # airHeight is 1-indexed from the bottom of the stack
 var paramsList: Array[Dictionary] = [
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 6,
+	&"airHeight": 4, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 6,
+ 	&"airHeight": 4, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3,
+	&"airHeight": 4, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 5,
+	&"airHeight": 2, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0, &"spireHeight": 4},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 5,
+	&"airHeight": 3, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 4,
+	&"airHeight": 5, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 2,
+	&"airHeight": 5, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4,
+	&"airHeight": 5, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 3,
+	&"airHeight": 2, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 3,
-	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0},
-	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 2,
-	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0},
+	&"airHeight": 3, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0, &"iceRow": 4},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 1,
+	&"airHeight": 3, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 2,
+	&"airHeight": 2, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2,
-	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0}
+	&"airHeight": 6, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0}
 ]
-var currentParams: Dictionary = paramsList[0]
+var currentParams: Dictionary = paramsList[depth + 1]
 var secondsElapsed: float = 0.0
+var rainCounter: float = 5.0
 
 func _ready() -> void:
 	players.append(Player.instantiate())
@@ -53,8 +74,8 @@ func generateNextFloor() -> void:
 		for piece in board:
 			if piece != null && !(piece is Player):
 				piece.queue_free()
-		var params: Dictionary = paramsList[depth]
-		board = generator.generateLevel(params)
+		currentParams = paramsList[depth]
+		board = generator.generateLevel(currentParams)
 		for piece in board:
 			if piece != null:
 				add_child(piece)
@@ -66,6 +87,8 @@ func generateNextFloor() -> void:
 			player.gridIndex = player.gridIndex % currentParams[&"width"]
 			board[player.gridIndex] = player
 		updateVisualPositions()
+		if currentParams.has(&"rain"):
+			rainCounter = currentParams[&"rain"]
 
 func win():
 	emit_signal("finished")
@@ -527,6 +550,36 @@ func _physics_process(delta: float) -> void:
 	handle_direction(players[0], directionPressed)
 	handle_buffered_input(players[0])
 	handle_player_state(players[0], delta)
+	if currentParams.has(&"rain"):
+		rainCounter = rainCounter - delta
+		if rainCounter <= 0.0:
+			rainCounter = currentParams[&"rain"]
+			var options: Array = []
+			for i in range(currentParams[&"width"]):
+				if board[i] == null:
+					options.append(i)
+			if options.is_empty():
+				lose()
+			else:
+				var target = options[randi_range(0, options.size() - 1)]
+				var types: Dictionary[Array, bool] = {}
+				for i in range(board.size()):
+					if board[i] != null && !(board[i] is Player) && !(board[i] is Air):
+						types[[board[i].type, board[i].variety]] = true
+				if !types.is_empty():
+					var result = types.keys()[randi_range(0, types.keys().size() - 1)]
+					var rain
+					for mon in currentParams[&"types"]:
+						rain = mon.instantiate()
+						add_child(rain)
+						if rain.variety == result[1]:
+							break
+						else:
+							remove_child(rain)
+							rain.queue_free()
+					rain.set_type(result[1])
+					rain.gridIndex = target
+					move(rain, target)
 	for i in range(board.size()):
 		var piece: Piece = board[i]
 		var belowIndex: int = i + currentParams[&"width"]

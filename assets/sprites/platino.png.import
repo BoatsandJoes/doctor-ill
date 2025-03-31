@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c6g85ldiy6um"
-path="res://.godot/imported/bat.png-999a3b8c364ad8eed0221c763440cff1.ctex"
+uid="uid://rnkgq0513ups"
+path="res://.godot/imported/platino.png-2f174a3d1c6fd0ed535c12a2c7d0eaf4.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/bat.png"
-dest_files=["res://.godot/imported/bat.png-999a3b8c364ad8eed0221c763440cff1.ctex"]
+source_file="res://assets/sprites/platino.png"
+dest_files=["res://.godot/imported/platino.png-2f174a3d1c6fd0ed535c12a2c7d0eaf4.ctex"]
 
 [params]
 

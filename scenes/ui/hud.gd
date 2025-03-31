@@ -3,7 +3,7 @@ class_name HUD
 
 signal out_of_air
 
-var maxAir: float = 60.99
+var maxAir: float = 180.99
 var air: float = maxAir
 
 func update_air(delta: float, max: float):

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://crnvbep1fvivb"
-path="res://.godot/imported/FlameTail v2.png-e5782e3d051dcd22265a253a6a10f431.ctex"
+uid="uid://bfo0wrdx22qa8"
+path="res://.godot/imported/whirlwind.png-419f4d1c9825100ae24b72c13e853e5e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/sprites/FlameTail v2.png"
-dest_files=["res://.godot/imported/FlameTail v2.png-e5782e3d051dcd22265a253a6a10f431.ctex"]
+source_file="res://assets/sprites/whirlwind.png"
+dest_files=["res://.godot/imported/whirlwind.png-419f4d1c9825100ae24b72c13e853e5e.ctex"]
 
 [params]
 

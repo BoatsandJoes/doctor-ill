@@ -6,15 +6,15 @@ var Air = preload("res://scenes/gameObjects/pieces/Air.tscn")
 func generateLevel(params: Dictionary) -> Array:
 	var result: Array = []
 	var bag: Array = []
-	var monCount: int = (params[&"height"] * params[&"width"]) - 1
+	var monCount: int = (params[&"height"] * params[&"width"]) - 1 # 1 is clock
+	if params.has(&"spireHeight"):
+		monCount = monCount - 3 * params[&"spireHeight"]
 	var numEachMonster = monCount / params[&"types"].size()
 	if monCount % params[&"types"].size() != 0:
 		numEachMonster = numEachMonster + 1
 	for typeIndex in range(params[&"types"].size()):
 		for i in range(numEachMonster):
 			var monster: Piece = params[&"types"][typeIndex].instantiate()
-			#todo use distinct colors if there are two instances of the same monster type
-			# (maybe change input format to take a different number of colors for each type. That would be best)
 			monster.set_type(i % params[&"colors"])
 			bag.append(monster)
 	for rowIndex in range(params[&"buffer"]):
@@ -24,18 +24,30 @@ func generateLevel(params: Dictionary) -> Array:
 	for rowIndex in range(params[&"height"]):
 		var airColIndex = -1
 		if rowIndex + params[&"airHeight"] == params[&"height"]:
-			airColIndex = randi_range(0, params[&"width"] - 1)
+			var options = [1, params[&"width"] - 2]
+			airColIndex = options[randi_range(0, options.size() - 1)]
 		for colIndex in range(params[&"width"]):
 			if colIndex == airColIndex:
+				#place air
 				result.append(Air.instantiate())
 				airIndex = result.size() - 1
+				result[result.size() - 1].gridIndex = result.size() - 1
+			elif params.has(&"spireHeight") && params[&"spireHeight"] > rowIndex && colIndex % 2 != 0:
+				result.append(null)
 			else:
 				var bagIndex: int = randi_range(0, bag.size() - 1)
 				result.append(bag[bagIndex])
 				bag.remove_at(bagIndex)
-			result[result.size() - 1].gridIndex = result.size() - 1
-	#place air and garbage
-	if airIndex != -1:
+				result[result.size() - 1].gridIndex = result.size() - 1
+				if params.has("bomb"):
+					result[result.size() - 1].set_bomb(0) 
+	#place garbage
+	if params.has(&"iceRow"):
+		var start: int = result.size() - params[&"iceRow"] * params[&"width"]
+		for i in range(start, start + params[&"width"]):
+			if result[i] != null:
+				result[i].set_ice()
+	elif params.has(&"airHeight"):
 		var onLeftWall: bool = airIndex % params[&"width"] == 0
 		var onRightWall: bool = (airIndex + 1) % params[&"width"] == 0
 		var onCeiling: bool = airIndex - params[&"width"] < 0
