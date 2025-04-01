@@ -2,5 +2,126 @@
 
 [ext_resource type="Script" uid="uid://dnjk2iwhs18rb" path="res://scenes/ui/menus/credits.gd" id="1_vifv1"]
 
-[node name="Credits" type="CanvasLayer"]
+[node name="Credits" type="Node2D"]
 script = ExtResource("1_vifv1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="MarginContainer" type="MarginContainer" parent="CanvasLayer"]
+offset_right = 766.0
+offset_bottom = 2513.0
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 10
+theme_override_constants/margin_right = 10
+theme_override_constants/margin_bottom = 10
+
+[node name="HBoxContainer" type="HBoxContainer" parent="CanvasLayer/MarginContainer"]
+layout_mode = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Lead Developer: BoatsAndJoes
+
+Mouse by rolff
+https://rolff.itch.io/mouse-spritesheet-16x16
+
+Frog, Slime, Imp, Dino, Eye, Ghost, and Skeleton by ansimuz.com
+https://opengameart.org/content/chibi-monsters-set-01
+https://creativecommons.org/licenses/by/3.0/
+
+Fairy by GrafxKid https://opengameart.org/content/super-random-sprites
+
+Bat and Platino by DragonDePlatino and DawnBringer
+https://opengameart.org/content/dawnlike-16x16-universal-rogue-like-tileset-v181
+No modifications made
+https://creativecommons.org/licenses/by/4.0/
+
+Snake and Cactus Copyright NightBlade9 (twitter.com/nightblade99).
+Original snake art copyright Joe Williamson.
+Snake further modified to lighten the outline.
+Snake https://opengameart.org/content/animated-roguelikerpg-monsters-from-eman-quest
+https://creativecommons.org/licenses/by-sa/3.0/
+Cactus https://opengameart.org/content/animated-walk-cycle-monsters-hijabi-from-eman-quest
+https://creativecommons.org/publicdomain/zero/1.0/
+
+Whirlwind by Spring Spring
+Cropped to 16 tall.
+https://opengameart.org/content/whirlwind
+https://creativecommons.org/licenses/by/3.0/
+https://creativecommons.org/licenses/by-sa/3.0/
+
+Ice tile by Angel https://opengameart.org/content/ice-dungeon
+https://static.opengameart.org/OGA-BY-3.0.txt
+
+Clock by MSavioti https://opengameart.org/content/simple-clock-16x16
+
+Song: Max Brhon - Humanity [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/Humanity
+Watch: http://youtu.be/OJhqsUnKUWw
+
+Song: LOUD ABOUT US! - Goes Like [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: https://ncs.io/GoesLike
+Watch: http://youtu.be/eDcKZpoUc6s
+
+Song: Toxic Joy - All Night [Arcade Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/allnight
+Watch: http://ncs.lnk.to/allnightAT/youtube
+
+Song: Alisky - Grow (feat. VØR) [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://NCS.io/Grow
+Watch: http://youtu.be/ZbnMeTzzjZE
+
+Song: JOXION - Talk That Way [Arcade Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/TalkThatWay
+Watch: https://www.youtube.com/watch?v=PMUqriyGW64
+
+Song: Siberian Express - Talk To Me [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://NCS.io/SETalkToMe
+Watch: http://youtu.be/LKg6P5aI_bQ
+
+Track: NATSUMI - Take Me Away [NCS Release]
+Music provided by NoCopyrightSounds.
+Watch: https://youtu.be/25-ma4FUXuY
+Free Download / Stream: https://ncs.io/TakeMeAway
+
+Song: SIIK & Alenn - Mess [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/Mess
+Watch: https://www.youtube.com/watch?v=-Kjrf-pxQc4
+
+Song: More Plastic & URBANO - Psycho [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/MPU_Psycho
+Watch: https://www.youtube.com/watch?v=-QKgzYTPSEo
+
+Song: NOYSE & ÆSTRØ - La Manera De Vivir [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/LMDV
+Watch: https://www.youtube.com/watch?v=z7hLV1JaryA
+
+Song: Sam Ourt, AKIAL & Srikar
+    - Escape (Juan Dileju & Sam Ourt VIP Mix)
+[NCS Release] Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/Escape_VIP
+Watch: https://www.youtube.com/watch?v=TtFSSfoUVo4
+
+Song: Approaching Nirvana & Alex Holmes
+    - Darkness Comes [NCS Release]
+Music provided by NoCopyrightSounds
+Free Download/Stream: http://ncs.io/DarknessComes
+Watch: http://youtu.be/NxpmN_f7AbY"
+
+[node name="Node2D" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="Node2D"]
+unique_name_in_owner = true

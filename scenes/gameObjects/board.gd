@@ -9,37 +9,37 @@ var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
 var generator: Generator = Generator.new()
 var players: Array[Player] = []
-var depth: int = 9
+var depth: int = -1
 var board: Array
 var tilePixels: int = 32
 # airHeight is 1-indexed from the bottom of the stack
 var paramsList: Array[Dictionary] = [
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 6,
-	&"airHeight": 4, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 6,
- 	&"airHeight": 4, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+ 	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3,
-	&"airHeight": 4, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 5,
-	&"airHeight": 2, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0, &"spireHeight": 4},
+	&"airHeight": 2, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0, &"spireHeight": 4},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 5,
-	&"airHeight": 3, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 4,
-	&"airHeight": 5, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 2,
-	&"airHeight": 5, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4,
-	&"airHeight": 5, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 3,
-	&"airHeight": 2, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 2, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 3,
-	&"airHeight": 3, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0, &"iceRow": 4},
+	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0, &"iceRow": 4},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 1,
-	&"airHeight": 3, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 2,
-	&"airHeight": 2, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0},
+	&"airHeight": 2, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2,
-	&"airHeight": 6, &"airContent": 180.0, &"maxAir": 180.0, &"rain": 5.0}
+	&"airHeight": 6, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0}
 ]
 var currentParams: Dictionary = paramsList[depth + 1]
 var secondsElapsed: float = 0.0
@@ -302,8 +302,8 @@ func handle_player_state(player: Player, delta: float):
 		if player.stateCountdown == player.defaultTurnaroundCounter:
 			player.turn_around()
 	elif player.state == player.stateType.WALKING:
-		# todo make stack have smooth movement too OR have falling check scan down for player
-		# (only important if rain exists)
+		# todo have falling check scan down for player
+		# (but if not it will just knock off the top of the stack it's fine)
 		if player.walk(tilePixels, delta):
 			# cross tile boundary
 			move(player, player.gridIndex + player.facing)
@@ -577,7 +577,7 @@ func _physics_process(delta: float) -> void:
 						else:
 							remove_child(rain)
 							rain.queue_free()
-					rain.set_type(result[1])
+					rain.set_type(result[0])
 					rain.gridIndex = target
 					move(rain, target)
 	for i in range(board.size()):

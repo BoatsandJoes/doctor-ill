@@ -2,13 +2,12 @@ extends Piece
 class_name Omni
 
 var monsterSkins: Array[Dictionary] = [
-{&"name": "snake", &"hFrames": 4, &"vFrames": 4},
+{&"name": "snake", &"hFrames": 4, &"vFrames": 1},
 {&"name": "frog", &"hFrames": 3, &"vFrames": 1},
-{&"name": "cactus", &"hFrames": 2, &"vFrames": 1},
 {&"name": "dino", &"hFrames": 4, &"vFrames": 1},
+{&"name": "cactus", &"hFrames": 2, &"vFrames": 1},
 {&"name": "slime", &"hFrames": 3, &"vFrames": 1},
-{&"name": "skeleton", &"hFrames": 4, &"vFrames": 1},
-{&"name": "rock", &"hFrames": 3, &"vFrames": 4}]
+{&"name": "skeleton", &"hFrames": 4, &"vFrames": 1}]
 
 func _ready() -> void:
 	matchVecs = [Vector2i(-1, -1), Vector2i(0, -1), Vector2i(1, -1), Vector2i(-1, 0)]
