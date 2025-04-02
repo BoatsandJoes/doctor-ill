@@ -651,3 +651,13 @@ func _physics_process(delta: float) -> void:
 				|| board[belowIndex] != null)):
 					piece.fall(tilePixels, delta, true)
 	secondsElapsed = secondsElapsed + delta
+
+func _input(event: InputEvent) -> void:
+	if event.is_action_pressed("another"):
+		var free = false
+		for i in range(currentParams[&"width"]):
+			if board[i] == null:
+				free = true
+				break
+		if free:
+			rainCounter = 0
