@@ -4,7 +4,7 @@ class_name Credits
 signal exit
 
 var speed = 90
-var limit = 2700
+var limit = 3000
 
 func _ready() -> void:
 	%Camera2D.make_current()

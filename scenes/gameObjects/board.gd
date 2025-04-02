@@ -7,6 +7,13 @@ signal collect_air(airContent: float, maxAir: float)
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
+var sounds: Dictionary = {
+	&"clear": preload("res://assets/sfx/clear.ogg"),
+	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
+	&"lightning": preload("res://assets/sfx/double_zap.mp3"),
+	&"clock": preload("res://assets/sfx/clock-1.ogg")
+}
+var sfx: Array[AudioStreamPlayer] = []
 var generator: Generator = Generator.new()
 var players: Array[Player] = []
 var depth: int = -1
@@ -15,37 +22,41 @@ var tilePixels: int = 32
 # airHeight is 1-indexed from the bottom of the stack
 var paramsList: Array[Dictionary] = [
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 6,
-	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 4, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 6,
- 	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+ 	&"airHeight": 4, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3,
-	&"airHeight": 4, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 4, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 5,
-	&"airHeight": 2, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0, &"spireHeight": 4},
+	&"airHeight": 2, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0, &"spireHeight": 4},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 5,
-	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 3, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 4,
-	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 2,
-	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4,
-	&"airHeight": 5, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 3,
-	&"airHeight": 2, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 2, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 3,
-	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0, &"iceRow": 4},
+	&"airHeight": 3, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0, &"iceRow": 4},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 1,
-	&"airHeight": 3, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 3, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 2,
-	&"airHeight": 2, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0},
+	&"airHeight": 2, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2,
-	&"airHeight": 6, &"airContent": 60.0, &"maxAir": 60.0, &"rain": 5.0}
+	&"airHeight": 6, &"airContent": 30.0, &"maxAir": 99.99, &"rain": 5.0}
 ]
 var currentParams: Dictionary = paramsList[depth + 1]
 var secondsElapsed: float = 0.0
 var rainCounter: float = 5.0
 
 func _ready() -> void:
+	for i in range(5):
+		sfx.append(AudioStreamPlayer.new())
+		sfx[sfx.size() - 1].set_bus("Reduce Less")
+		add_child(sfx[sfx.size() - 1])
 	players.append(Player.instantiate())
 	for playerNum in range(players.size()):
 		add_child(players[playerNum])
@@ -96,6 +107,19 @@ func win():
 func lose():
 	emit_signal("finished")
 
+func play_sfx(key: StringName):
+	var played: bool = false
+	for player in sfx:
+		if !player.playing:
+			player.stream = sounds[key]
+			player.play()
+			played = true
+			break
+	if !played:
+		sfx[0].stop()
+		sfx[0].stream = sounds[key]
+		sfx[0].play
+
 func move(piece: Piece, toIndex: int):
 	#var fromIndex = piece.gridIndex
 	if board[toIndex] == null:
@@ -110,7 +134,8 @@ func fall(piece: Piece, pieceIndex: int, belowIndex: int, startingFallValue: flo
 		piece.fallingCounter = startingFallValue
 		move(piece, belowIndex)
 		#make stack above fall, if piece is in stack
-		if(pieceIndex - currentParams[&"width"] >= 0 && board[pieceIndex - currentParams[&"width"]] != null):
+		if(pieceIndex - currentParams[&"width"] >= 0 && board[pieceIndex - currentParams[&"width"]] != null
+		&& !(board[pieceIndex - currentParams[&"width"]] is Player)):
 			fall(board[pieceIndex - currentParams[&"width"]], pieceIndex - currentParams[&"width"],
 			pieceIndex, startingFallValue)
 
@@ -266,6 +291,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 		elif (board[source] != null && board[target] == null && !board[source].ice):
 			var above = source - currentParams[&"width"]
 			if board[source] is Air && pick:
+				play_sfx(&"clock")
 				board[source].queue_free()
 				board[source] = null
 				emit_signal("collect_air", currentParams[&"airContent"], currentParams[&"maxAir"])
@@ -440,11 +466,14 @@ func clear(clearDicts: Array[Dictionary]):
 					cellsToPreserve[cell] = 1
 	var furtherClears: Array[int] = []
 	# Actually clear
+	if !cellsToClear.is_empty():
+		play_sfx(&"clear")
 	while !cellsToClear.is_empty():
 		var cell = cellsToClear.keys()[0]
 		if board[cell] != null:
 			#activate flame/lightning
 			if board[cell].lightning:
+				play_sfx(&"lightning")
 				#left
 				var scan: int = cell - 1
 				while (scan + 1) % currentParams[&"width"] != 0:
@@ -474,6 +503,7 @@ func clear(clearDicts: Array[Dictionary]):
 						break
 					scan = scan + currentParams[&"width"]
 			if board[cell].flame:
+				play_sfx(&"fire")
 				var onLeftWall: bool = cell % currentParams[&"width"] == 0
 				var onRightWall: bool = (cell + 1) % currentParams[&"width"] == 0
 				var onCeiling: bool = cell - currentParams[&"width"] < 0
