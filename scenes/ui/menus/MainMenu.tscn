@@ -58,7 +58,11 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Exit"
 
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Play" to="." method="_on_play_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Settings" to="." method="_on_settings_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Credits" to="." method="_on_credits_pressed"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Exit" to="." method="_on_exit_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Play" to="." method="_on_play_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Play" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Settings" to="." method="_on_settings_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Settings" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Credits" to="." method="_on_credits_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Credits" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Exit" to="." method="_on_exit_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Exit" to="." method="_on_button_pressed"]
