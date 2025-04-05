@@ -22,6 +22,10 @@ window/size/viewport_height=360
 window/size/resizable=false
 window/stretch/mode="viewport"
 
+[gui]
+
+theme/custom_font="uid://dtiuc7hyeqn45"
+
 [input]
 
 up={
