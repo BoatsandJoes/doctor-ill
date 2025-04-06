@@ -22,6 +22,7 @@ var kicked: int = 0
 func set_ice():
 	ice = true
 	$Ice.visible = true
+	$AnimationPlayer.play("RESET")
 
 func melt_ice():
 	ice = false
