@@ -40,7 +40,11 @@ func _ready() -> void:
 		boards[i].position = Vector2i(boards[i].tilePixels / 2, boards[i].tilePixels / 2)
 		boards[i].finished.connect(_on_board_finished)
 		boards[i].collect_air.connect(_on_board_collect_air)
+		boards[i].next_floor.connect(_on_board_next_floor)
 	play_random_song()
+
+func _on_board_next_floor():
+	hud.round_up_to_nearest_second()
 
 func _on_board_collect_air(quantity: float, max: float):
 	hud.update_air(quantity, max)

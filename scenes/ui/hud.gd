@@ -14,5 +14,8 @@ func update_air(delta: float, max: float):
 		emit_signal("out_of_air")
 	%Air.text = str(int(air))
 
+func round_up_to_nearest_second():
+	air = floor(air) + 0.999
+
 func _physics_process(delta: float) -> void:
 	update_air(-delta, maxAir)

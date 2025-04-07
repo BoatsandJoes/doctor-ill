@@ -3,6 +3,7 @@ class_name Board
 
 signal finished
 signal collect_air(airContent: float, maxAir: float)
+signal next_floor
 
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
@@ -51,6 +52,8 @@ var paramsList: Array[Dictionary] = [
 var currentParams: Dictionary = paramsList[depth + 1]
 var secondsElapsed: float = 0.0
 var rainCounter: float = 5.0
+var typesOfMonster: Array[Array] = []
+var animating: int = 0
 
 func _ready() -> void:
 	for i in range(5):
@@ -90,6 +93,9 @@ func generateNextFloor() -> void:
 		for piece in board:
 			if piece != null:
 				add_child(piece)
+				if !typesOfMonster.has([piece.variety, piece.type]) && !(piece is Air):
+					typesOfMonster.append([piece.variety, piece.type])
+		dance()
 		#place players
 		for player in players:
 			# remove and add to change processing order to last
@@ -100,6 +106,16 @@ func generateNextFloor() -> void:
 		updateVisualPositions()
 		if currentParams.has(&"rain"):
 			rainCounter = currentParams[&"rain"]
+		emit_signal("next_floor")
+
+func dance():
+	if animating >= typesOfMonster.size():
+		animating = 0
+	for piece in board:
+		if (piece != null && !(piece is Air) && ! piece.ice && piece.type == typesOfMonster[animating][1]
+		&& piece.variety == typesOfMonster[animating][0]):
+			piece.animate()
+	animating = animating + 1
 
 func win():
 	emit_signal("finished")
@@ -567,6 +583,16 @@ func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
 	return []
 
 func _physics_process(delta: float) -> void:
+	var animating: bool = false
+	for piece in board:
+		if (piece != null && !(piece is Air) && !(piece is Player)
+		&& piece.get_node("AnimationPlayer").current_animation != null
+		&& piece.get_node("AnimationPlayer").current_animation != ""):
+			var anim = piece.get_node("AnimationPlayer").current_animation
+			animating = true
+			break
+	if !animating:
+		dance()
 	check_clears()
 	var directionPressed: Vector2i = Vector2i(0,0)
 	if Input.is_action_pressed("left"):

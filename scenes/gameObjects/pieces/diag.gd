@@ -18,3 +18,12 @@ func set_type(type: int):
 	$Sprite2D.hframes = monsterSkins[type][&"hFrames"]
 	$Sprite2D.vframes = monsterSkins[type][&"vFrames"]
 	self.type = type
+
+func animate():
+	if monsterSkins[type][&"hFrames"] == 4:
+		$AnimationPlayer.play("fairy")
+	elif monsterSkins[type][&"hFrames"] == 2:
+		$AnimationPlayer.play("bat")
+	elif monsterSkins[type][&"hFrames"] == 3:
+		$AnimationPlayer.play("ghost")
+	$AnimationPlayer.queue("RESET")
