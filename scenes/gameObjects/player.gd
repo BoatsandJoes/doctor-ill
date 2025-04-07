@@ -64,6 +64,7 @@ func set_bomb(_secondsElapsed: float):
 	pass
 
 func climb_state():
+	$AnimationPlayer.play("walk")
 	state = stateType.CLIMBING
 	stateCountdown = defaultWalkCounter
 	if facing == -1:
@@ -77,12 +78,15 @@ func idle_state():
 	$Sprite2D.position = Vector2i(0, $Sprite2D.position.y)
 	$Sprite2D.rotation = 0
 	nonBufferedClimb = false
+	if $AnimationPlayer.current_animation == "walk":
+		$AnimationPlayer.play("RESET")
 
 func walk_state():
 	state = stateType.WALKING
 	stateCountdown = defaultWalkCounter
 	$Sprite2D.position = Vector2i(0, 0)
 	$Sprite2D.rotation = 0
+	$AnimationPlayer.play("walk")
 
 func grabbing_state(stack: bool):
 	if stack:
@@ -90,11 +94,20 @@ func grabbing_state(stack: bool):
 	else:
 		state = stateType.GRABBING_ONE
 	stateCountdown = defaultPickupCounter
+	$AnimationPlayer.play("pick_up")
+	$AnimationPlayer.queue("RESET")
+
+func put_down_animation():
+	$AnimationPlayer.play("put_down")
+	$AnimationPlayer.queue("RESET")
 
 func is_this_the_part_where_we_start_kicking():
 	state = stateType.KICKING
+	$Sprite2D.rotation = 0
 	stateCountdown = defaultKickCounter
 	didAKick = false
+	$AnimationPlayer.play("kick")
+	$AnimationPlayer.queue("RESET")
 
 func center():
 	$Sprite2D.position = Vector2i(0,0)

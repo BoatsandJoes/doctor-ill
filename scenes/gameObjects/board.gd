@@ -182,8 +182,7 @@ func handle_direction(player: Player, direction: Vector2i):
 			&& (player.gridIndex + currentParams[&"width"] >= board.size()
 			|| board[player.gridIndex + currentParams[&"width"]] != null)):
 				#walk
-				player.state = player.stateType.WALKING
-				player.stateCountdown = player.defaultWalkCounter
+				player.walk_state()
 		# holding up
 		elif direction.y == -1:
 			#not on ceiling
@@ -315,6 +314,8 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				#perform move
 				move(board[source], target)
 				board[target].fall_fast()
+				if !pick:
+					player.put_down_animation()
 				# there is a stack and we are putting
 				if (above >= 0 && board[above] != null && !pick):
 					# make rest of stack fall
@@ -338,6 +339,8 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 						board[target].fall_fast()
 						above = above - currentParams[&"width"]
 						target = target - currentParams[&"width"]
+					if !pick:
+						player.put_down_animation()
 
 func handle_player_state(player: Player, delta: float):
 	if player.state == player.stateType.TURNING:
