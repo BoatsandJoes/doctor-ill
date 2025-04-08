@@ -8,6 +8,7 @@ var GameManager = preload("res://scenes/GameManager.tscn")
 var MainMenu = preload("res://scenes/ui/menus/MainMenu.tscn")
 var Credits = preload("res://scenes/ui/menus/Credits.tscn")
 var Settings = preload("res://scenes/ui/menus/Settings.tscn")
+var Difficulty = preload("res://scenes/ui/menus/Difficulty.tscn")
 
 func _ready():
 	get_window().position = get_window().position + get_window().size / 2 - Vector2i(1280, 720) / 2
@@ -32,14 +33,22 @@ func go_to_settings():
 	menu.config_controls.connect(go_to_button_config)
 	add_child(menu)
 
+func go_to_difficulty():
+	remove_children()
+	menu = Difficulty.instantiate()
+	menu.back.connect(go_to_main_menu)
+	menu.start.connect(go_to_game)
+	add_child(menu)
+
 func go_to_button_config():
 	pass
 
-func go_to_game():
+func go_to_game(depth: int):
 	remove_children()
 	game = GameManager.instantiate()
 	game.currentTrack = lastTrack
 	game.exit.connect(_on_game_exit)
+	game.startingDepth = depth
 	add_child(game)
 
 func remove_children():
@@ -61,7 +70,7 @@ func _on_game_exit(track: int):
 	go_to_main_menu()
 
 func _on_main_menu_play():
-	go_to_game()
+	go_to_difficulty()
 
 func _on_main_menu_exit():
 	get_tree().quit()

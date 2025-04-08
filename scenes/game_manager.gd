@@ -24,6 +24,7 @@ var musicTracks: Array[String] = [
 "res://assets/music/Approaching Nirvana & Alex Holmes - Darkness Comes [NCS Release] (instrumental).mp3"
 ]
 var currentTrack: int
+var startingDepth: int = -1
 
 func _ready() -> void:
 	hud = HUD.instantiate()
@@ -35,6 +36,7 @@ func _ready() -> void:
 	add_child(music)
 	boards.append(Board.instantiate())
 	for i in range(boards.size()):
+		boards[i].depth = startingDepth
 		add_child(boards[i])
 		#todo handle multiple boards
 		boards[i].position = Vector2i(boards[i].tilePixels / 2, boards[i].tilePixels / 2)
