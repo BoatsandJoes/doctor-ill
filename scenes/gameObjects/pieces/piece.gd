@@ -18,6 +18,7 @@ var flameSize: int = 4
 var lightning: bool = false
 var ice: bool = false
 var kicked: int = 0
+var coyoteTime: int = -1
 
 func set_ice():
 	ice = true

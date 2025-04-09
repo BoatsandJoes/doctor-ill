@@ -316,6 +316,9 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				board[target].fall_fast()
 				if !pick:
 					player.put_down_animation()
+				if (pick && board[source - currentParams[&"width"]] != null
+				&& !board[source - currentParams[&"width"]] is Player):
+					board[source - currentParams[&"width"]].coyoteTime = 1
 				# there is a stack and we are putting
 				if (above >= 0 && board[above] != null && !pick):
 					# make rest of stack fall
@@ -399,6 +402,8 @@ func checkSurroundingCellsForFall(fallTarget: int) -> bool:
 func check_stable(cell: int, ignoreKicked: bool) -> bool:
 	if board[cell] == null || (!ignoreKicked && board[cell].kicked != 0):
 		return false
+	elif board[cell].coyoteTime >= 0:
+		return true
 	var stable = true
 	var ground = cell + currentParams[&"width"]
 	while ground < board.size():
@@ -643,6 +648,8 @@ func _physics_process(delta: float) -> void:
 		var piece: Piece = board[i]
 		var belowIndex: int = i + currentParams[&"width"]
 		if piece != null:
+			if piece.coyoteTime >= 0:
+				piece.coyoteTime = piece.coyoteTime - 1
 			if piece.kicked != 0:
 				var target: int = i + piece.kicked
 				if (!(piece.kicked == -1 && i % currentParams[&"width"] == 0)
