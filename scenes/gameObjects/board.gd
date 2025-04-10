@@ -3,6 +3,8 @@ class_name Board
 
 signal finished
 signal collect_air(airContent: float, maxAir: float)
+signal destroy_clock(airContent: float, maxAir: float)
+signal all_clear
 signal next_floor
 
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
@@ -570,7 +572,7 @@ func clear_cell(cell: int) -> void:
 			board[cell].melt_ice()
 		else:
 			if board[cell] is Air:
-				pass #todo score
+				emit_signal("destroy_clock", currentParams[&"airContent"], currentParams[&"maxAir"])
 			board[cell].queue_free()
 			board[cell] = null
 

@@ -30,6 +30,7 @@ func _ready() -> void:
 	hud = HUD.instantiate()
 	add_child(hud)
 	hud.out_of_air.connect(_on_hud_out_of_air)
+	hud.set_floor(13 - (startingDepth + 1))
 	music = AudioStreamPlayer.new()
 	music.set_bus("Reduce")
 	music.finished.connect(_on_music_finished)
@@ -42,11 +43,16 @@ func _ready() -> void:
 		boards[i].position = Vector2i(boards[i].tilePixels / 2, boards[i].tilePixels / 2)
 		boards[i].finished.connect(_on_board_finished)
 		boards[i].collect_air.connect(_on_board_collect_air)
+		boards[i].destroy_clock.connect(_on_board_destroy_clock)
 		boards[i].next_floor.connect(_on_board_next_floor)
 	play_random_song()
 
 func _on_board_next_floor():
-	hud.round_up_to_nearest_second()
+	hud.next_floor()
+
+func _on_board_destroy_clock(quantity: float, max: float):
+	hud.update_air(quantity / 2, max)
+	hud.destroyed()
 
 func _on_board_collect_air(quantity: float, max: float):
 	hud.update_air(quantity, max)
