@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://q38uccoqsw32"]
+[gd_scene load_steps=3 format=3 uid="uid://q38uccoqsw32"]
 
 [ext_resource type="Script" uid="uid://cjbykveol2ykt" path="res://scenes/gameObjects/pieces/piece.gd" id="1_1cxbv"]
+[ext_resource type="Texture2D" uid="uid://cqh0xvbuulxxr" path="res://assets/sprites/electricity.png" id="2_alfbo"]
 
 [node name="Piece" type="Node2D"]
 script = ExtResource("1_1cxbv")
@@ -11,3 +12,8 @@ script = ExtResource("1_1cxbv")
 
 [node name="Ice" type="Sprite2D" parent="."]
 visible = false
+
+[node name="Lightning" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_alfbo")
+hframes = 7

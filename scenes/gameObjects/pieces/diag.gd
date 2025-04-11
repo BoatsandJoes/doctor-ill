@@ -27,3 +27,12 @@ func animate():
 	elif monsterSkins[type][&"hFrames"] == 3:
 		$AnimationPlayer.play("ghost")
 	$AnimationPlayer.queue("RESET")
+
+func _physics_process(delta: float) -> void:
+	if $Lightning.visible:
+		lightingFrameTime = lightingFrameTime - delta
+		if lightingFrameTime <= 0:
+			lightingFrameTime = lightingFrameTime + lightningFrameHold
+			if $Lightning.frame >= 6:
+				$Lightning.frame = 0
+			else: $Lightning.frame = $Lightning.frame + 1

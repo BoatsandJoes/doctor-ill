@@ -1,8 +1,9 @@
-[gd_scene load_steps=9 format=3 uid="uid://cgtxgq00j1723"]
+[gd_scene load_steps=10 format=3 uid="uid://cgtxgq00j1723"]
 
 [ext_resource type="Script" uid="uid://bu20jrnpuv42c" path="res://scenes/gameObjects/pieces/diag.gd" id="1_hektf"]
 [ext_resource type="Texture2D" uid="uid://bnnduyqdk8pqq" path="res://assets/sprites/ice is nice.png" id="2_b0s54"]
 [ext_resource type="Texture2D" uid="uid://cgiiskwtgkgoa" path="res://assets/sprites/fairy.png" id="2_st6rj"]
+[ext_resource type="Texture2D" uid="uid://cqh0xvbuulxxr" path="res://assets/sprites/electricity.png" id="4_8ahfa"]
 
 [sub_resource type="Animation" id="Animation_foblr"]
 length = 0.001
@@ -96,3 +97,8 @@ texture = ExtResource("2_b0s54")
 hframes = 6
 vframes = 5
 frame = 12
+
+[node name="Lightning" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("4_8ahfa")
+hframes = 7
