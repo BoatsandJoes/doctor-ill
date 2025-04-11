@@ -20,13 +20,14 @@ func set_type(type: int):
 	self.type = type
 
 func animate():
-	if monsterSkins[type][&"hFrames"] == 4:
-		$AnimationPlayer.play("fairy")
-	elif monsterSkins[type][&"hFrames"] == 2:
-		$AnimationPlayer.play("bat")
-	elif monsterSkins[type][&"hFrames"] == 3:
-		$AnimationPlayer.play("ghost")
-	$AnimationPlayer.queue("RESET")
+	if !$AnimationPlayer.current_animation == "clear":
+		if monsterSkins[type][&"hFrames"] == 4:
+			$AnimationPlayer.play("fairy")
+		elif monsterSkins[type][&"hFrames"] == 2:
+			$AnimationPlayer.play("bat")
+		elif monsterSkins[type][&"hFrames"] == 3:
+			$AnimationPlayer.play("ghost")
+		$AnimationPlayer.queue("RESET")
 
 func _physics_process(delta: float) -> void:
 	if $Lightning.visible:

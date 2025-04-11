@@ -581,7 +581,6 @@ func clear(clearDicts: Array[Dictionary]):
 		cellsToClear.erase(cell)
 
 func clear_cell(cell: int) -> void:
-	#todo pretty
 	if board[cell] != null:
 		if board[cell] is Player:
 			lose()
@@ -590,7 +589,9 @@ func clear_cell(cell: int) -> void:
 		else:
 			if board[cell] is Air:
 				emit_signal("destroy_clock", currentParams[&"airContent"], currentParams[&"maxAir"])
-			board[cell].queue_free()
+				board[cell].queue_free()
+			else:
+				board[cell].clear()
 			board[cell] = null
 
 func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
@@ -614,7 +615,8 @@ func _physics_process(delta: float) -> void:
 	for piece in board:
 		if (piece != null && !(piece is Air) && !(piece is Player)
 		&& piece.get_node("AnimationPlayer").current_animation != null
-		&& piece.get_node("AnimationPlayer").current_animation != ""):
+		&& piece.get_node("AnimationPlayer").current_animation != ""
+		&& piece.get_node("AnimationPlayer").current_animation != "clear"):
 			var anim = piece.get_node("AnimationPlayer").current_animation
 			animating = true
 			break

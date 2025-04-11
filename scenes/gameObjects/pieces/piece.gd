@@ -81,3 +81,15 @@ func kick(facing: int):
 func bonk():
 	kicked = 0
 	fall_fast()
+
+func clear():
+	$Sprite2D.modulate = Color(5,5,5)
+	$AnimationPlayer.play("clear")
+	$AnimationPlayer.animation_finished.connect(free_self)
+	$Fire.visible = false
+	$Lightning.visible = false
+
+func free_self(animation: String):
+	if animation == "clear":
+		get_parent().remove_child(self)
+		self.queue_free()
