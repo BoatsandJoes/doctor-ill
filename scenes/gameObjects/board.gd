@@ -459,12 +459,12 @@ func check_clears():
 							duplicate = false
 							#combine these clears
 							dict[&"breakfast"] = true
-							dict[&"size"]= max(clears.size(), dict[&"size"])
+							dict[&"size"]= max(largestClear, dict[&"size"])
 							for i in clears:
-								dict[i] = true
+								dict[&"cells"][i] = true
 							modified = true
 						#break #could be okay but the benefit is marginal, so why risk it
-				if !modified && !duplicate:
+				if !modified && !duplicate && !clears.is_empty():
 					# new clear
 					var dict: Dictionary = {&"size": largestClear, &"breakfast": breakfast, &"cells": {}}
 					for i in clears:
