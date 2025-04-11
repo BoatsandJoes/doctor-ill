@@ -588,6 +588,7 @@ func clear_cell(cell: int) -> void:
 			board[cell].melt_ice()
 		else:
 			if board[cell] is Air:
+				play_sfx(&"clock")
 				emit_signal("destroy_clock", currentParams[&"airContent"], currentParams[&"maxAir"])
 				board[cell].queue_free()
 			else:
