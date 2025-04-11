@@ -11,6 +11,7 @@ var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
 var Lightning = preload("res://scenes/gameObjects/vfx/Lightning.tscn")
+var Fire = preload("res://scenes/gameObjects/vfx/Fire.tscn")
 var sounds: Dictionary = {
 	&"clear": preload("res://assets/sfx/clear.ogg"),
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
@@ -543,6 +544,9 @@ func clear(clearDicts: Array[Dictionary]):
 				light.set_length(left,right,up,down)
 			if board[cell].flame:
 				play_sfx(&"fire")
+				var f = Fire.instantiate()
+				f.position = getPositionForIndex(cell)
+				add_child(f)
 				var onLeftWall: bool = cell % currentParams[&"width"] == 0
 				var onRightWall: bool = (cell + 1) % currentParams[&"width"] == 0
 				var onCeiling: bool = cell - currentParams[&"width"] < 0

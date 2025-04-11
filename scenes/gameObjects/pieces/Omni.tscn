@@ -1,7 +1,8 @@
-[gd_scene load_steps=10 format=3 uid="uid://dg6glvodmagm8"]
+[gd_scene load_steps=11 format=3 uid="uid://dg6glvodmagm8"]
 
 [ext_resource type="Script" uid="uid://7sbngdenvm5v" path="res://scenes/gameObjects/pieces/omni.gd" id="1_nqqi1"]
 [ext_resource type="Texture2D" uid="uid://b0r7gu5vlxslp" path="res://assets/sprites/dino.png" id="2_he0yv"]
+[ext_resource type="Texture2D" uid="uid://b5clrgua761tt" path="res://assets/sprites/ARW 2D Flame Sprite Sheet .png" id="2_x1phj"]
 [ext_resource type="Texture2D" uid="uid://bnnduyqdk8pqq" path="res://assets/sprites/ice is nice.png" id="3_he0yv"]
 [ext_resource type="Texture2D" uid="uid://cqh0xvbuulxxr" path="res://assets/sprites/electricity.png" id="4_vtvqp"]
 
@@ -97,6 +98,11 @@ texture = ExtResource("3_he0yv")
 hframes = 6
 vframes = 5
 frame = 12
+
+[node name="Fire" type="Sprite2D" parent="."]
+visible = false
+texture = ExtResource("2_x1phj")
+hframes = 7
 
 [node name="Lightning" type="Sprite2D" parent="."]
 visible = false

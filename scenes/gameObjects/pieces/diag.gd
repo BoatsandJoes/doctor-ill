@@ -36,3 +36,10 @@ func _physics_process(delta: float) -> void:
 			if $Lightning.frame >= 6:
 				$Lightning.frame = 0
 			else: $Lightning.frame = $Lightning.frame + 1
+	if $Fire.visible:
+		fireFrameTime = fireFrameTime - delta
+		if fireFrameTime <= 0:
+			fireFrameTime = fireFrameTime + fireFrameHold
+			if $Fire.frame >= 6:
+				$Fire.frame = 0
+			else: $Fire.frame = $Fire.frame + 1

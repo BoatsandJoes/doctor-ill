@@ -21,6 +21,8 @@ var kicked: int = 0
 var coyoteTime: int = -1
 var lightningFrameHold: float = 0.1
 var lightingFrameTime: float = lightningFrameHold
+var fireFrameHold: float = 0.1
+var fireFrameTime: float = fireFrameHold
 
 func set_ice():
 	ice = true
@@ -34,10 +36,7 @@ func melt_ice():
 func set_flame(size: int):
 	flame = true
 	flameSize = size
-	if !lightning:
-		$Sprite2D.rotation = 3 * PI / 2
-	else:
-		$Sprite2D.rotation = PI
+	$Fire.visible = true
 
 func set_lightning():
 	lightning = true
@@ -46,7 +45,7 @@ func set_lightning():
 func revert_special():
 	lightning = false
 	flame = false
-	$Sprite2D.rotation = 0
+	$Fire.visible = false
 	$Lightning.visible = false
 
 func fall_fast():

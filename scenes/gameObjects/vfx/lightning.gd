@@ -1,7 +1,7 @@
 extends Node2D
 class_name Lightning
 
-var life: float = 0.5
+var life: float = 0.2
 var startFrameLife: float = 3.0 / 60.0
 var frameLife: float = startFrameLife
 
@@ -53,11 +53,11 @@ func set_length(left: int, right: int, up: int, down: int):
 		$Sprite2D13.visible = false
 	if left <= 5:
 		$Sprite2D14.visible = false
-	if left <= 2:
+	if right <= 2:
 		$Sprite2D2.visible = false
-	if left <= 4:
+	if right <= 4:
 		$Sprite2D11.visible = false
-	if left <= 5:
+	if right <= 5:
 		$Sprite2D12.visible = false
 	if up <= 2:
 		$Sprite2D9.visible = false
