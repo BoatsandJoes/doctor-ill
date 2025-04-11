@@ -1,0 +1,107 @@
+[gd_scene load_steps=3 format=3 uid="uid://cvg6wnrssubru"]
+
+[ext_resource type="Script" uid="uid://bya3sjc6nj6lm" path="res://scenes/gameObjects/vfx/lightning.gd" id="1_irliv"]
+[ext_resource type="Texture2D" uid="uid://ciixjtn2tnlec" path="res://assets/sprites/shock.png" id="2_jm047"]
+
+[node name="Lightning" type="Node2D"]
+script = ExtResource("1_irliv")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D2" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D3" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D4" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D5" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D6" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D7" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D8" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D9" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D10" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D11" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D12" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D13" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D14" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D15" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D16" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D17" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D18" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D19" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8
+
+[node name="Sprite2D20" type="Sprite2D" parent="."]
+texture = ExtResource("2_jm047")
+hframes = 4
+vframes = 8

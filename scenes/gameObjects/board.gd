@@ -10,6 +10,7 @@ signal next_floor
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
+var Lightning = preload("res://scenes/gameObjects/vfx/Lightning.tscn")
 var sounds: Dictionary = {
 	&"clear": preload("res://assets/sfx/clear.ogg"),
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
@@ -500,34 +501,46 @@ func clear(clearDicts: Array[Dictionary]):
 			#activate flame/lightning
 			if board[cell].lightning:
 				play_sfx(&"lightning")
+				var light = Lightning.instantiate()
+				light.position = getPositionForIndex(cell)
+				add_child(light)
 				#left
 				var scan: int = cell - 1
+				var left = 0
 				while (scan + 1) % currentParams[&"width"] != 0:
 					cellsToClear[scan] = true
 					if board[scan] != null && board[scan].ice:
 						break
 					scan = scan - 1
+					left = left + 1
 				#right
 				scan = cell + 1
+				var right = 0
 				while scan % currentParams[&"width"] != 0:
 					cellsToClear[scan] = true
 					if board[scan] != null && board[scan].ice:
 						break
 					scan = scan + 1
+					right = right + 1
 				#up
 				scan = cell - currentParams[&"width"]
+				var up = 0
 				while scan >= 0:
 					cellsToClear[scan] = true
 					if board[scan] != null && board[scan].ice:
 						break
 					scan = scan - currentParams[&"width"]
+					up = up + 1
 				#down
 				scan = cell + currentParams[&"width"]
+				var down = 0
 				while scan < board.size():
 					cellsToClear[scan] = true
 					if board[scan] != null && board[scan].ice:
 						break
 					scan = scan + currentParams[&"width"]
+					down = down + 1
+				light.set_length(left,right,up,down)
 			if board[cell].flame:
 				play_sfx(&"fire")
 				var onLeftWall: bool = cell % currentParams[&"width"] == 0
