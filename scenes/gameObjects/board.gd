@@ -6,7 +6,9 @@ signal collect_air(airContent: float, maxAir: float)
 signal destroy_clock(airContent: float, maxAir: float)
 signal all_clear
 signal next_floor
+signal hatch(doorIndex: int)
 
+var hatchTimer: Timer
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
@@ -16,7 +18,8 @@ var sounds: Dictionary = {
 	&"clear": preload("res://assets/sfx/clear.ogg"),
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
 	&"lightning": preload("res://assets/sfx/double_zap.mp3"),
-	&"clock": preload("res://assets/sfx/clock-1.ogg")
+	&"clock": preload("res://assets/sfx/clock-1.ogg"),
+	&"creak": preload("res://assets/sfx/door_creak_open.ogg")
 }
 var sfx: Array[AudioStreamPlayer] = []
 var generator: Generator = Generator.new()
@@ -61,6 +64,12 @@ var animating: int = 0
 var allClearHappened: bool = false
 
 func _ready() -> void:
+	hatchTimer = Timer.new()
+	hatchTimer.wait_time = 0.5
+	hatchTimer.autostart = false
+	hatchTimer.one_shot = true
+	hatchTimer.timeout.connect(generateNextFloor)
+	add_child(hatchTimer)
 	for i in range(5):
 		sfx.append(AudioStreamPlayer.new())
 		sfx[sfx.size() - 1].set_bus("Reduce Less")
@@ -274,6 +283,12 @@ func handle_buffered_input(player: Player):
 			player.bufferedKick = false
 			player.is_this_the_part_where_we_start_kicking()
 
+func downTheHatch():
+	play_sfx(&"creak")
+	#open hatch
+	emit_signal("hatch", (players[0].gridIndex + players[0].facing) % currentParams[&"width"])
+	hatchTimer.start()
+
 func pick_or_put(player: Player, stack: bool, pick: bool):
 	var overhead: int = player.gridIndex - currentParams[&"width"]
 	var front: int = player.gridIndex + player.facing
@@ -307,7 +322,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 	|| (player.facing == 1 && (player.gridIndex + 1) % currentParams[&"width"] != 0))):
 		if source >= board.size():
 			#down the match
-			generateNextFloor()
+			downTheHatch()
 		# first piece can move successfully
 		elif (board[source] != null && board[target] == null && !board[source].ice):
 			var above = source - currentParams[&"width"]
@@ -623,103 +638,104 @@ func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:
 	return []
 
 func _physics_process(delta: float) -> void:
-	var animating: bool = false
-	for piece in board:
-		if (piece != null && !(piece is Air) && !(piece is Player)
-		&& piece.get_node("AnimationPlayer").current_animation != null
-		&& piece.get_node("AnimationPlayer").current_animation != ""
-		&& piece.get_node("AnimationPlayer").current_animation != "clear"):
-			var anim = piece.get_node("AnimationPlayer").current_animation
-			animating = true
-			break
-	if !animating:
-		dance()
-	check_clears()
-	var directionPressed: Vector2i = Vector2i(0,0)
-	if Input.is_action_pressed("left"):
-		directionPressed = directionPressed + Vector2i(-1,0)
-	if Input.is_action_pressed("right"):
-		directionPressed = directionPressed + Vector2i(1,0)
-	if Input.is_action_pressed("up"):
-		directionPressed = directionPressed + Vector2i(0,-1)
-	if Input.is_action_pressed("down"):
-		directionPressed = directionPressed + Vector2i(0,1)
-	handle_direction(players[0], directionPressed)
-	handle_buffered_input(players[0])
-	handle_player_state(players[0], delta)
-	if currentParams.has(&"rain"):
-		rainCounter = rainCounter - delta
-		if rainCounter <= 0.0:
-			rainCounter = currentParams[&"rain"]
-			var options: Array = []
-			for i in range(currentParams[&"width"]):
-				if board[i] == null:
-					options.append(i)
-			if options.is_empty():
-				lose()
-			else:
-				var target = options[randi_range(0, options.size() - 1)]
-				var types: Dictionary[Array, bool] = {}
-				for i in range(board.size()):
-					if board[i] != null && !(board[i] is Player) && !(board[i] is Air):
-						types[[board[i].type, board[i].variety]] = true
-				if !types.is_empty():
-					var result = types.keys()[randi_range(0, types.keys().size() - 1)]
-					var rain
-					for mon in currentParams[&"types"]:
-						rain = mon.instantiate()
-						add_child(rain)
-						if rain.variety == result[1]:
-							break
-						else:
-							remove_child(rain)
-							rain.queue_free()
-					rain.set_type(result[0])
-					rain.gridIndex = target
-					move(rain, target)
-	for i in range(board.size()):
-		var piece: Piece = board[i]
-		var belowIndex: int = i + currentParams[&"width"]
-		if piece != null:
-			if piece.coyoteTime >= 0:
-				piece.coyoteTime = piece.coyoteTime - 1
-			if piece.kicked != 0:
-				var target: int = i + piece.kicked
-				if (!(piece.kicked == -1 && i % currentParams[&"width"] == 0)
-				&& !(piece.kicked == 1 && (i + 1) % currentParams[&"width"] == 0)
-				&& board[target] == null && check_stable(i, true)):
-					piece.stateCountdown = piece.stateCountdown - delta
-					if piece.stateCountdown <= 0:
-						move(piece, target)
-						piece.stateCountdown = piece.defaultSlideCounter
+	if hatchTimer.is_stopped():
+		var animating: bool = false
+		for piece in board:
+			if (piece != null && !(piece is Air) && !(piece is Player)
+			&& piece.get_node("AnimationPlayer").current_animation != null
+			&& piece.get_node("AnimationPlayer").current_animation != ""
+			&& piece.get_node("AnimationPlayer").current_animation != "clear"):
+				var anim = piece.get_node("AnimationPlayer").current_animation
+				animating = true
+				break
+		if !animating:
+			dance()
+		check_clears()
+		var directionPressed: Vector2i = Vector2i(0,0)
+		if Input.is_action_pressed("left"):
+			directionPressed = directionPressed + Vector2i(-1,0)
+		if Input.is_action_pressed("right"):
+			directionPressed = directionPressed + Vector2i(1,0)
+		if Input.is_action_pressed("up"):
+			directionPressed = directionPressed + Vector2i(0,-1)
+		if Input.is_action_pressed("down"):
+			directionPressed = directionPressed + Vector2i(0,1)
+		handle_direction(players[0], directionPressed)
+		handle_buffered_input(players[0])
+		handle_player_state(players[0], delta)
+		if currentParams.has(&"rain"):
+			rainCounter = rainCounter - delta
+			if rainCounter <= 0.0:
+				rainCounter = currentParams[&"rain"]
+				var options: Array = []
+				for i in range(currentParams[&"width"]):
+					if board[i] == null:
+						options.append(i)
+				if options.is_empty():
+					lose()
 				else:
-					piece.bonk()
-			if (belowIndex < board.size() && board[belowIndex] == null
-			&& !(piece is Player && (piece.state == piece.stateType.CLIMBING
-			|| piece.state == piece.stateType.WALKING))):
-				#player smooth fall + inherit climbing position
-				if piece is Player:
-					if piece.fall(tilePixels, delta, false):
-						fall(piece, i, belowIndex, piece.defaultFallingCounter)
+					var target = options[randi_range(0, options.size() - 1)]
+					var types: Dictionary[Array, bool] = {}
+					for i in range(board.size()):
+						if board[i] != null && !(board[i] is Player) && !(board[i] is Air):
+							types[[board[i].type, board[i].variety]] = true
+					if !types.is_empty():
+						var result = types.keys()[randi_range(0, types.keys().size() - 1)]
+						var rain
+						for mon in currentParams[&"types"]:
+							rain = mon.instantiate()
+							add_child(rain)
+							if rain.variety == result[1]:
+								break
+							else:
+								remove_child(rain)
+								rain.queue_free()
+						rain.set_type(result[0])
+						rain.gridIndex = target
+						move(rain, target)
+		for i in range(board.size()):
+			var piece: Piece = board[i]
+			var belowIndex: int = i + currentParams[&"width"]
+			if piece != null:
+				if piece.coyoteTime >= 0:
+					piece.coyoteTime = piece.coyoteTime - 1
+				if piece.kicked != 0:
+					var target: int = i + piece.kicked
+					if (!(piece.kicked == -1 && i % currentParams[&"width"] == 0)
+					&& !(piece.kicked == 1 && (i + 1) % currentParams[&"width"] == 0)
+					&& board[target] == null && check_stable(i, true)):
+						piece.stateCountdown = piece.stateCountdown - delta
+						if piece.stateCountdown <= 0:
+							move(piece, target)
+							piece.stateCountdown = piece.defaultSlideCounter
+					else:
+						piece.bonk()
+				if (belowIndex < board.size() && board[belowIndex] == null
+				&& !(piece is Player && (piece.state == piece.stateType.CLIMBING
+				|| piece.state == piece.stateType.WALKING))):
+					#player smooth fall + inherit climbing position
+					if piece is Player:
+						if piece.fall(tilePixels, delta, false):
+							fall(piece, i, belowIndex, piece.defaultFallingCounter)
+					else:
+						piece.fallingCounter = piece.fallingCounter - delta
+						#delay fall if player is moving under or away.
+						if piece.fallingCounter <= 0 && checkSurroundingCellsForFall(belowIndex):
+							#Fall, and carry over fall timer if stacked because of player movement or dropped frames
+							var nextFall: float = piece.fallingCounter
+							if piece.fastFall:
+								nextFall = nextFall + piece.defaultFastFallCounter
+							else:
+								nextFall = nextFall + piece.defaultFallingCounter
+							fall(piece, i, belowIndex, nextFall)
 				else:
-					piece.fallingCounter = piece.fallingCounter - delta
-					#delay fall if player is moving under or away.
-					if piece.fallingCounter <= 0 && checkSurroundingCellsForFall(belowIndex):
-						#Fall, and carry over fall timer if stacked because of player movement or dropped frames
-						var nextFall: float = piece.fallingCounter
-						if piece.fastFall:
-							nextFall = nextFall + piece.defaultFastFallCounter
-						else:
-							nextFall = nextFall + piece.defaultFallingCounter
-						fall(piece, i, belowIndex, nextFall)
-			else:
-				piece.fallingCounter = piece.defaultFallingCounter
-				piece.fastFall = false
-				if (piece is Player && piece.state != piece.stateType.CLIMBING
-				&& piece.state != piece.stateType.WALKING && (belowIndex >= board.size()
-				|| board[belowIndex] != null)):
-					piece.fall(tilePixels, delta, true)
-	secondsElapsed = secondsElapsed + delta
+					piece.fallingCounter = piece.defaultFallingCounter
+					piece.fastFall = false
+					if (piece is Player && piece.state != piece.stateType.CLIMBING
+					&& piece.state != piece.stateType.WALKING && (belowIndex >= board.size()
+					|| board[belowIndex] != null)):
+						piece.fall(tilePixels, delta, true)
+		secondsElapsed = secondsElapsed + delta
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("another"):

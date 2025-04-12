@@ -39,16 +39,22 @@ func _ready() -> void:
 	for i in range(boards.size()):
 		boards[i].depth = startingDepth
 		add_child(boards[i])
-		#todo handle multiple boards
+		#multiple boards not actually handled oops
 		boards[i].position = Vector2i(3 * boards[i].tilePixels / 2, boards[i].tilePixels / 2)
 		boards[i].finished.connect(_on_board_finished)
 		boards[i].collect_air.connect(_on_board_collect_air)
 		boards[i].destroy_clock.connect(_on_board_destroy_clock)
 		boards[i].next_floor.connect(_on_board_next_floor)
 		boards[i].all_clear.connect(hud.allClear)
+		boards[i].hatch.connect(_on_board_hatch)
 	play_random_song()
 
+func _on_board_hatch(hatchIndex: int):
+	$doors.set_cell(Vector2i(hatchIndex + 1,11), 2, Vector2i(0,0))
+
 func _on_board_next_floor():
+	for i in range(1,8):
+		$doors.set_cell(Vector2i(i,11), 1, Vector2i(0,0))
 	hud.next_floor()
 
 func _on_board_destroy_clock(quantity: float, max: float):
