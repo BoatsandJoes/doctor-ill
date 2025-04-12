@@ -45,6 +45,7 @@ text = "Volume 80%"
 [node name="Controls" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
+disabled = true
 text = "Controls"
 
 [node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer/Buttons"]
