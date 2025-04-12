@@ -40,7 +40,7 @@ func _ready() -> void:
 		boards[i].depth = startingDepth
 		add_child(boards[i])
 		#todo handle multiple boards
-		boards[i].position = Vector2i(boards[i].tilePixels / 2, boards[i].tilePixels / 2)
+		boards[i].position = Vector2i(3 * boards[i].tilePixels / 2, boards[i].tilePixels / 2)
 		boards[i].finished.connect(_on_board_finished)
 		boards[i].collect_air.connect(_on_board_collect_air)
 		boards[i].destroy_clock.connect(_on_board_destroy_clock)

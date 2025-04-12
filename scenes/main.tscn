@@ -1,6 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://dvmkbx88vbjd7"]
+[gd_scene load_steps=3 format=3 uid="uid://dvmkbx88vbjd7"]
 
 [ext_resource type="Script" uid="uid://cbarnfu04fs4p" path="res://scenes/main.gd" id="1_o5qli"]
+[ext_resource type="Texture2D" uid="uid://ccg5ypdvon2sh" path="res://assets/backgrounds/Dungeon-door.png" id="2_0wfyh"]
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_o5qli")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_left = -48.0
+offset_right = 320.0
+offset_bottom = 208.0
+scale = Vector2(2, 2)
+texture = ExtResource("2_0wfyh")

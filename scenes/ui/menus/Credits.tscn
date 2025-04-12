@@ -5,6 +5,17 @@
 [node name="Credits" type="Node2D"]
 script = ExtResource("1_vifv1")
 
+[node name="ColorRect" type="ColorRect" parent="."]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -360.0
+offset_right = 640.0
+offset_bottom = 3640.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.0646965, 0.0646965, 0.0646965, 1)
+
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
@@ -28,16 +39,20 @@ text = "Lead Developer: BoatsAndJoes
 
 Graphics
 
+Main menu background by ansimuz
+https://opengameart.org/content/phantasy-dungeon-entrance
+
 Mouse by rolff
 https://rolff.itch.io/mouse-spritesheet-16x16
 
 Frog, Slime, Imp, Dino, Eye, Ghost, and Skeleton by ansimuz.com
 https://opengameart.org/content/chibi-monsters-set-01
 https://creativecommons.org/licenses/by/3.0/
+Imp color changed slightly
 
 Fairy by GrafxKid https://opengameart.org/content/super-random-sprites
 
-Bat and Platino by DragonDePlatino and DawnBringer
+Background tiles, Bat, and Platino by DragonDePlatino and DawnBringer
 https://opengameart.org/content/dawnlike-16x16-universal-rogue-like-tileset-v181
 No modifications made
 https://creativecommons.org/licenses/by/4.0/
