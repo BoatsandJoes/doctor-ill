@@ -9,6 +9,9 @@ var floor: int = 13
 var allClears: int = 0
 var clocksDestroyed: int = 0
 
+func _ready() -> void:
+	$AnimationPlayer.play("platino")
+
 func update_air(delta: float, max: float):
 	maxAir = max
 	air = min(air + delta, maxAir)
@@ -34,12 +37,22 @@ func win():
 
 func destroyed():
 	clocksDestroyed = clocksDestroyed + 1
+	if clocksDestroyed == 13:
+		$Sprite2D.visible = true
+	elif !%ClocksDestroyed.visible && $Sprite2D.visible:
+		$Sprite2D.visible = false
+		$Sprite2D2.visible = true
 	%ClocksDestroyed.visible = true
 	%DestroyedLabel.visible = true
 	%ClocksDestroyed.text = str(clocksDestroyed)
 
 func allClear():
 	allClears = allClears + 1
+	if allClears == 13:
+		if %ClocksDestroyed.visible:
+			$Sprite2D2.visible = true
+		else:
+			$Sprite2D.visible = true
 	%AllClears.visible = true
 	%AllClearLabel.visible = true
 	%AllClears.text = str(allClears)
