@@ -30,7 +30,7 @@ func _ready() -> void:
 	hud = HUD.instantiate()
 	add_child(hud)
 	hud.out_of_air.connect(_on_hud_out_of_air)
-	hud.set_floor(13 - (startingDepth + 1))
+	hud.set_floor(startingDepth + 2)
 	music = AudioStreamPlayer.new()
 	music.set_bus("Reduce")
 	music.finished.connect(_on_music_finished)
@@ -45,6 +45,7 @@ func _ready() -> void:
 		boards[i].collect_air.connect(_on_board_collect_air)
 		boards[i].destroy_clock.connect(_on_board_destroy_clock)
 		boards[i].next_floor.connect(_on_board_next_floor)
+		boards[i].all_clear.connect(hud.allClear)
 	play_random_song()
 
 func _on_board_next_floor():

@@ -23,8 +23,8 @@ func set_floor(floor: int):
 
 func next_floor():
 	round_up_to_nearest_second()
-	if floor > 1:
-		floor = floor - 1
+	if floor < 13:
+		floor = floor + 1
 		%Floor.text = str(floor)
 	else:
 		win()
@@ -34,12 +34,14 @@ func win():
 
 func destroyed():
 	clocksDestroyed = clocksDestroyed + 1
-	#%Destroyed.visible = true
+	%ClocksDestroyed.visible = true
+	%DestroyedLabel.visible = true
 	%ClocksDestroyed.text = str(clocksDestroyed)
 
 func allClear():
 	allClears = allClears + 1
-	#%Clears.visible = true
+	%AllClears.visible = true
+	%AllClearLabel.visible = true
 	%AllClears.text = str(allClears)
 
 func round_up_to_nearest_second():

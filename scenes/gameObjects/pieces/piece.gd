@@ -66,7 +66,7 @@ func toggle_bomb(secondsElapsed: float):
 
 func set_bomb(secondsElapsed: float):
 	if !ice:
-		$Sprite2D.modulate = Color(5,5,5)
+		$Sprite2D.modulate = Color(3,3,3)
 		bomb = true
 		bombCreationTime = secondsElapsed
 

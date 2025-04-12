@@ -19,7 +19,7 @@ func set_type(type: int):
 	$Sprite2D.vframes = monsterSkins[type][&"vFrames"]
 	self.type = type
 	if monsterSkins[type][&"name"] == "imp":
-		modulate = Color(1.6,1.6,1.6)
+		$Sprite2D.modulate = Color(1.6,1.6,1.6)
 
 func animate():
 	if !$AnimationPlayer.current_animation == "clear":

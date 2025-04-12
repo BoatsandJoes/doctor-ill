@@ -58,6 +58,7 @@ var secondsElapsed: float = 0.0
 var rainCounter: float = 5.0
 var typesOfMonster: Array[Array] = []
 var animating: int = 0
+var allClearHappened: bool = false
 
 func _ready() -> void:
 	for i in range(5):
@@ -111,6 +112,7 @@ func generateNextFloor() -> void:
 		if currentParams.has(&"rain"):
 			rainCounter = currentParams[&"rain"]
 		emit_signal("next_floor")
+	allClearHappened = false
 
 func dance():
 	if animating >= typesOfMonster.size():
@@ -579,6 +581,15 @@ func clear(clearDicts: Array[Dictionary]):
 					board[cell].set_flame(4)
 					board[cell].set_lightning()
 		cellsToClear.erase(cell)
+	if !allClearHappened:
+		var allClear: bool = true
+		for cell in board:
+			if cell != null && !(cell is Player):
+				allClear = false
+				break
+		if allClear:
+			emit_signal("all_clear")
+			allClearHappened = true
 
 func clear_cell(cell: int) -> void:
 	if board[cell] != null:
