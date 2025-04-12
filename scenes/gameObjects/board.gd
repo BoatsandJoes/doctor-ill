@@ -9,6 +9,8 @@ signal next_floor
 signal hatch(doorIndex: int)
 
 var hatchTimer: Timer
+var chainTimer: Timer
+var chainsEnabled: bool = true
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
@@ -70,6 +72,11 @@ func _ready() -> void:
 	hatchTimer.one_shot = true
 	hatchTimer.timeout.connect(generateNextFloor)
 	add_child(hatchTimer)
+	chainTimer = Timer.new()
+	chainTimer.wait_time = 0.76
+	chainTimer.autostart = false
+	chainTimer.one_shot = true
+	add_child(chainTimer)
 	for i in range(5):
 		sfx.append(AudioStreamPlayer.new())
 		sfx[sfx.size() - 1].set_bus("Reduce Less")
@@ -337,9 +344,11 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				board[target].fall_fast()
 				if !pick:
 					player.put_down_animation()
-				if (pick && board[source - currentParams[&"width"]] != null
-				&& !board[source - currentParams[&"width"]] is Player):
-					board[source - currentParams[&"width"]].coyoteTime = 1
+				var coyoteIndex = source - currentParams[&"width"]
+				while (pick && coyoteIndex >= 0 && board[coyoteIndex] != null
+				&& !board[coyoteIndex] is Player):
+					board[coyoteIndex].coyoteTime = 1
+					coyoteIndex = coyoteIndex - currentParams[&"width"]
 				# there is a stack and we are putting
 				if (above >= 0 && board[above] != null && !pick):
 					# make rest of stack fall
@@ -358,7 +367,8 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 				if passed:
 					#move whole stack
 					above = source
-					while above >= 0 && board[above] != null && !(board[above] is Player) && !board[above].ice:
+					while (above >= 0 && board[above] != null && !(board[above] is Player)
+					&& !board[above].ice):
 						move(board[above], target)
 						board[target].fall_fast()
 						above = above - currentParams[&"width"]
@@ -513,6 +523,12 @@ func clear(clearDicts: Array[Dictionary]):
 	# Actually clear
 	if !cellsToClear.is_empty():
 		play_sfx(&"clear")
+		if chainTimer.is_stopped():
+			chainTimer.start()
+		elif chainsEnabled:
+			chainTimer.start()
+			play_sfx(&"clock")
+			emit_signal("collect_air", 1.0, currentParams[&"maxAir"])
 	while !cellsToClear.is_empty():
 		var cell = cellsToClear.keys()[0]
 		if board[cell] != null:
@@ -721,7 +737,8 @@ func _physics_process(delta: float) -> void:
 						piece.fallingCounter = piece.fallingCounter - delta
 						#delay fall if player is moving under or away.
 						if piece.fallingCounter <= 0 && checkSurroundingCellsForFall(belowIndex):
-							#Fall, and carry over fall timer if stacked because of player movement or dropped frames
+							#Fall, and carry over fall timer if stacked because of player movement
+							# or dropped frames
 							var nextFall: float = piece.fallingCounter
 							if piece.fastFall:
 								nextFall = nextFall + piece.defaultFastFallCounter
