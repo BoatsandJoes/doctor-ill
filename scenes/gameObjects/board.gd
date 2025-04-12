@@ -10,7 +10,7 @@ signal hatch(doorIndex: int)
 
 var hatchTimer: Timer
 var chainTimer: Timer
-var chainsEnabled: bool = true
+var chainsEnabled: bool = false
 var Omni = preload("res://scenes/gameObjects/pieces/Omni.tscn")
 var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
