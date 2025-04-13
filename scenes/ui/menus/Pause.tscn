@@ -1,0 +1,32 @@
+[gd_scene load_steps=2 format=3 uid="uid://ca6tdfsdukljw"]
+
+[ext_resource type="Script" uid="uid://dsh6luqiqwq87" path="res://scenes/ui/menus/pause.gd" id="1_hymue"]
+
+[node name="Pause" type="CanvasLayer"]
+process_mode = 2
+script = ExtResource("1_hymue")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 86
+theme_override_constants/margin_top = 60
+
+[node name="Buttons" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Resume" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Resume"
+
+[node name="Back" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Exit"
+
+[connection signal="mouse_entered" from="MarginContainer/Buttons/Resume" to="." method="_on_resume_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/Buttons/Resume" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/Buttons/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/Buttons/Back" to="." method="_on_button_pressed"]

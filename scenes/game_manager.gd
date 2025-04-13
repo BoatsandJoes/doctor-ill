@@ -7,6 +7,8 @@ var HUD = preload("res://scenes/ui/HUD.tscn")
 var hud: HUD
 var Board = preload("res://scenes/gameObjects/board.tscn")
 var boards: Array[Board] = []
+var Pause = preload("res://scenes/ui/menus/Pause.tscn")
+var pause: Pause
 
 var music: AudioStreamPlayer
 var musicTracks: Array[String] = [
@@ -27,6 +29,9 @@ var currentTrack: int
 var startingDepth: int = -1
 
 func _ready() -> void:
+	pause = Pause.instantiate()
+	pause.exit.connect(exit_game)
+	add_child(pause)
 	hud = HUD.instantiate()
 	add_child(hud)
 	hud.out_of_air.connect(_on_hud_out_of_air)
@@ -71,8 +76,13 @@ func _on_board_finished():
 	emit_signal("exit", currentTrack)
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("esc"):
-		emit_signal("exit", currentTrack)
+	if event.is_action_pressed("esc") || event.is_action_pressed("pause"):
+		if !pause.visible:
+			get_viewport().set_input_as_handled()
+			pause.pause()
+
+func exit_game():
+	emit_signal("exit", currentTrack)
 
 func _on_music_finished():
 	play_random_song()
