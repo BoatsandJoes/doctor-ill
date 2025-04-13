@@ -18,6 +18,10 @@ func update_air(delta: float, max: float):
 	if air < 0:
 		air = 0
 		emit_signal("out_of_air")
+	elif air >= 11.0:
+		%Air.modulate = Color(1,1,1)
+	else:
+		%Air.modulate = Color(1, 0.4, 0.4)
 	%Air.text = str(int(air))
 
 func set_floor(floor: int):
@@ -59,6 +63,3 @@ func allClear():
 
 func round_up_to_nearest_second():
 	air = floor(air) + 0.999
-
-func _physics_process(delta: float) -> void:
-	update_air(-delta, maxAir)

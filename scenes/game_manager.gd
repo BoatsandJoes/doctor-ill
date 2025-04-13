@@ -10,7 +10,7 @@ var Board = preload("res://scenes/gameObjects/board.tscn")
 var boards: Array[Board] = []
 var Pause = preload("res://scenes/ui/menus/Pause.tscn")
 var pause: Pause
-
+var hatchOpen: bool = false
 var music: AudioStreamPlayer
 var musicTracks: Array[String] = [
 "res://assets/music/JOXION - Talk That Way [NCS Release] (instrumental).mp3",
@@ -61,9 +61,11 @@ func restart_game():
 	emit_signal("restart", currentTrack, startingDepth)
 
 func _on_board_hatch(hatchIndex: int):
+	hatchOpen = true
 	$doors.set_cell(Vector2i(hatchIndex + 1,11), 2, Vector2i(0,0))
 
 func _on_board_next_floor():
+	hatchOpen = false
 	for i in range(1,8):
 		$doors.set_cell(Vector2i(i,11), 1, Vector2i(0,0))
 	hud.next_floor()
@@ -85,9 +87,11 @@ func _on_board_won():
 	play_win_animation()
 
 func play_win_animation():
-	#todo improve
 	var player = boards[0].players[0]
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
+	for audio in boards[0].sfx:
+		audio.process_mode = Node.PROCESS_MODE_ALWAYS
+	music.stream_paused = true
 	player.win()
 	pause.winTimer.start()
 	get_tree().paused = true
@@ -95,6 +99,9 @@ func play_win_animation():
 func play_lose_animation():
 	var player = boards[0].players[0]
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
+	for audio in boards[0].sfx:
+		audio.process_mode = Node.PROCESS_MODE_ALWAYS
+	music.stream_paused = true
 	get_tree().paused = true
 	player.lose()
 	pause.loseTimer.start()
@@ -119,3 +126,7 @@ func play_random_song():
 	music.stream = load(musicTracks[choice])
 	currentTrack = choice
 	music.play()
+
+func _physics_process(delta: float) -> void:
+	if !hatchOpen:
+		hud.update_air(-delta, hud.maxAir)
