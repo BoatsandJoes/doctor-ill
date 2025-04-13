@@ -107,6 +107,23 @@ func updateVisualPosition(i: int):
 func generateNextFloor() -> void:
 	depth = depth + 1
 	if depth >= paramsList.size():
+		for piece in board:
+			if piece != null && !(piece is Player):
+				piece.queue_free()
+		board = generator.victory(players[0].gridIndex % currentParams[&"width"], [Omni, Diag],
+		currentParams[&"height"] + currentParams[&"buffer"], currentParams[&"width"])
+		for piece in board:
+			if piece != null:
+				piece.process_mode = Node.PROCESS_MODE_ALWAYS
+				add_child(piece)
+				piece.win("")
+		for player in players:
+			# remove and add to change processing order to last
+			remove_child(player)
+			add_child(player)
+			player.gridIndex = player.gridIndex % currentParams[&"width"]
+			board[player.gridIndex] = player
+		updateVisualPositions()
 		win()
 	else:
 		for piece in board:

@@ -26,7 +26,7 @@ func _ready() -> void:
 	loseTimer.timeout.connect(lose)
 	loseTimer.one_shot = true
 	add_child(loseTimer)
-	winTimer.wait_time = 5
+	winTimer.wait_time = 2.5 + 60.0 / 130.0
 	winTimer.autostart = false
 	winTimer.timeout.connect(win)
 	winTimer.one_shot = true

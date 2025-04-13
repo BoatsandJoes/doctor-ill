@@ -21,6 +21,15 @@ func set_type(type: int):
 	if monsterSkins[type][&"name"] == "imp":
 		$Sprite2D.modulate = Color(1.6,1.6,1.6)
 
+func win(_animation: String):
+	if monsterSkins[type][&"hFrames"] == 4:
+		$AnimationPlayer.play("fairy")
+	elif monsterSkins[type][&"hFrames"] == 2:
+		$AnimationPlayer.play("bat")
+	elif monsterSkins[type][&"hFrames"] == 3:
+		$AnimationPlayer.play("ghost")
+	$AnimationPlayer.animation_finished.connect(win)
+
 func animate():
 	if !$AnimationPlayer.current_animation == "clear":
 		if monsterSkins[type][&"hFrames"] == 4:

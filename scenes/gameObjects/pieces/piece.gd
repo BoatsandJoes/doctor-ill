@@ -24,6 +24,9 @@ var lightingFrameTime: float = lightningFrameHold
 var fireFrameHold: float = 0.1
 var fireFrameTime: float = fireFrameHold
 
+func win(_animation: String):
+	pass
+
 func set_ice():
 	ice = true
 	$Ice.visible = true

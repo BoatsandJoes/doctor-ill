@@ -3,6 +3,24 @@ class_name Generator
 
 var Air = preload("res://scenes/gameObjects/pieces/Air.tscn")
 
+func victory(playerCol: int, types: Array, height: int, width: int) -> Array:
+	var result: Array = []
+	for i in range(height - types.size()):
+		for j in range(width):
+			result.append(null)
+	for j in range(types.size() - 1, -1, -1):
+		var type = types[j]
+		for i in range(width):
+			if i == playerCol:
+				result.append(null)
+			else:
+				result.append(type.instantiate())
+				if i < playerCol:
+					result[result.size() - 1].set_type(i)
+				else:
+					result[result.size() - 1].set_type(i - 1)
+	return result
+
 func generateLevel(params: Dictionary) -> Array:
 	var result: Array = []
 	var bag: Array = []

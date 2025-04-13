@@ -105,6 +105,9 @@ func _on_board_won():
 	play_win_animation()
 
 func play_win_animation():
+	# replace floor
+	for i in range(1,8):
+		$doors.set_cell(Vector2i(i,11), 0, Vector2i(1,12))
 	pause.time = formatSeconds(boards[0].secondsElapsed)
 	var player = boards[0].players[0]
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
@@ -112,7 +115,8 @@ func play_win_animation():
 		audio.process_mode = Node.PROCESS_MODE_ALWAYS
 	boards[0].play_sfx(&"win")
 	music.stream_paused = true
-	player.win()
+	player.win("")
+	player.play_falling()
 	pause.winTimer.start()
 	get_tree().paused = true
 

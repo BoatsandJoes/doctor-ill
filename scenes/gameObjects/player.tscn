@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://bp7hqibsq37vu"]
+[gd_scene load_steps=14 format=3 uid="uid://bp7hqibsq37vu"]
 
 [ext_resource type="Script" uid="uid://jnf47t47pqsf" path="res://scenes/gameObjects/player.gd" id="1_vihax"]
 [ext_resource type="Texture2D" uid="uid://badurden33ec3" path="res://assets/sprites/MouseSpritesheet.png" id="2_xdgp7"]
@@ -172,7 +172,8 @@ tracks/0/keys = {
 
 [sub_resource type="Animation" id="Animation_lt5et"]
 resource_name = "win"
-length = 5.0
+length = 1.6
+loop_mode = 1
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -180,10 +181,22 @@ tracks/0/path = NodePath("Sprite2D:frame")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0, 0.0667, 0.1333, 0.2, 0.2667, 0.3333, 0.4, 0.4667, 0.5333, 0.6, 0.6667, 0.7333, 0.8, 0.8667, 0.9333, 1, 1.0667, 1.1333, 1.2, 1.2667, 1.3333, 1.4, 1.4667, 1.5333),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
 "update": 1,
-"values": [13]
+"values": [1, 2, 3, 1, 2, 3, 5, 6, 7, 5, 6, 7, 1, 2, 3, 1, 2, 3, 9, 10, 11, 9, 10, 11]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite2D:flip_h")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.8),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_l0tsy"]
@@ -195,6 +208,43 @@ _data = {
 &"put_down": SubResource("Animation_6y7ms"),
 &"walk": SubResource("Animation_xdgp7"),
 &"win": SubResource("Animation_lt5et")
+}
+
+[sub_resource type="Animation" id="Animation_4b5ke"]
+resource_name = "fall"
+length = 2.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 2.5),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0, 320)]
+}
+
+[sub_resource type="Animation" id="Animation_kprde"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wbxcn"]
+_data = {
+&"RESET": SubResource("Animation_kprde"),
+&"fall": SubResource("Animation_4b5ke")
 }
 
 [node name="Player" type="Node2D"]
@@ -209,4 +259,9 @@ vframes = 9
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
 &"": SubResource("AnimationLibrary_l0tsy")
+}
+
+[node name="Fall" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_wbxcn")
 }

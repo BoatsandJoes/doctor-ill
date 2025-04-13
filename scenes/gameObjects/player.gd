@@ -60,6 +60,9 @@ func fall(tileWidth: int, delta: float, stopAtMiddleOfTile: bool) -> bool:
 		$Sprite2D.position.y = 0
 	return false
 
+func play_falling():
+	$Fall.play("fall")
+
 func set_bomb(_secondsElapsed: float):
 	pass
 
@@ -123,9 +126,11 @@ func lose():
 	state = stateType.END
 	$AnimationPlayer.play("lose")
 
-func win():
+func win(_animation: String):
 	idle_state()
 	state = stateType.END
+	#130 bpm, 60 seconds per minute, 2.5 walk cycles per second
+	$AnimationPlayer.speed_scale = (130.0 / 60.0) / 2.5
 	$AnimationPlayer.play("win")
 
 func _input(event: InputEvent) -> void:

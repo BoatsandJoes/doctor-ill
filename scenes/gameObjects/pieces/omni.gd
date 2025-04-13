@@ -19,6 +19,15 @@ func set_type(type: int):
 	$Sprite2D.vframes = monsterSkins[type][&"vFrames"]
 	self.type = type
 
+func win(_animation: String):
+	if monsterSkins[type][&"hFrames"] == 4:
+		$AnimationPlayer.play("snake")
+	elif monsterSkins[type][&"hFrames"] == 2:
+		$AnimationPlayer.play("cactus")
+	elif monsterSkins[type][&"hFrames"] == 3:
+		$AnimationPlayer.play("frog")
+	$AnimationPlayer.animation_finished.connect(win)
+
 func animate():
 	if !$AnimationPlayer.current_animation == "clear":
 		if monsterSkins[type][&"hFrames"] == 4:
