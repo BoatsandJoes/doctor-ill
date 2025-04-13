@@ -30,20 +30,20 @@ alignment = 1
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Easy" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
+[node name="Hard" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Easy"
+text = "Hard"
 
 [node name="Medium" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Medium"
 
-[node name="Hard" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
+[node name="Easy" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Hard"
+text = "Easy"
 
 [node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 layout_mode = 2
@@ -62,7 +62,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 96
 text = "Difficulty"
 
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Easy" to="." method="_on_easy_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Medium" to="." method="_on_medium_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Hard" to="." method="_on_hard_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Medium" to="." method="_on_medium_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Easy" to="." method="_on_easy_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Back" to="." method="_on_back_mouse_entered"]

@@ -7,7 +7,7 @@ signal back
 var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var timer: Timer = Timer.new()
-var depths: Array[int] = [9, 4, -1]
+var depths: Array[int] = [-1, 4, 9]
 var buttonIndex: int = 0
 
 func _ready() -> void:
