@@ -11,6 +11,8 @@ var timer: Timer = Timer.new()
 var loseTimer: Timer = Timer.new()
 var winTimer: Timer = Timer.new()
 var buttonCalls: Array[Callable] = [_on_resume_pressed, _on_restart_pressed, _on_back_pressed]
+var difficulty: String = ""
+var time: String = ""
 
 func _ready() -> void:
 	visible = false
@@ -47,12 +49,16 @@ func set_cursor_position():
 
 func lose():
 	%Buttons/Resume.visible = false
-	%Title.text = "Game\nOver"
+	%Title.text = "Game"
+	%Time.text = "Over"
+	%Difficulty.text = time
 	pause()
 
 func win():
 	%Buttons/Resume.visible = false
-	%Title.text = "\nYou Win!"
+	%Title.text = "You Win!"
+	%Difficulty.text = difficulty
+	%Time.text = time
 	pause()
 
 func pause():

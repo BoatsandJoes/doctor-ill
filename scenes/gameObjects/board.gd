@@ -23,7 +23,8 @@ var sounds: Dictionary = {
 	&"lightning": preload("res://assets/sfx/double_zap.mp3"),
 	&"clock": preload("res://assets/sfx/clock-1.ogg"),
 	&"creak": preload("res://assets/sfx/door_creak_open.ogg"),
-	&"lose": preload("res://assets/sfx/No Hope.ogg")
+	&"lose": preload("res://assets/sfx/No Hope.ogg"),
+	&"win": preload("res://assets/music/Joyful, Фрози, Zachz Winner - Boogie [NCS Release].mp3")
 }
 var sfx: Array[AudioStreamPlayer] = []
 var generator: Generator = Generator.new()

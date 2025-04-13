@@ -19,7 +19,8 @@ var musicTracks: Array[String] = [
 "res://assets/music/More Plastic & URBANO - Psycho [NCS Release] (instrumental).mp3",
 "res://assets/music/NOYSE & ÆSTRØ - La Manera De Vivir [NCS Release] (instrumental).mp3",
 "res://assets/music/SIIK & Alenn - Mess [NCS Release] (instrumental).mp3",
-"res://assets/music/Sam Ourt, AKIAL & Srikar - Escape (Juan Dileju & Sam Ourt VIP Mix) [NCS Release] (instrumental).mp3",
+"res://assets/music/Sam Ourt, AKIAL & Srikar - Escape (Juan Dileju & Sam Ourt VIP Mix)"
++ " [NCS Release] (instrumental).mp3",
 "res://assets/music/Siberian Express - Talk To Me [NCS Release] (instrumental).mp3",
 "res://assets/music/Toxic Joy - All Night [NCS Release] (instrumental).mp3",
 "res://assets/music/Track NATSUMI - Take Me Away [NCS Release].mp3",
@@ -55,7 +56,24 @@ func _ready() -> void:
 	pause = Pause.instantiate()
 	pause.exit.connect(exit_game)
 	pause.restart.connect(restart_game)
+	if startingDepth == -1:
+		pause.difficulty = "Hard"
+	elif startingDepth == 9:
+		pause.difficulty = "Easy"
+	elif startingDepth == 4:
+		pause.difficulty = "Medium"
 	add_child(pause)
+
+func formatSeconds(seconds: float) -> String:
+	var minutes: int = int(seconds) / 60
+	var wholeSeconds: int = int(seconds) % 60
+	var wholeSecondsStr: String = str(wholeSeconds)
+	if wholeSecondsStr.length() <= 1:
+		wholeSecondsStr = "0" + wholeSecondsStr
+	var fraction: String = str(int((seconds - floor(seconds)) * 100))
+	if fraction.length() <= 1:
+		fraction = fraction + "0"
+	return str(minutes) + ":" + wholeSecondsStr + "." + fraction
 
 func restart_game():
 	emit_signal("restart", currentTrack, startingDepth)
@@ -87,16 +105,19 @@ func _on_board_won():
 	play_win_animation()
 
 func play_win_animation():
+	pause.time = formatSeconds(boards[0].secondsElapsed)
 	var player = boards[0].players[0]
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	for audio in boards[0].sfx:
 		audio.process_mode = Node.PROCESS_MODE_ALWAYS
+	boards[0].play_sfx(&"win")
 	music.stream_paused = true
 	player.win()
 	pause.winTimer.start()
 	get_tree().paused = true
 
 func play_lose_animation():
+	pause.time = formatSeconds(boards[0].secondsElapsed)
 	var player = boards[0].players[0]
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	for audio in boards[0].sfx:
