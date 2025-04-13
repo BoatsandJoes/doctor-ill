@@ -118,6 +118,14 @@ func vertically_centered() -> bool:
 func above_vertically_centered() -> bool:
 	return $Sprite2D.position.y <= 0
 
+func lose():
+	idle_state()
+	$AnimationPlayer.play("lose")
+
+func win():
+	idle_state()
+	$AnimationPlayer.play("win")
+
 func _input(event: InputEvent) -> void:
 	if(event.is_action_pressed("pick_up_one")):
 		if Input.is_action_pressed("down") && !Input.is_action_pressed("up"):

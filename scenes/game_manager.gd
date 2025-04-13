@@ -45,6 +45,7 @@ func _ready() -> void:
 		#multiple boards not actually handled oops
 		boards[i].position = Vector2i(3 * boards[i].tilePixels / 2, boards[i].tilePixels / 2)
 		boards[i].finished.connect(_on_board_finished)
+		boards[i].won.connect(_on_board_won)
 		boards[i].collect_air.connect(_on_board_collect_air)
 		boards[i].destroy_clock.connect(_on_board_destroy_clock)
 		boards[i].next_floor.connect(_on_board_next_floor)
@@ -75,10 +76,28 @@ func _on_board_collect_air(quantity: float, max: float):
 	hud.update_air(quantity, max)
 
 func _on_hud_out_of_air():
-	emit_signal("exit", currentTrack)
+	play_lose_animation()
 
 func _on_board_finished():
-	emit_signal("exit", currentTrack)
+	play_lose_animation()
+
+func _on_board_won():
+	play_win_animation()
+
+func play_win_animation():
+	#todo improve
+	var player = boards[0].players[0]
+	player.process_mode = Node.PROCESS_MODE_ALWAYS
+	player.win()
+	pause.winTimer.start()
+	get_tree().paused = true
+
+func play_lose_animation():
+	var player = boards[0].players[0]
+	player.process_mode = Node.PROCESS_MODE_ALWAYS
+	player.lose()
+	pause.loseTimer.start()
+	get_tree().paused = true
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc") || event.is_action_pressed("pause"):

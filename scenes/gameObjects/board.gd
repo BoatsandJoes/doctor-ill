@@ -2,6 +2,7 @@ extends Node2D
 class_name Board
 
 signal finished
+signal won
 signal collect_air(airContent: float, maxAir: float)
 signal destroy_clock(airContent: float, maxAir: float)
 signal all_clear
@@ -140,7 +141,7 @@ func dance():
 	animating = animating + 1
 
 func win():
-	emit_signal("finished")
+	emit_signal("won")
 
 func lose():
 	emit_signal("finished")

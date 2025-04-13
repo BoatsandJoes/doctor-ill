@@ -4,6 +4,7 @@
 [ext_resource type="Texture2D" uid="uid://ciixjtn2tnlec" path="res://assets/sprites/shock.png" id="2_jm047"]
 
 [node name="Lightning" type="Node2D"]
+process_mode = 3
 script = ExtResource("1_irliv")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
