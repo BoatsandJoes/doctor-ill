@@ -47,10 +47,12 @@ func set_cursor_position():
 
 func lose():
 	%Buttons/Resume.visible = false
+	%Title.text = "Game Over"
 	pause()
 
 func win():
 	%Buttons/Resume.visible = false
+	%Title.text = "You Win!"
 	pause()
 
 func pause():
