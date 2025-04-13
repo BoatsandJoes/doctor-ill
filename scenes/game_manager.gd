@@ -30,10 +30,6 @@ var currentTrack: int
 var startingDepth: int = -1
 
 func _ready() -> void:
-	pause = Pause.instantiate()
-	pause.exit.connect(exit_game)
-	pause.restart.connect(restart_game)
-	add_child(pause)
 	hud = HUD.instantiate()
 	add_child(hud)
 	hud.out_of_air.connect(_on_hud_out_of_air)
@@ -55,6 +51,10 @@ func _ready() -> void:
 		boards[i].all_clear.connect(hud.allClear)
 		boards[i].hatch.connect(_on_board_hatch)
 	play_random_song()
+	pause = Pause.instantiate()
+	pause.exit.connect(exit_game)
+	pause.restart.connect(restart_game)
+	add_child(pause)
 
 func restart_game():
 	emit_signal("restart", currentTrack, startingDepth)
