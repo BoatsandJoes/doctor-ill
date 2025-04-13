@@ -101,6 +101,7 @@ func play_lose_animation():
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	for audio in boards[0].sfx:
 		audio.process_mode = Node.PROCESS_MODE_ALWAYS
+	boards[0].play_sfx(&"lose")
 	music.stream_paused = true
 	get_tree().paused = true
 	player.lose()

@@ -22,7 +22,8 @@ var sounds: Dictionary = {
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
 	&"lightning": preload("res://assets/sfx/double_zap.mp3"),
 	&"clock": preload("res://assets/sfx/clock-1.ogg"),
-	&"creak": preload("res://assets/sfx/door_creak_open.ogg")
+	&"creak": preload("res://assets/sfx/door_creak_open.ogg"),
+	&"lose": preload("res://assets/sfx/No Hope.ogg")
 }
 var sfx: Array[AudioStreamPlayer] = []
 var generator: Generator = Generator.new()
