@@ -66,6 +66,7 @@ func _on_resume_pressed():
 	buttonIndex = 0
 	set_cursor_position()
 	visible = false
+	get_parent().boards[0].visible = true
 	get_tree().paused = false
 
 func _on_restart_pressed():

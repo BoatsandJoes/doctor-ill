@@ -84,6 +84,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc") || event.is_action_pressed("pause"):
 		if !pause.visible:
 			get_viewport().set_input_as_handled()
+			boards[0].visible = false
 			pause.pause()
 
 func exit_game():
