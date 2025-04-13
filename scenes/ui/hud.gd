@@ -37,7 +37,7 @@ func win():
 
 func destroyed():
 	clocksDestroyed = clocksDestroyed + 1
-	if clocksDestroyed == 13:
+	if get_parent().startingDepth + 1 + clocksDestroyed == 13:
 		$Sprite2D.visible = true
 	elif !%ClocksDestroyed.visible && $Sprite2D.visible:
 		$Sprite2D.visible = false
@@ -48,7 +48,7 @@ func destroyed():
 
 func allClear():
 	allClears = allClears + 1
-	if allClears == 13:
+	if get_parent().startingDepth + 1 + allClears == 13:
 		if %ClocksDestroyed.visible:
 			$Sprite2D2.visible = true
 		else:

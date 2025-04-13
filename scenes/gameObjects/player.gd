@@ -1,7 +1,7 @@
 extends Piece
 class_name Player
 
-enum stateType {IDLE, WALKING, TURNING, GRABBING_ONE, GRABBING_STACK, CLIMBING, KICKING}
+enum stateType {IDLE, WALKING, TURNING, GRABBING_ONE, GRABBING_STACK, CLIMBING, KICKING, END}
 var state = stateType.IDLE
 var facing: int = 1 # 1 == right, -1 == left
 var defaultTurnaroundCounter: float = 0.15
@@ -120,10 +120,12 @@ func above_vertically_centered() -> bool:
 
 func lose():
 	idle_state()
+	state = stateType.END
 	$AnimationPlayer.play("lose")
 
 func win():
 	idle_state()
+	state = stateType.END
 	$AnimationPlayer.play("win")
 
 func _input(event: InputEvent) -> void:

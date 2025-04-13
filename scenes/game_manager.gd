@@ -95,9 +95,9 @@ func play_win_animation():
 func play_lose_animation():
 	var player = boards[0].players[0]
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
+	get_tree().paused = true
 	player.lose()
 	pause.loseTimer.start()
-	get_tree().paused = true
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc") || event.is_action_pressed("pause"):
