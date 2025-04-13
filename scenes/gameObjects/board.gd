@@ -34,31 +34,31 @@ var tilePixels: int = 32
 # airHeight is 1-indexed from the bottom of the stack
 var paramsList: Array[Dictionary] = [
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 6,
-	&"airHeight": 4, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 4, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 6,
- 	&"airHeight": 4, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+ 	&"airHeight": 4, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3,
-	&"airHeight": 4, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 4, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 5,
-	&"airHeight": 2, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0, &"spireHeight": 4},
+	&"airHeight": 2, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0, &"spireHeight": 4},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 5,
-	&"airHeight": 3, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 3, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 3,
-	&"airHeight": 2, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 2, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 3,
-	&"airHeight": 3, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0, &"iceRow": 4},
+	&"airHeight": 3, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0, &"iceRow": 4},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 2,
-	&"airHeight": 2, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 2, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2,
-	&"airHeight": 6, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 6, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 1,
-	&"airHeight": 3, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 3, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4,
-	&"airHeight": 5, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 2,
-	&"airHeight": 5, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0},
+	&"airHeight": 5, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0},
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 4,
-	&"airHeight": 5, &"airContent": 45.0, &"maxAir": 99.99, &"rain": 5.0}
+	&"airHeight": 5, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0}
 ]
 var currentParams: Dictionary = paramsList[depth + 1]
 var secondsElapsed: float = 0.0
@@ -623,6 +623,8 @@ func clear(clearDicts: Array[Dictionary]):
 		if allClear:
 			emit_signal("all_clear")
 			allClearHappened = true
+			play_sfx(&"clock")
+			emit_signal("collect_air", currentParams[&"airContent"] / 4, currentParams[&"maxAir"])
 
 func clear_cell(cell: int) -> void:
 	if board[cell] != null:
