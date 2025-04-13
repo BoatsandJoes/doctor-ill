@@ -2,12 +2,13 @@ extends CanvasLayer
 class_name Pause
 
 signal exit
+signal restart
 
 var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var buttonIndex: int = 0
 var timer: Timer = Timer.new()
-var buttonCalls: Array[Callable] = [_on_resume_pressed, _on_back_pressed]
+var buttonCalls: Array[Callable] = [_on_resume_pressed, _on_restart_pressed, _on_back_pressed]
 
 func _ready() -> void:
 	visible = false
@@ -39,8 +40,8 @@ func pause():
 	timer.start()
 
 func _input(event: InputEvent) -> void:
-	get_viewport().set_input_as_handled()
 	if event.is_action_pressed("esc") || event.is_action_pressed("pause"):
+		get_viewport().set_input_as_handled()
 		_on_resume_pressed()
 	elif event.is_action_pressed("accept"):
 		cursor.select()
@@ -67,6 +68,10 @@ func _on_resume_pressed():
 	visible = false
 	get_tree().paused = false
 
+func _on_restart_pressed():
+	get_tree().paused = false
+	emit_signal("restart")
+
 func _on_back_pressed():
 	get_tree().paused = false
 	emit_signal("exit")
@@ -75,6 +80,10 @@ func _on_resume_mouse_entered() -> void:
 	buttonIndex = 0
 	set_cursor_position()
 
-func _on_back_mouse_entered() -> void:
+func _on_restart_mouse_entered() -> void:
 	buttonIndex = 1
+	set_cursor_position()
+
+func _on_back_mouse_entered() -> void:
+	buttonIndex = 2
 	set_cursor_position()

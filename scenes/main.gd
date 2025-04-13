@@ -49,6 +49,7 @@ func go_to_game(depth: int):
 	game.currentTrack = lastTrack
 	game.exit.connect(_on_game_exit)
 	game.startingDepth = depth
+	game.restart.connect(_on_game_restart)
 	add_child(game)
 
 func remove_children():
@@ -68,6 +69,10 @@ func _on_menu_credits():
 func _on_game_exit(track: int):
 	lastTrack = track
 	go_to_main_menu()
+
+func _on_game_restart(track: int, depth: int):
+	lastTrack = track
+	go_to_game(depth)
 
 func _on_main_menu_play():
 	go_to_difficulty()

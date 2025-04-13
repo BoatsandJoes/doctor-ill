@@ -21,6 +21,11 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Resume"
 
+[node name="Restart" type="Button" parent="MarginContainer/Buttons"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Restart"
+
 [node name="Back" type="Button" parent="MarginContainer/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
@@ -28,5 +33,7 @@ text = "Exit"
 
 [connection signal="mouse_entered" from="MarginContainer/Buttons/Resume" to="." method="_on_resume_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/Buttons/Resume" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/Buttons/Restart" to="." method="_on_restart_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/Buttons/Restart" to="." method="_on_button_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/Buttons/Back" to="." method="_on_back_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/Buttons/Back" to="." method="_on_button_pressed"]

@@ -2,6 +2,7 @@ extends Node2D
 class_name GameManager
 
 signal exit(track: int)
+signal restart(track: int, startingDepth: int)
 
 var HUD = preload("res://scenes/ui/HUD.tscn")
 var hud: HUD
@@ -31,6 +32,7 @@ var startingDepth: int = -1
 func _ready() -> void:
 	pause = Pause.instantiate()
 	pause.exit.connect(exit_game)
+	pause.restart.connect(restart_game)
 	add_child(pause)
 	hud = HUD.instantiate()
 	add_child(hud)
@@ -53,6 +55,9 @@ func _ready() -> void:
 		boards[i].all_clear.connect(hud.allClear)
 		boards[i].hatch.connect(_on_board_hatch)
 	play_random_song()
+
+func restart_game():
+	emit_signal("restart", currentTrack, startingDepth)
 
 func _on_board_hatch(hatchIndex: int):
 	$doors.set_cell(Vector2i(hatchIndex + 1,11), 2, Vector2i(0,0))
