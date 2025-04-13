@@ -24,6 +24,7 @@ window/stretch/mode="viewport"
 
 [gui]
 
+theme/custom="uid://c1nb1ksjvwf76"
 theme/custom_font="uid://dtiuc7hyeqn45"
 
 [input]
