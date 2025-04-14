@@ -777,7 +777,7 @@ func _physics_process(delta: float) -> void:
 		secondsElapsed = secondsElapsed + delta
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("another"):
+	if event.is_action_pressed("another") && rainCounter < currentParams[&"rain"] - 0.1:
 		var free = false
 		for i in range(currentParams[&"width"]):
 			if board[i] == null:
