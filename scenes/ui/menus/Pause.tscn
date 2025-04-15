@@ -56,28 +56,43 @@ offset_bottom = 40.0
 theme_override_constants/margin_left = 80
 theme_override_constants/margin_top = 150
 
-[node name="Buttons" type="VBoxContainer" parent="MarginContainer"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="Buttons" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 
-[node name="Resume" type="Button" parent="MarginContainer/Buttons"]
+[node name="Resume" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Resume"
 
-[node name="Restart" type="Button" parent="MarginContainer/Buttons"]
+[node name="Restart" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Restart"
 
-[node name="Back" type="Button" parent="MarginContainer/Buttons"]
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Exit"
 
-[connection signal="mouse_entered" from="MarginContainer/Buttons/Resume" to="." method="_on_resume_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/Buttons/Resume" to="." method="_on_button_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/Buttons/Restart" to="." method="_on_restart_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/Buttons/Restart" to="." method="_on_button_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/Buttons/Back" to="." method="_on_back_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/Buttons/Back" to="." method="_on_button_pressed"]
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+layout_mode = 2
+text = "Now Playing:"
+
+[node name="NowPlaying" type="Label" parent="MarginContainer/VBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Buttons/Resume" to="." method="_on_resume_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Resume" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Buttons/Restart" to="." method="_on_restart_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Restart" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Buttons/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/Buttons/Back" to="." method="_on_button_pressed"]

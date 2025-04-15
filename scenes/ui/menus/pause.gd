@@ -48,6 +48,7 @@ func set_cursor_position():
 	cursor.position = button.global_position + Vector2(cursor.width * -1, button.size.y / 2)
 
 func lose():
+	%NowPlaying.text = "No Hope (You died)"
 	%Buttons/Resume.visible = false
 	%Title.text = "Game"
 	%Time.text = "Over"
@@ -55,6 +56,7 @@ func lose():
 	pause()
 
 func win():
+	%NowPlaying.text = "Boogie"
 	%Buttons/Resume.visible = false
 	%Title.text = "You Win!"
 	%Difficulty.text = difficulty

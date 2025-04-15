@@ -12,6 +12,20 @@ var Pause = preload("res://scenes/ui/menus/Pause.tscn")
 var pause: Pause
 var hatchOpen: bool = false
 var music: AudioStreamPlayer
+var trackTitles: Array[String] = [
+	"Talk That Way",
+	"Goes Like",
+	"Humanity",
+	"Psycho",
+	"La Manera De Vivir",
+	"Mess",
+	"Escape",
+	"Talk to Me",
+	"All Night",
+	"Take Me Away",
+	"Grow",
+	"Darkness Comes"
+]
 var musicTracks: Array[String] = [
 "res://assets/music/JOXION - Talk That Way [NCS Release] (instrumental).mp3",
 "res://assets/music/LOUD ABOUT US! - Goes Like [NCS Release].mp3",
@@ -138,6 +152,7 @@ func _input(event: InputEvent) -> void:
 		if !pause.visible:
 			get_viewport().set_input_as_handled()
 			boards[0].visible = false
+			pause.get_node("%NowPlaying").text = trackTitles[currentTrack]
 			pause.pause()
 
 func exit_game():
