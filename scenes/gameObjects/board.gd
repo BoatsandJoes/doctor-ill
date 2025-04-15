@@ -27,6 +27,8 @@ var sounds: Dictionary = {
 	&"win": preload("res://assets/music/Joyful, Фрози, Zachz Winner - Boogie [NCS Release].mp3")
 }
 var sfx: Array[AudioStreamPlayer] = []
+var Hint = preload("res://scenes/gameObjects/vfx/Hint.tscn")
+var hints: Array[Hint] = []
 var generator: Generator = Generator.new()
 var players: Array[Player] = []
 var depth: int = -1
@@ -67,6 +69,7 @@ var rainCounter: float = 5.0
 var typesOfMonster: Array[Array] = []
 var animating: int = 0
 var allClearHappened: bool = false
+var pickupTimer: Timer
 
 func _ready() -> void:
 	hatchTimer = Timer.new()
@@ -90,6 +93,18 @@ func _ready() -> void:
 		# evenly distribute the players
 		players[playerNum].gridIndex = (currentParams[&"width"] * (playerNum + 1)) / (players.size() * 2)
 	generateNextFloor()
+	for i in range(currentParams[&"width"]):
+		hints.append(Hint.instantiate())
+		hints[hints.size() - 1].position = getPositionForIndex(board.size() + i)
+		add_child(hints[hints.size() - 1])
+	pickupTimer = Timer.new()
+	pickupTimer.wait_time = 8.0
+	pickupTimer.autostart = true
+	pickupTimer.one_shot = false
+	pickupTimer.timeout.connect(showHint)
+	add_child(pickupTimer)
+	if depth != 10 || get_parent().get_parent().graduated:
+		pickupTimer.paused = true
 
 func updateVisualPositions() -> void:
 	for i in range(board.size()):
@@ -104,7 +119,21 @@ func getPositionForIndex(i: int) -> Vector2i:
 func updateVisualPosition(i: int):
 	board[i].position = getPositionForIndex(i)
 
+func showHint():
+	for i in range(currentParams[&"width"]):
+		if ((board[board.size() - currentParams[&"width"] + i] == null
+		|| (board[board.size() - currentParams[&"width"] + i] is Player))
+		&& ((board[board.size() - 2*currentParams[&"width"] + i] == null
+		|| (board[board.size() - 2*currentParams[&"width"] + i] is Player)))):
+			#bottom two cells of column are empty
+			if i != 0:
+				hints[i - 1].animate()
+			if i < hints.size() - 1:
+				hints[i + 1].animate()
+
 func generateNextFloor() -> void:
+	if pickupTimer != null:
+		pickupTimer.paused = true
 	depth = depth + 1
 	if depth >= paramsList.size():
 		for piece in board:
@@ -315,6 +344,7 @@ func downTheHatch():
 	#open hatch
 	emit_signal("hatch", (players[0].gridIndex + players[0].facing) % currentParams[&"width"])
 	hatchTimer.start()
+	get_parent().get_parent().graduated = true
 
 func pick_or_put(player: Player, stack: bool, pick: bool):
 	var overhead: int = player.gridIndex - currentParams[&"width"]
@@ -354,6 +384,7 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 		elif (board[source] != null && board[target] == null && !board[source].ice):
 			var above = source - currentParams[&"width"]
 			if board[source] is Air && pick:
+				pickupTimer.start()
 				play_sfx(&"clock")
 				board[source].queue_free()
 				board[source] = null
@@ -542,6 +573,7 @@ func clear(clearDicts: Array[Dictionary]):
 	var furtherClears: Array[int] = []
 	# Actually clear
 	if !cellsToClear.is_empty():
+		pickupTimer.start()
 		play_sfx(&"clear")
 		if chainTimer.is_stopped():
 			chainTimer.start()

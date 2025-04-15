@@ -105,6 +105,7 @@ func _on_board_won():
 	play_win_animation()
 
 func play_win_animation():
+	hud.next_floor()
 	# replace floor
 	for i in range(1,8):
 		$doors.set_cell(Vector2i(i,11), 0, Vector2i(1,12))

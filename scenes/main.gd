@@ -9,6 +9,7 @@ var MainMenu = preload("res://scenes/ui/menus/MainMenu.tscn")
 var Credits = preload("res://scenes/ui/menus/Credits.tscn")
 var Settings = preload("res://scenes/ui/menus/Settings.tscn")
 var Difficulty = preload("res://scenes/ui/menus/Difficulty.tscn")
+var graduated = false
 
 func _ready():
 	var baseSize = Vector2i(640, 360)
