@@ -17,6 +17,7 @@ var Diag = preload("res://scenes/gameObjects/pieces/Diag.tscn")
 var Player = preload("res://scenes/gameObjects/player.tscn")
 var Lightning = preload("res://scenes/gameObjects/vfx/Lightning.tscn")
 var Fire = preload("res://scenes/gameObjects/vfx/Fire.tscn")
+var TimeJuice = preload("res://scenes/gameObjects/vfx/TimeJuice.tscn")
 var sounds: Dictionary = {
 	&"clear": preload("res://assets/sfx/clear.ogg"),
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
@@ -401,6 +402,10 @@ func pick_or_put(player: Player, stack: bool, pick: bool):
 			if board[source] is Air && pick:
 				pickupTimer.start()
 				play_sfx(&"clock")
+				var juice = TimeJuice.instantiate()
+				juice.get_node("Label").text = "+40"
+				juice.position = getPositionForIndex(source)
+				add_child(juice)
 				board[source].queue_free()
 				board[source] = null
 				emit_signal("collect_air", currentParams[&"airContent"], currentParams[&"maxAir"])
@@ -595,6 +600,10 @@ func clear(clearDicts: Array[Dictionary]):
 		elif chainsEnabled:
 			chainTimer.start()
 			play_sfx(&"clock")
+			var juice = TimeJuice.instantiate()
+			juice.get_node("Label").text = "+1"
+			juice.position = getPositionForIndex(cellsToClear[0])
+			add_child(juice)
 			emit_signal("collect_air", 1.0, currentParams[&"maxAir"])
 	while !cellsToClear.is_empty():
 		var cell = cellsToClear.keys()[0]
@@ -689,6 +698,10 @@ func clear(clearDicts: Array[Dictionary]):
 			emit_signal("all_clear")
 			allClearHappened = true
 			play_sfx(&"clock")
+			var juice = TimeJuice.instantiate()
+			juice.get_node("Label").text = "+10"
+			juice.position = getPositionForIndex(max(0, players[0].gridIndex - currentParams[&"width"]))
+			add_child(juice)
 			emit_signal("collect_air", currentParams[&"airContent"] / 4, currentParams[&"maxAir"])
 
 func clear_cell(cell: int) -> void:
@@ -700,6 +713,10 @@ func clear_cell(cell: int) -> void:
 		else:
 			if board[cell] is Air:
 				play_sfx(&"clock")
+				var juice = TimeJuice.instantiate()
+				juice.get_node("Label").text = "+20"
+				juice.position = getPositionForIndex(cell)
+				add_child(juice)
 				emit_signal("destroy_clock", currentParams[&"airContent"], currentParams[&"maxAir"])
 				board[cell].queue_free()
 			else:
