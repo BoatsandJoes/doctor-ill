@@ -70,8 +70,14 @@ var typesOfMonster: Array[Array] = []
 var animating: int = 0
 var allClearHappened: bool = false
 var pickupTimer: Timer
+var clockTimer: Timer
 
 func _ready() -> void:
+	clockTimer = Timer.new()
+	clockTimer.one_shot = true
+	clockTimer.autostart = false
+	clockTimer.timeout.connect(_on_clockTimer_timeout)
+	add_child(clockTimer)
 	hatchTimer = Timer.new()
 	hatchTimer.wait_time = 0.5
 	hatchTimer.autostart = false
@@ -93,6 +99,7 @@ func _ready() -> void:
 		# evenly distribute the players
 		players[playerNum].gridIndex = (currentParams[&"width"] * (playerNum + 1)) / (players.size() * 2)
 	generateNextFloor()
+	pause_clock_for(1.0)
 	for i in range(currentParams[&"width"]):
 		hints.append(Hint.instantiate())
 		hints[hints.size() - 1].position = getPositionForIndex(board.size() + i)
@@ -130,6 +137,14 @@ func showHint():
 				hints[i - 1].animate()
 			if i < hints.size() - 1:
 				hints[i + 1].animate()
+
+func pause_clock_for(time: float):
+	clockTimer.start(time)
+
+func _on_clockTimer_timeout():
+	for piece in board:
+		if piece != null && piece is Air:
+			piece.tick_tock()
 
 func generateNextFloor() -> void:
 	if pickupTimer != null:

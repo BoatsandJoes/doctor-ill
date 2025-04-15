@@ -29,7 +29,6 @@ func set_floor(floor: int):
 	%Floor.text = str(floor)
 
 func next_floor():
-	round_up_to_nearest_second()
 	floor = floor + 1
 	%Floor.text = str(floor)
 	if floor > 13:

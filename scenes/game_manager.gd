@@ -101,6 +101,7 @@ func _on_board_next_floor():
 	for i in range(1,8):
 		$doors.set_cell(Vector2i(i,11), 1, Vector2i(0,0))
 	hud.next_floor()
+	boards[0].pause_clock_for(hud.air - floor(hud.air))
 
 func _on_board_destroy_clock(quantity: float, max: float):
 	hud.update_air(quantity / 2, max)

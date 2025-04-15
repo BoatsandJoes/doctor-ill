@@ -28,7 +28,15 @@ func win(_animation: String):
 		$AnimationPlayer.play("bat")
 	elif monsterSkins[type][&"hFrames"] == 3:
 		$AnimationPlayer.play("ghost")
-	$AnimationPlayer.animation_finished.connect(win)
+	$AnimationPlayer.animation_finished.connect(win2)
+
+func win2(_animation: String):
+	if monsterSkins[type][&"hFrames"] == 4:
+		$AnimationPlayer.play("fairy")
+	elif monsterSkins[type][&"hFrames"] == 2:
+		$AnimationPlayer.play("bat")
+	elif monsterSkins[type][&"hFrames"] == 3:
+		$AnimationPlayer.play("ghost")
 
 func animate():
 	if !$AnimationPlayer.current_animation == "clear":
