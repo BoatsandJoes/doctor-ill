@@ -81,8 +81,9 @@ func cycle_resolution():
 	if get_window().mode == Window.MODE_FULLSCREEN:
 		get_window().mode = Window.MODE_WINDOWED
 		get_window().size = baseSize
-		#get_viewport().content_scale_size = baseSize
 		scaleMult = 1
+		get_window().position = (get_window().position + DisplayServer.screen_get_size() / 2
+		- (baseSize * scaleMult) / 2)
 	elif (get_window().size.x + baseSize.x > DisplayServer.screen_get_size().x
 	|| get_window().size.y + baseSize.y > DisplayServer.screen_get_size().y):
 		get_window().mode = Window.MODE_FULLSCREEN
@@ -90,6 +91,7 @@ func cycle_resolution():
 	else:
 		#get_viewport().content_scale_size = get_viewport().content_scale_size + baseSize
 		scaleMult = scaleMult + 1
+		get_window().position = get_window().position + get_window().size / 2 - (baseSize * scaleMult) / 2
 		get_window().size = baseSize * scaleMult
 	update_scale_label()
 

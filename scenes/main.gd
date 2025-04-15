@@ -11,8 +11,13 @@ var Settings = preload("res://scenes/ui/menus/Settings.tscn")
 var Difficulty = preload("res://scenes/ui/menus/Difficulty.tscn")
 
 func _ready():
-	get_window().position = get_window().position + get_window().size / 2 - Vector2i(1280, 720) / 2
-	get_window().size = Vector2i(1280, 720)
+	var baseSize = Vector2i(640, 360)
+	var currSize = baseSize
+	while !(currSize.x + baseSize.x >= DisplayServer.screen_get_size().x
+	|| currSize.y + baseSize.y >= DisplayServer.screen_get_size().y):
+		currSize = currSize + baseSize
+	get_window().position = get_window().position + get_window().size / 2 - currSize / 2
+	get_window().size = currSize
 	
 	go_to_main_menu()
 	AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("Master"), 0.6)
