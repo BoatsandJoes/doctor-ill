@@ -2,21 +2,6 @@
 
 [ext_resource type="Script" uid="uid://cts861mq3ccam" path="res://scenes/gameObjects/vfx/hint.gd" id="1_b0l0n"]
 
-[sub_resource type="Animation" id="Animation_f2e7q"]
-resource_name = "flash"
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("ColorRect:color")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
-"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
-"update": 0,
-"values": [Color(1, 0.92549, 0.509804, 0), Color(1, 0.92549, 0.509804, 0.862745), Color(1, 0.92549, 0.509804, 0), Color(1, 0.92549, 0.509804, 0.862745), Color(1, 0.92549, 0.509804, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_b0l0n"]
 length = 0.001
 tracks/0/type = "value"
@@ -30,6 +15,21 @@ tracks/0/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [Color(1, 0.92549, 0.509804, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_f2e7q"]
+resource_name = "flash"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ColorRect:color")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.25, 0.5, 0.75, 1),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
+"update": 0,
+"values": [Color(1, 0.92549, 0.509804, 0), Color(1, 0.92549, 0.509804, 0.862745), Color(1, 0.92549, 0.509804, 0), Color(1, 0.92549, 0.509804, 0.862745), Color(1, 0.92549, 0.509804, 0)]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_uc5te"]

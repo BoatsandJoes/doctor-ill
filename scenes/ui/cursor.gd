@@ -3,13 +3,20 @@ class_name Cursor
 
 var width: int = 16
 var timer: Timer
+var sfx: AudioStreamPlayer
+var click = preload("res://assets/sfx/click3.ogg")
 
 signal chosen
 
 func _ready() -> void:
+	sfx = AudioStreamPlayer.new()
+	sfx.set_bus("Reduce Less")
+	sfx.stream = click
+	add_child(sfx)
 	$AnimationPlayer.animation_set_next("choose", "idle")
 
 func select():
+	sfx.play()
 	$AnimationPlayer.play("choose")
 	timer = Timer.new()
 	timer.autostart = false
