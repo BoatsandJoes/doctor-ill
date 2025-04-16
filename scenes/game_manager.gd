@@ -86,7 +86,7 @@ func formatSeconds(seconds: float) -> String:
 		wholeSecondsStr = "0" + wholeSecondsStr
 	var fraction: String = str(int((seconds - floor(seconds)) * 100))
 	if fraction.length() <= 1:
-		fraction = fraction + "0"
+		fraction = "0" + fraction
 	return str(minutes) + ":" + wholeSecondsStr + "." + fraction
 
 func restart_game():
