@@ -56,7 +56,7 @@ func _on_cursor_chosen():
 		buttonCalls[buttonIndex].call()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("esc"):
+	if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
 		emit_signal("back")
 	elif event.is_action_pressed("accept"):
 		cursor.select()

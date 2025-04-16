@@ -26,7 +26,7 @@ func _ready() -> void:
 	loseTimer.timeout.connect(lose)
 	loseTimer.one_shot = true
 	add_child(loseTimer)
-	winTimer.wait_time = 2.5 + 60.0 / 130.0
+	winTimer.wait_time = (16.0 * 60.0) / 130.0
 	winTimer.autostart = false
 	winTimer.timeout.connect(win)
 	winTimer.one_shot = true
@@ -76,12 +76,11 @@ func pause():
 
 func _input(event: InputEvent) -> void:
 	if loseTimer.is_stopped() && winTimer.is_stopped():
-		if event.is_action_pressed("esc") || event.is_action_pressed("pause"):
+		if (event.is_action_pressed("esc") || event.is_action_pressed("pause")
+		|| event.is_action_pressed("cancel")):
 			if %Buttons/Resume.visible:
 				get_viewport().set_input_as_handled()
 				_on_resume_pressed()
-			else:
-				_on_back_pressed()
 		elif event.is_action_pressed("accept"):
 			cursor.select()
 		elif !cursor.is_animating():
@@ -103,11 +102,11 @@ func _input(event: InputEvent) -> void:
 				else:
 					buttonIndex = buttonIndex - 1
 				set_cursor_position()
-	elif event.is_action_pressed("pause") || event.is_action_pressed("esc"):
-		if !winTimer.is_stopped():
-			winTimer.start(0.01)
+	elif (event.is_action_pressed("pause") || event.is_action_pressed("esc")):
 		if !loseTimer.is_stopped():
 			loseTimer.start(0.01)
+		if !winTimer.is_stopped():
+			winTimer.start(0.01)
 
 func _on_button_pressed():
 	cursor.select()
