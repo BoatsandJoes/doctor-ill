@@ -3,8 +3,8 @@ class_name Credits
 
 signal exit
 
-var speed = 90
-var limit = 3000
+var speed = 60
+var limit = 3300
 
 func _ready() -> void:
 	%Camera2D.make_current()
@@ -15,9 +15,9 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc"):
 		emit_signal("exit")
 	elif event.is_action_pressed("accept"):
-		speed = speed + 90
+		speed = speed + 60
 	elif event.is_action_pressed("cancel"):
-		speed = speed - 90
+		speed = speed - 60
 		if speed < 0:
 			emit_signal("exit")
 

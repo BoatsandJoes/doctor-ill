@@ -35,6 +35,7 @@ layout_mode = 2
 
 [node name="Label" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
 layout_mode = 2
+theme_override_constants/outline_size = 0
 text = "Lead Developer: BoatsAndJoes
 
         Graphics
@@ -97,15 +98,28 @@ Font https://burloe.itch.io/bagura-font
 Clock by AntumDeluge
 https://opengameart.org/content/ticking-clock-0
 
+Torch Fire Spell by spookymodem https://opengameart.org/content/torch-fire-spell
+https://creativecommons.org/licenses/by/3.0/
+Fade in and out applied
+
 Fire by dklon
 https://opengameart.org/content/atari-fire
 https://creativecommons.org/licenses/by/3.0/
 
 Little zap - zaps_1a by ani_music -- https://freesound.org/s/219622/ -- License: Attribution 4.0
+Unmodified
 
-Double zap.wav by chipfork71 -- https://freesound.org/s/50633/ -- License: Attribution 4.0
+Charge up 2 by BrickDeveloper171 -- https://freesound.org/s/610562/
+-- License: Creative Commons 0
+Tempo increased
+
+Lightning Strike by Timopy https://opengameart.org/content/misc-sfx-pack
+
+Steam release sounds by bart https://opengameart.org/content/steam-release-sounds
 
 Door by laleksic https://opengameart.org/content/various-sound-effects
+
+Button click by Kenney https://www.kenney.nl
 
 No Hope (You died) by Cleyton Kauffman - https://soundcloud.com/cleytonkauffman
 https://opengameart.org/content/game-over-theme

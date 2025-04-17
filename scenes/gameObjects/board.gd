@@ -19,9 +19,12 @@ var Lightning = preload("res://scenes/gameObjects/vfx/Lightning.tscn")
 var Fire = preload("res://scenes/gameObjects/vfx/Fire.tscn")
 var TimeJuice = preload("res://scenes/gameObjects/vfx/TimeJuice.tscn")
 var sounds: Dictionary = {
+	&"ice": preload("res://assets/sfx/steam hisses - Marker #5.wav"),
+	&"charge": preload("res://assets/sfx/charge.mp3"),
+	&"fuse": preload("res://assets/sfx/Waving Torch.ogg"),
 	&"clear": preload("res://assets/sfx/clear.ogg"),
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
-	&"lightning": preload("res://assets/sfx/double_zap.mp3"),
+	&"lightning": preload("res://assets/sfx/LightningStrike.ogg"),
 	&"clock": preload("res://assets/sfx/clock-1.ogg"),
 	&"creak": preload("res://assets/sfx/door_creak_open.ogg"),
 	&"lose": preload("res://assets/sfx/No Hope.ogg"),
@@ -90,7 +93,7 @@ func _ready() -> void:
 	chainTimer.autostart = false
 	chainTimer.one_shot = true
 	add_child(chainTimer)
-	for i in range(5):
+	for i in range(10):
 		sfx.append(AudioStreamPlayer.new())
 		sfx[sfx.size() - 1].set_bus("Reduce Less")
 		add_child(sfx[sfx.size() - 1])
@@ -212,16 +215,23 @@ func lose():
 
 func play_sfx(key: StringName):
 	var played: bool = false
+	var replace: AudioStreamPlayer
+	var score: float = -1.0
 	for player in sfx:
 		if !player.playing:
 			player.stream = sounds[key]
 			player.play()
 			played = true
 			break
+		else:
+			var test = player.get_playback_position()
+			if test > score:
+				score = test
+				replace = player
 	if !played:
-		sfx[0].stop()
-		sfx[0].stream = sounds[key]
-		sfx[0].play
+		replace.stop()
+		replace.stream = sounds[key]
+		replace.play
 
 func move(piece: Piece, toIndex: int):
 	#var fromIndex = piece.gridIndex
@@ -590,7 +600,6 @@ func clear(clearDicts: Array[Dictionary]):
 					cellsToPreserve[cell] = 2
 				elif(dict[&"size"] > 3):
 					cellsToPreserve[cell] = 1
-	var furtherClears: Array[int] = []
 	# Actually clear
 	if !cellsToClear.is_empty():
 		pickupTimer.start()
@@ -681,10 +690,14 @@ func clear(clearDicts: Array[Dictionary]):
 			else:
 				board[cell].revert_special()
 				if cellsToPreserve[cell] == 1:
+					play_sfx(&"fuse")
 					board[cell].set_flame(4)
 				elif cellsToPreserve[cell] == 2:
+					play_sfx(&"charge")
 					board[cell].set_lightning()
 				elif cellsToPreserve[cell] == 3:
+					play_sfx(&"fuse")
+					play_sfx(&"charge")
 					board[cell].set_flame(4)
 					board[cell].set_lightning()
 		cellsToClear.erase(cell)
@@ -709,6 +722,7 @@ func clear_cell(cell: int) -> void:
 		if board[cell] is Player:
 			lose()
 		elif board[cell].ice:
+			play_sfx(&"ice")
 			board[cell].melt_ice()
 		else:
 			if board[cell] is Air:

@@ -135,5 +135,7 @@ hframes = 7
 
 [node name="Lightning" type="Sprite2D" parent="."]
 visible = false
+position = Vector2(0, -10)
+scale = Vector2(2, 2)
 texture = ExtResource("4_8ahfa")
 hframes = 7
