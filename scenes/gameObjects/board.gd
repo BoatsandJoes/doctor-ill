@@ -614,9 +614,10 @@ func clear(clearDicts: Array[Dictionary]):
 			juice.position = getPositionForIndex(cellsToClear[0])
 			add_child(juice)
 			emit_signal("collect_air", 1.0, currentParams[&"maxAir"])
+	var alreadyCleared: Array[int] = []
 	while !cellsToClear.is_empty():
 		var cell = cellsToClear.keys()[0]
-		if board[cell] != null:
+		if board[cell] != null && !alreadyCleared.has(cell):
 			#activate flame/lightning
 			if board[cell].lightning:
 				play_sfx(&"lightning")
@@ -688,6 +689,7 @@ func clear(clearDicts: Array[Dictionary]):
 			if !cellsToPreserve.has(cell):
 				clear_cell(cell)
 			else:
+				alreadyCleared.append(cell)
 				board[cell].revert_special()
 				if cellsToPreserve[cell] == 1:
 					play_sfx(&"fuse")
