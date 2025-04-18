@@ -26,9 +26,7 @@ var sounds: Dictionary = {
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
 	&"lightning": preload("res://assets/sfx/LightningStrike.ogg"),
 	&"clock": preload("res://assets/sfx/clock-1.ogg"),
-	&"creak": preload("res://assets/sfx/door_creak_open.ogg"),
-	&"lose": preload("res://assets/sfx/No Hope.ogg"),
-	&"win": preload("res://assets/music/Joyful, Фрози, Zachz Winner - Boogie [NCS Release].mp3")
+	&"creak": preload("res://assets/sfx/door_creak_open.ogg")
 }
 var sfx: Array[AudioStreamPlayer] = []
 var Hint = preload("res://scenes/gameObjects/vfx/Hint.tscn")
@@ -95,7 +93,7 @@ func _ready() -> void:
 	add_child(chainTimer)
 	for i in range(10):
 		sfx.append(AudioStreamPlayer.new())
-		sfx[sfx.size() - 1].set_bus("Reduce Less")
+		sfx[sfx.size() - 1].set_bus("sfx")
 		add_child(sfx[sfx.size() - 1])
 	players.append(Player.instantiate())
 	for playerNum in range(players.size()):

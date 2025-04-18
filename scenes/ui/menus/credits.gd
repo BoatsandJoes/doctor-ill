@@ -4,7 +4,6 @@ class_name Credits
 signal exit
 
 var speed = 60
-var limit = 3300
 
 func _ready() -> void:
 	%Camera2D.make_current()
@@ -23,5 +22,5 @@ func _input(event: InputEvent) -> void:
 
 func _process(delta: float) -> void:
 	$Node2D.position.y = $Node2D.position.y + delta * speed
-	if $Node2D.position.y > limit:
+	if $Node2D.position.y > %Credits.size.y + 220:
 		emit_signal("exit")

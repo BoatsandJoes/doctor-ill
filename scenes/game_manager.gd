@@ -50,7 +50,7 @@ func _ready() -> void:
 	hud.out_of_air.connect(_on_hud_out_of_air)
 	hud.set_floor(startingDepth + 2)
 	music = AudioStreamPlayer.new()
-	music.set_bus("Reduce")
+	music.set_bus("music")
 	music.finished.connect(_on_music_finished)
 	add_child(music)
 	boards.append(Board.instantiate())
@@ -129,7 +129,7 @@ func play_win_animation():
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	for audio in boards[0].sfx:
 		audio.process_mode = Node.PROCESS_MODE_ALWAYS
-	boards[0].play_sfx(&"win")
+	pause.play(&"win")
 	music.stream_paused = true
 	player.win("")
 	player.play_falling()
@@ -142,7 +142,7 @@ func play_lose_animation():
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
 	for audio in boards[0].sfx:
 		audio.process_mode = Node.PROCESS_MODE_ALWAYS
-	boards[0].play_sfx(&"lose")
+	pause.play(&"lose")
 	music.stream_paused = true
 	get_tree().paused = true
 	player.lose()

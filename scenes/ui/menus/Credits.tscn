@@ -11,7 +11,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 offset_top = -360.0
 offset_right = 640.0
-offset_bottom = 3640.0
+offset_bottom = 5640.0
 grow_horizontal = 2
 grow_vertical = 2
 color = Color(0.0646965, 0.0646965, 0.0646965, 1)
@@ -33,15 +33,24 @@ layout_mode = 2
 [node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/MarginContainer/HBoxContainer"]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
+[node name="Credits" type="RichTextLabel" parent="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/outline_size = 0
+theme_override_constants/shadow_outline_size = 0
+theme_override_font_sizes/bold_italics_font_size = 24
+theme_override_font_sizes/italics_font_size = 24
+theme_override_font_sizes/mono_font_size = 24
+theme_override_font_sizes/normal_font_size = 24
+theme_override_font_sizes/bold_font_size = 24
+bbcode_enabled = true
 text = "Lead Developer: BoatsAndJoes
 
         Graphics
 
 Main menu background by ansimuz
-https://opengameart.org/content/phantasy-dungeon-entrance
+https://opengameart.org/content/phantasy-dungeon-
+entrance
 
 Mouse by rolff
 https://rolff.itch.io/mouse-spritesheet-16x16
@@ -51,21 +60,26 @@ https://opengameart.org/content/chibi-monsters-set-01
 https://creativecommons.org/licenses/by/3.0/
 Imp color changed slightly
 
-Fairy by GrafxKid https://opengameart.org/content/super-random-sprites
+Fairy by GrafxKid
+https://opengameart.org/content/super-random-sprites
 
-Background tiles, Bat, and Platino by DragonDePlatino and DawnBringer
-https://opengameart.org/content/dawnlike-16x16-universal-rogue-like-tileset-v181
+Background tiles, Bat, and Platino
+by DragonDePlatino and DawnBringer
+https://opengameart.org/content/dawnlike-16x16-universal-
+rogue-like-tileset-v181
 No modifications made
 https://creativecommons.org/licenses/by/4.0/
 
 Snake Copyright NightBlade9 (twitter.com/nightblade99).
 Original snake art copyright Joe Williamson.
 Further modified to lighten the outline.
-https://opengameart.org/content/animated-roguelikerpg-monsters-from-eman-quest
+https://opengameart.org/content/animated-roguelikerpg-
+monsters-from-eman-quest
 https://creativecommons.org/licenses/by-sa/3.0/
 
 Cactus by NightBlade9 (twitter.com/nightblade99).
-https://opengameart.org/content/animated-walk-cycle-monsters-hijabi-from-eman-quest
+https://opengameart.org/content/animated-walk-cycle-
+monsters-hijabi-from-eman-quest
 https://creativecommons.org/publicdomain/zero/1.0/
 
 Whirlwind by Spring Spring
@@ -74,22 +88,28 @@ https://opengameart.org/content/whirlwind
 https://creativecommons.org/licenses/by/3.0/
 https://creativecommons.org/licenses/by-sa/3.0/
 
-Ice tile by Angel https://opengameart.org/content/ice-dungeon
+Ice tile by Angel
+https://opengameart.org/content/ice-dungeon
 https://static.opengameart.org/OGA-BY-3.0.txt
 
-Clock by MSavioti https://opengameart.org/content/simple-clock-16x16
+Clock by MSavioti
+https://opengameart.org/content/simple-clock-16x16
 
-Shock by Clint Bellanger https://opengameart.org/content/lightning-shock-spell
+Shock by Clint Bellanger
+https://opengameart.org/content/lightning-shock-spell
 https://creativecommons.org/licenses/by/3.0/
 
-Electricity by Jordan Irwin (AntumDeluge) https://opengameart.org/node/165557
+Electricity by Jordan Irwin (AntumDeluge)
+https://opengameart.org/node/165557
 https://creativecommons.org/licenses/by/3.0/
 http://static.opengameart.org/OGA-BY-3.0.txt
 
-Fire by ColorOptimist https://opengameart.org/content/2d-pixel-fire-sprite-strip
+Fire by ColorOptimist
+https://opengameart.org/content/2d-pixel-fire-sprite-strip
 https://creativecommons.org/licenses/by/3.0/
 
-Explosion by Sogomn https://opengameart.org/content/explosion-3
+Explosion by Sogomn
+https://opengameart.org/content/explosion-3
 
 Font https://burloe.itch.io/bagura-font
 
@@ -98,7 +118,8 @@ Font https://burloe.itch.io/bagura-font
 Clock by AntumDeluge
 https://opengameart.org/content/ticking-clock-0
 
-Torch Fire Spell by spookymodem https://opengameart.org/content/torch-fire-spell
+Torch Fire Spell by spookymodem
+https://opengameart.org/content/torch-fire-spell
 https://creativecommons.org/licenses/by/3.0/
 Fade in and out applied
 
@@ -106,22 +127,30 @@ Fire by dklon
 https://opengameart.org/content/atari-fire
 https://creativecommons.org/licenses/by/3.0/
 
-Little zap - zaps_1a by ani_music -- https://freesound.org/s/219622/ -- License: Attribution 4.0
+Little zap - zaps_1a by ani_music
+https://freesound.org/s/219622/
+License: Attribution 4.0
 Unmodified
 
-Charge up 2 by BrickDeveloper171 -- https://freesound.org/s/610562/
--- License: Creative Commons 0
+Charge up 2 by BrickDeveloper171
+https://freesound.org/s/610562/
+License: Creative Commons 0
 Tempo increased
 
-Lightning Strike by Timopy https://opengameart.org/content/misc-sfx-pack
+Lightning Strike by Timopy
+https://opengameart.org/content/misc-sfx-pack
 
-Steam release sounds by bart https://opengameart.org/content/steam-release-sounds
+Steam release sounds by bart
+https://opengameart.org/content/steam-release-sounds
 
-Door by laleksic https://opengameart.org/content/various-sound-effects
+Door by laleksic
+https://opengameart.org/content/various-sound-effects
 
-Button click by Kenney https://www.kenney.nl
+Button click by Kenney
+https://www.kenney.nl
 
-No Hope (You died) by Cleyton Kauffman - https://soundcloud.com/cleytonkauffman
+No Hope (You died) by Cleyton Kauffman
+https://soundcloud.com/cleytonkauffman
 https://opengameart.org/content/game-over-theme
 
 Song: Max Brhon - Humanity [NCS Release]
@@ -189,7 +218,20 @@ Watch: http://youtu.be/NxpmN_f7AbY
 Song: Zachz, Фрози, Joyful - Boogie
 Music provided by NoCopyrightSounds
 Free Download/Stream: http://ncs.io/Boogie
-Watch: http://ncs.lnk.to/BoogieAT/youtube"
+Watch: http://ncs.lnk.to/BoogieAT/youtube
+
+        Playtesting
+
+birdup
+Gamersgoin'Blind
+kyatt7
+itsameliaSMB
+Ardrox
+Raspberry
+Hacker Doggy Kaito"
+fit_content = true
+scroll_active = false
+autowrap_mode = 0
 
 [node name="Node2D" type="Node2D" parent="."]
 

@@ -10,7 +10,7 @@ signal chosen
 
 func _ready() -> void:
 	sfx = AudioStreamPlayer.new()
-	sfx.set_bus("Reduce Less")
+	sfx.set_bus("sfx")
 	sfx.stream = click
 	add_child(sfx)
 	$AnimationPlayer.animation_set_next("choose", "idle")

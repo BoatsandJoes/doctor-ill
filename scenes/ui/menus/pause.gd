@@ -13,8 +13,16 @@ var winTimer: Timer = Timer.new()
 var buttonCalls: Array[Callable] = [_on_resume_pressed, _on_restart_pressed, _on_back_pressed]
 var difficulty: String = ""
 var time: String = ""
+var music: AudioStreamPlayer
+var songs: Dictionary = {
+	&"lose": preload("res://assets/sfx/No Hope.ogg"),
+	&"win": preload("res://assets/music/Joyful, Фрози, Zachz Winner - Boogie [NCS Release].mp3")
+}
 
 func _ready() -> void:
+	music = AudioStreamPlayer.new()
+	music.set_bus("over_music")
+	add_child(music)
 	visible = false
 	timer.wait_time = 0.05
 	timer.autostart = false
@@ -35,6 +43,10 @@ func _ready() -> void:
 	cursor.visible = false
 	add_child(cursor)
 	cursor.chosen.connect(_on_cursor_chosen)
+
+func play(key: StringName):
+	music.stream = songs[key]
+	music.play()
 
 func _on_timer_timeout():
 	set_cursor_position()

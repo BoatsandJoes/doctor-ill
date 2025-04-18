@@ -27,6 +27,12 @@ func _ready() -> void:
 	cursor.visible = false
 	add_child(cursor)
 
+func device_selected(keyboard: bool):
+	self.keyboard = keyboard
+	%Devices.visible = false
+	%Types.visible = true
+	%Title.text = "Buttons"
+
 func _on_timer_timeout():
 	set_cursor_position()
 	cursor.visible = true
@@ -68,12 +74,14 @@ func _on_cursor_chosen():
 			buttonIndex = 0
 			%Devices.visible = false
 			%Types.visible = true
+			%Title.text = "Buttons"
 			timer.start()
 	else:
 		if buttonIndex >= %Devices.get_children().size() - 1:
 			buttonIndex = 0
 			%Devices.visible = true
 			%Types.visible = false
+			%Title.text = "Device"
 			timer.start()
 		else:
 			gameButtons = buttonIndex == 0

@@ -55,12 +55,16 @@ func go_to_button_config():
 	menu.buttons.connect(go_to_rebind)
 	add_child(menu)
 
+func go_to_button_config_for_device(keyboard: bool):
+	go_to_button_config()
+	menu.device_selected(keyboard)
+
 func go_to_rebind(keyboard: bool, gameButtons: bool):
 	remove_children()
 	menu = Rebind.instantiate()
 	menu.keyboard = keyboard
 	menu.gameButtons = gameButtons
-	menu.back.connect(go_to_button_config)
+	menu.back.connect(go_to_button_config_for_device)
 	add_child(menu)
 
 func go_to_game(depth: int):

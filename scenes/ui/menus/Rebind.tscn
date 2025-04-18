@@ -4,3 +4,240 @@
 
 [node name="Rebind" type="CanvasLayer"]
 script = ExtResource("1_j5rvx")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 10
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_bottom = -30
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = -20
+
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 40
+
+[node name="Labels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls"]
+layout_mode = 2
+theme_override_constants/separation = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Up"
+
+[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Down"
+
+[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Left"
+
+[node name="Label4" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Right"
+
+[node name="Label5" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Move One"
+
+[node name="Label6" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Move Stack"
+
+[node name="Label7" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Kick"
+
+[node name="Label8" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Rain"
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Controls"]
+layout_mode = 2
+
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_constants/separation = 30
+
+[node name="Buttons1" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Up" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Down" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Left" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Right" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="MoveOne" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="MoveStack" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Kick" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Rain" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Buttons2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Up1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Down1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Left1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Right1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="MoveOne1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="MoveStack1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Kick1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Rain1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Buttons3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
+custom_minimum_size = Vector2(120, 0)
+layout_mode = 2
+theme_override_constants/separation = 5
+
+[node name="Up2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Down2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Left2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Right2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="MoveOne2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="MoveStack2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Kick2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="Rain2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = " "
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 96
+text = "Buttons"
+
+[node name="MarginContainer2" type="MarginContainer" parent="."]
+anchors_preset = 9
+anchor_bottom = 1.0
+offset_right = 80.0
+grow_vertical = 2
+theme_override_constants/margin_left = 30
+theme_override_constants/margin_bottom = 10
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
+layout_mode = 2
+alignment = 2
+
+[node name="Back" type="Button" parent="MarginContainer2/VBoxContainer"]
+unique_name_in_owner = true
+z_index = 100
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Save"
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Up" to="." method="_on_up_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer2/VBoxContainer/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="pressed" from="MarginContainer2/VBoxContainer/Back" to="." method="_on_button_pressed"]
