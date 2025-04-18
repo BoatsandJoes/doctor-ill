@@ -1,0 +1,80 @@
+[gd_scene load_steps=2 format=3 uid="uid://bgh5d2ankt4j4"]
+
+[ext_resource type="Script" uid="uid://chwjj1ib6ve4o" path="res://scenes/ui/menus/device_select.gd" id="1_adyfh"]
+
+[node name="DeviceSelect" type="CanvasLayer"]
+script = ExtResource("1_adyfh")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="Devices" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[node name="Keyboard" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Devices"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Keyboard"
+
+[node name="Controller" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Devices"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Controller"
+
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Devices"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Back"
+
+[node name="Types" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
+unique_name_in_owner = true
+visible = false
+layout_mode = 2
+
+[node name="Gameplay" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Types"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Game Buttons"
+
+[node name="Menu" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Types"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Menu Buttons"
+
+[node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Types"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Back"
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+alignment = 1
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+layout_mode = 2
+
+[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2/VBoxContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 96
+text = "Device"
+
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Keyboard" to="." method="_on_keyboard_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Controller" to="." method="_on_controller_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Types/Gameplay" to="." method="_on_gameplay_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Types/Menu" to="." method="_on_menu_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Types/Back" to="." method="_on_back_mouse_entered"]

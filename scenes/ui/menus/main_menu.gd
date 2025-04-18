@@ -37,10 +37,10 @@ func _on_cursor_chosen():
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc"):
 		_on_exit_pressed()
-	elif event.is_action_pressed("accept"):
-		cursor.select()
 	elif !cursor.is_animating():
-		if event.is_action_pressed("down"):
+		if event.is_action_pressed("accept"):
+			cursor.select()
+		elif event.is_action_pressed("down"):
 			if buttonIndex >= %Buttons.get_children().size() - 1:
 				buttonIndex = 0
 			else:

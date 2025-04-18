@@ -9,6 +9,8 @@ var MainMenu = preload("res://scenes/ui/menus/MainMenu.tscn")
 var Credits = preload("res://scenes/ui/menus/Credits.tscn")
 var Settings = preload("res://scenes/ui/menus/Settings.tscn")
 var Difficulty = preload("res://scenes/ui/menus/Difficulty.tscn")
+var DeviceSelect = preload("res://scenes/ui/menus/DeviceSelect.tscn")
+var Rebind = preload("res://scenes/ui/menus/Rebind.tscn")
 var graduated = false
 
 func _ready():
@@ -47,7 +49,19 @@ func go_to_difficulty():
 	add_child(menu)
 
 func go_to_button_config():
-	pass
+	remove_children()
+	menu = DeviceSelect.instantiate()
+	menu.back.connect(go_to_settings)
+	menu.buttons.connect(go_to_rebind)
+	add_child(menu)
+
+func go_to_rebind(keyboard: bool, gameButtons: bool):
+	remove_children()
+	menu = Rebind.instantiate()
+	menu.keyboard = keyboard
+	menu.gameButtons = gameButtons
+	menu.back.connect(go_to_button_config)
+	add_child(menu)
 
 func go_to_game(depth: int):
 	remove_children()

@@ -76,15 +76,15 @@ func pause():
 
 func _input(event: InputEvent) -> void:
 	if loseTimer.is_stopped() && winTimer.is_stopped():
-		if (event.is_action_pressed("esc") || event.is_action_pressed("pause")
-		|| event.is_action_pressed("cancel")):
-			if %Buttons/Resume.visible:
-				get_viewport().set_input_as_handled()
-				_on_resume_pressed()
-		elif event.is_action_pressed("accept"):
-			cursor.select()
-		elif !cursor.is_animating():
-			if event.is_action_pressed("down"):
+		if !cursor.is_animating():
+			if (event.is_action_pressed("esc") || event.is_action_pressed("pause")
+			|| event.is_action_pressed("cancel")):
+				if %Buttons/Resume.visible:
+					get_viewport().set_input_as_handled()
+					_on_resume_pressed()
+			elif event.is_action_pressed("accept"):
+				cursor.select()
+			elif event.is_action_pressed("down"):
 				if buttonIndex >= %Buttons.get_children().size() - 1:
 					if %Buttons/Resume.visible:
 						buttonIndex = 0

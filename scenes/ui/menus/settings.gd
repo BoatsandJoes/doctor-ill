@@ -56,12 +56,12 @@ func _on_cursor_chosen():
 		buttonCalls[buttonIndex].call()
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
-		emit_signal("back")
-	elif event.is_action_pressed("accept"):
-		cursor.select()
-	elif !cursor.is_animating():
-		if event.is_action_pressed("down"):
+	if !cursor.is_animating():
+		if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
+			emit_signal("back")
+		elif event.is_action_pressed("accept"):
+			cursor.select()
+		elif event.is_action_pressed("down"):
 			if buttonIndex >= %Buttons.get_children().size() - 1:
 				buttonIndex = 0
 			else:
@@ -119,7 +119,7 @@ func update_scale_label():
 		%Buttons/Resolution.text = "Windowed " + str(scaleMult) + "x"
 
 func button_config():
-	pass
+	emit_signal("config_controls")
 
 func go_back():
 	emit_signal("back")

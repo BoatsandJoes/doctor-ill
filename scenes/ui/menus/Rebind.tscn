@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cwuuof3rbvnqa"]
+
+[ext_resource type="Script" uid="uid://ct73uawfv6o7o" path="res://scenes/ui/menus/rebind.gd" id="1_j5rvx"]
+
+[node name="Rebind" type="CanvasLayer"]
+script = ExtResource("1_j5rvx")
