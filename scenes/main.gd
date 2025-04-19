@@ -11,6 +11,7 @@ var Settings = preload("res://scenes/ui/menus/Settings.tscn")
 var Difficulty = preload("res://scenes/ui/menus/Difficulty.tscn")
 var DeviceSelect = preload("res://scenes/ui/menus/DeviceSelect.tscn")
 var Rebind = preload("res://scenes/ui/menus/Rebind.tscn")
+var Volume = preload("res://scenes/ui/menus/Volume.tscn")
 var graduated = false
 
 func _ready():
@@ -39,6 +40,13 @@ func go_to_settings():
 	menu = Settings.instantiate()
 	menu.back.connect(go_to_main_menu)
 	menu.config_controls.connect(go_to_button_config)
+	menu.volume.connect(go_to_volume)
+	add_child(menu)
+
+func go_to_volume():
+	remove_children()
+	menu = Volume.instantiate()
+	menu.back.connect(go_to_settings)
 	add_child(menu)
 
 func go_to_difficulty():

@@ -2,6 +2,7 @@ extends CanvasLayer
 class_name Settings
 
 signal back
+signal volume
 signal config_controls
 
 var Cursor = preload("res://scenes/ui/cursor.tscn")
@@ -21,7 +22,6 @@ func _ready() -> void:
 	timer.start()
 	cursor = Cursor.instantiate()
 	cursor.chosen.connect(_on_cursor_chosen)
-	update_vol_label()
 	scaleMult = get_window().size.y / baseSize.y
 	if scaleMult == 0:
 		scaleMult = 1
@@ -96,21 +96,7 @@ func cycle_resolution():
 	update_scale_label()
 
 func cycle_volume():
-	const interval = 0.2
-	if AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("Master")) >= 1.0:
-		AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), true)
-		AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("Master"), 0.0)
-	elif AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("Master")) <= 0.0:
-		AudioServer.set_bus_mute(AudioServer.get_bus_index("Master"), false)
-		AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("Master"), interval)
-	else:
-		AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("Master"),
-		AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("Master")) + interval)
-	update_vol_label()
-
-func update_vol_label():
-	%Buttons/Volume.text = "Volume " + str(int(floor(
-		AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("Master")) * 100))) + "%"
+	emit_signal("volume")
 
 func update_scale_label():
 	if get_window().mode == Window.MODE_FULLSCREEN:
