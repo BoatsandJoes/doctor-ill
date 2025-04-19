@@ -1,20 +1,19 @@
 extends CanvasLayer
-class_name MainMenu
+class_name Library
 
-signal exit
-signal play
-signal settings
+signal back
 signal credits
+signal how_to_play
+signal scores
 
-var buttonIndex: int = 0
 var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var timer: Timer = Timer.new()
-var buttonCalls: Array[Callable] = [_on_play_pressed, _on_credits_pressed, _on_settings_pressed,
-_on_exit_pressed]
+var buttonIndex: int = 0
+var buttonCalls: Array[Callable] = [emit_how_to_play, emit_scores, emit_credits, go_back]
 
 func _ready() -> void:
-	timer.wait_time = 0.05
+	timer.wait_time = 0.01
 	timer.autostart = false
 	timer.timeout.connect(_on_timer_timeout)
 	timer.one_shot = true
@@ -22,6 +21,8 @@ func _ready() -> void:
 	timer.start()
 	cursor = Cursor.instantiate()
 	cursor.chosen.connect(_on_cursor_chosen)
+	for button in %Buttons.get_children():
+		button.pressed.connect(_on_button_pressed)
 
 func _on_timer_timeout():
 	set_cursor_position()
@@ -31,14 +32,23 @@ func set_cursor_position():
 	var button = %Buttons.get_children().get(buttonIndex)
 	cursor.position = button.global_position + Vector2(cursor.width * -1, button.size.y / 2)
 
-func _on_cursor_chosen():
-	buttonCalls[buttonIndex].call()
+func emit_how_to_play():
+	emit_signal("how_to_play")
+
+func emit_scores():
+	emit_signal("scores")
+
+func emit_credits():
+	emit_signal("credits")
+
+func go_back():
+	emit_signal("back")
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("esc"):
-		_on_exit_pressed()
-	elif !cursor.is_animating():
-		if event.is_action_pressed("accept"):
+	if !cursor.is_animating():
+		if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
+			emit_signal("back")
+		elif event.is_action_pressed("accept"):
 			cursor.select()
 		elif event.is_action_pressed("down"):
 			if buttonIndex >= %Buttons.get_children().size() - 1:
@@ -56,30 +66,21 @@ func _input(event: InputEvent) -> void:
 func _on_button_pressed():
 	cursor.select()
 
-func _on_play_pressed() -> void:
-	emit_signal("play")
+func _on_cursor_chosen():
+	buttonCalls[buttonIndex].call()
 
-func _on_settings_pressed() -> void:
-	emit_signal("settings")
-
-func _on_credits_pressed() -> void:
-	emit_signal("credits")
-
-func _on_exit_pressed() -> void:
-	emit_signal("exit")
-
-func _on_play_mouse_entered() -> void:
+func _on_how_to_play_mouse_entered():
 	buttonIndex = 0
 	set_cursor_position()
 
-func _on_settings_mouse_entered() -> void:
-	buttonIndex = 2
-	set_cursor_position()
-
-func _on_credits_mouse_entered() -> void:
+func _on_scores_mouse_entered():
 	buttonIndex = 1
 	set_cursor_position()
 
-func _on_exit_mouse_entered() -> void:
+func _on_credits_mouse_entered():
+	buttonIndex = 2
+	set_cursor_position()
+
+func _on_back_mouse_entered():
 	buttonIndex = 3
 	set_cursor_position()

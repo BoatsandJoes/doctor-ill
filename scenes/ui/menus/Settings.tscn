@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://denf86fkb3pl6"]
+[gd_scene load_steps=3 format=3 uid="uid://denf86fkb3pl6"]
 
 [ext_resource type="Script" uid="uid://ci5f2rvjtfuno" path="res://scenes/ui/menus/settings.gd" id="1_xtb8l"]
+[ext_resource type="Texture2D" uid="uid://bkyif47nq2284" path="res://assets/sprites/cycle.png" id="2_r5l7f"]
 
 [node name="Settings" type="CanvasLayer"]
 script = ExtResource("1_xtb8l")
@@ -26,13 +27,14 @@ alignment = 1
 
 [node name="Buttons" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(200, 0)
+custom_minimum_size = Vector2(230, 0)
 layout_mode = 2
 
 [node name="Resolution" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Windowed 2x"
+icon = ExtResource("2_r5l7f")
 
 [node name="Volume" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 layout_mode = 2

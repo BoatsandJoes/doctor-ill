@@ -26,7 +26,8 @@ var sounds: Dictionary = {
 	&"fire": preload("res://assets/sfx/atari_fire_1.wav"),
 	&"lightning": preload("res://assets/sfx/LightningStrike.ogg"),
 	&"clock": preload("res://assets/sfx/clock-1.ogg"),
-	&"creak": preload("res://assets/sfx/door_creak_open.ogg")
+	&"creak": preload("res://assets/sfx/door_creak_open.ogg"),
+	&"close": preload("res://assets/sfx/doorwood_close.wav")
 }
 var sfx: Array[AudioStreamPlayer] = []
 var Hint = preload("res://scenes/gameObjects/vfx/Hint.tscn")
@@ -84,7 +85,7 @@ func _ready() -> void:
 	hatchTimer.wait_time = 0.5
 	hatchTimer.autostart = false
 	hatchTimer.one_shot = true
-	hatchTimer.timeout.connect(generateNextFloor)
+	hatchTimer.timeout.connect(_on_hatch_timer_timeout)
 	add_child(hatchTimer)
 	chainTimer = Timer.new()
 	chainTimer.wait_time = 0.76
@@ -114,6 +115,11 @@ func _ready() -> void:
 	add_child(pickupTimer)
 	if depth != 10 || get_parent().get_parent().graduated:
 		pickupTimer.paused = true
+
+func _on_hatch_timer_timeout():
+	generateNextFloor()
+	if depth < 13:
+		play_sfx(&"close")
 
 func updateVisualPositions() -> void:
 	for i in range(board.size()):
@@ -188,7 +194,7 @@ func generateNextFloor() -> void:
 			# remove and add to change processing order to last
 			remove_child(player)
 			add_child(player)
-			player.gridIndex = player.gridIndex % currentParams[&"width"]
+			player.gridIndex = (player.gridIndex + player.facing) % currentParams[&"width"]
 			board[player.gridIndex] = player
 		updateVisualPositions()
 		if currentParams.has(&"rain"):
@@ -367,6 +373,7 @@ func downTheHatch():
 	play_sfx(&"creak")
 	#open hatch
 	emit_signal("hatch", (players[0].gridIndex + players[0].facing) % currentParams[&"width"])
+	players[0].get_node("AnimationPlayer").queue(&"walk")
 	hatchTimer.start()
 	get_parent().get_parent().graduated = true
 
@@ -853,6 +860,10 @@ func _physics_process(delta: float) -> void:
 					|| board[belowIndex] != null)):
 						piece.fall(tilePixels, delta, true)
 		secondsElapsed = secondsElapsed + delta
+	else:
+		var ratio: float = 1 - hatchTimer.time_left / hatchTimer.wait_time
+		players[0].position.x = (getPositionForIndex(players[0].gridIndex).x
+		+ players[0].facing * tilePixels * ratio)
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("another") && rainCounter < currentParams[&"rain"] - 0.1:

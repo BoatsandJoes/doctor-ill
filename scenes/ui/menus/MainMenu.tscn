@@ -1,6 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://b432ko5y5en5f"]
+[gd_scene load_steps=5 format=3 uid="uid://b432ko5y5en5f"]
 
 [ext_resource type="Script" uid="uid://cqrre3mxtlgdi" path="res://scenes/ui/menus/main_menu.gd" id="1_s63no"]
+[ext_resource type="Texture2D" uid="uid://kcumd8vpel5c" path="res://assets/sprites/Scroll.png" id="2_785oh"]
+[ext_resource type="Texture2D" uid="uid://b0ouduye6omx0" path="res://assets/sprites/settings.png" id="3_xs4um"]
+[ext_resource type="Texture2D" uid="uid://bnt1iyggjridc" path="res://assets/sprites/exit.png" id="4_qcwt5"]
 
 [node name="MainMenu" type="CanvasLayer"]
 script = ExtResource("1_s63no")
@@ -31,25 +34,30 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Play"
+text = "Play!"
+
+[node name="Library" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Library"
+icon = ExtResource("2_785oh")
+alignment = 0
 
 [node name="Settings" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Settings"
-
-[node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
-unique_name_in_owner = true
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "Credits"
+icon = ExtResource("3_xs4um")
+alignment = 0
 
 [node name="Exit" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer2/Buttons"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Exit"
+text = "  Exit      "
+icon = ExtResource("4_qcwt5")
 
 [node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
@@ -67,9 +75,9 @@ horizontal_alignment = 1
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Play" to="." method="_on_play_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Play" to="." method="_on_button_pressed"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Library" to="." method="_on_credits_mouse_entered"]
+[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Library" to="." method="_on_button_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Settings" to="." method="_on_settings_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Settings" to="." method="_on_button_pressed"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Credits" to="." method="_on_credits_mouse_entered"]
-[connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Credits" to="." method="_on_button_pressed"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Exit" to="." method="_on_exit_mouse_entered"]
 [connection signal="pressed" from="MarginContainer/VBoxContainer/HBoxContainer2/Buttons/Exit" to="." method="_on_button_pressed"]

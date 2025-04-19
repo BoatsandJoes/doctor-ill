@@ -12,6 +12,7 @@ var Difficulty = preload("res://scenes/ui/menus/Difficulty.tscn")
 var DeviceSelect = preload("res://scenes/ui/menus/DeviceSelect.tscn")
 var Rebind = preload("res://scenes/ui/menus/Rebind.tscn")
 var Volume = preload("res://scenes/ui/menus/Volume.tscn")
+var Library = preload("res://scenes/ui/menus/Library.tscn")
 var graduated = false
 
 func _ready():
@@ -92,10 +93,25 @@ func remove_children():
 		remove_child(menu)
 		menu.queue_free()
 
+func go_to_how_to_play():
+	pass
+
+func go_to_scores():
+	pass
+
 func _on_menu_credits():
 	remove_children()
+	menu = Library.instantiate()
+	menu.back.connect(go_to_main_menu)
+	menu.credits.connect(go_to_credits)
+	menu.how_to_play.connect(go_to_how_to_play)
+	menu.scores.connect(go_to_scores)
+	add_child(menu)
+
+func go_to_credits():
+	remove_children()
 	menu = Credits.instantiate()
-	menu.exit.connect(go_to_main_menu)
+	menu.exit.connect(_on_menu_credits)
 	add_child(menu)
 
 func _on_game_exit(track: int):

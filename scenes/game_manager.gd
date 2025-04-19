@@ -100,8 +100,19 @@ func _on_board_next_floor():
 	hatchOpen = false
 	for i in range(1,8):
 		$doors.set_cell(Vector2i(i,11), 1, Vector2i(0,0))
+	$Ceiling.set_cell(Vector2i(boards[0].players[0].gridIndex + 1,0), 1, Vector2i(0,0))
+	var timer = Timer.new()
+	timer.autostart = true
+	timer.one_shot = true
+	timer.wait_time = 1
+	timer.timeout.connect(close_ceil)
+	add_child(timer)
 	hud.next_floor()
 	boards[0].pause_clock_for(hud.air - floor(hud.air))
+
+func close_ceil():
+	for i in range(1,8):
+		$Ceiling.set_cell(Vector2i(i,0), 0, Vector2i(0,0))
 
 func _on_board_destroy_clock(quantity: float, max: float):
 	hud.update_air(quantity / 2, max)
@@ -121,9 +132,12 @@ func _on_board_won():
 
 func play_win_animation():
 	hud.next_floor()
+	boards[0].players[0].gridIndex = boards[0].players[0].gridIndex + boards[0].players[0].facing
 	# replace floor
 	for i in range(1,8):
 		$doors.set_cell(Vector2i(i,11), 0, Vector2i(1,12))
+	# replace ceiling
+	$Ceiling.set_cell(Vector2i(boards[0].players[0].gridIndex,0), 1, Vector2i(0,0))
 	pause.time = formatSeconds(boards[0].secondsElapsed)
 	var player = boards[0].players[0]
 	player.process_mode = Node.PROCESS_MODE_ALWAYS
