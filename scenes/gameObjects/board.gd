@@ -862,8 +862,12 @@ func _physics_process(delta: float) -> void:
 		secondsElapsed = secondsElapsed + delta
 	else:
 		var ratio: float = 1 - hatchTimer.time_left / hatchTimer.wait_time
-		players[0].position.x = (getPositionForIndex(players[0].gridIndex).x
-		+ players[0].facing * tilePixels * ratio)
+		if ratio <= 0.5:
+			players[0].position.x = (getPositionForIndex(players[0].gridIndex).x
+			+ (players[0].facing * 2.0 * tilePixels * ratio))
+		else:
+			players[0].position.x = getPositionForIndex(players[0].gridIndex + players[0].facing).x
+			players[0].position.y = players[0].position.y + delta * tilePixels * 5
 
 func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("another") && rainCounter < currentParams[&"rain"] - 0.1:
