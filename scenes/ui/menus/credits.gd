@@ -24,3 +24,6 @@ func _process(delta: float) -> void:
 	$Node2D.position.y = $Node2D.position.y + delta * speed
 	if $Node2D.position.y > %Credits.size.y + 220:
 		emit_signal("exit")
+
+func _on_credits_meta_clicked(meta: Variant) -> void:
+	OS.shell_open(str(meta).replace("\n", ""))

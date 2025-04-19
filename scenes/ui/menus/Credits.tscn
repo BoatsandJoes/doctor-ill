@@ -44,181 +44,184 @@ theme_override_font_sizes/mono_font_size = 24
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
-text = "Lead Developer: BoatsAndJoes
+text = "Down the Match version 13
+
+Lead Developer: BoatsAndJoes
 
         Graphics
 
 Main menu background by ansimuz
-https://opengameart.org/content/phantasy-dungeon-
-entrance
+[url]https://opengameart.org/content/phantasy-dungeon-
+entrance[/url]
 
 Mouse by rolff
-https://rolff.itch.io/mouse-spritesheet-16x16
+[url]https://rolff.itch.io/mouse-spritesheet-16x16[/url]
 
 Frog, Slime, Imp, Dino, Eye, Ghost, and Skeleton by ansimuz.com
-https://opengameart.org/content/chibi-monsters-set-01
-https://creativecommons.org/licenses/by/3.0/
+[url]https://opengameart.org/content/platform-pixel-art-assets[/url]
+[url]https://opengameart.org/content/chibi-monsters-set-01[/url]
+[url]https://creativecommons.org/licenses/by/3.0/[/url]
 Imp color changed slightly
 
 Fairy by GrafxKid
-https://opengameart.org/content/super-random-sprites
+[url]https://opengameart.org/content/super-random-sprites[/url]
 
 Background tiles, Bat, and Platino
 by DragonDePlatino and DawnBringer
-https://opengameart.org/content/dawnlike-16x16-universal-
-rogue-like-tileset-v181
+[url]https://opengameart.org/content/dawnlike-16x16-universal-
+rogue-like-tileset-v181[/url]
 No modifications made
-https://creativecommons.org/licenses/by/4.0/
+[url]https://creativecommons.org/licenses/by/4.0/[/url]
 
-Snake Copyright NightBlade9 (twitter.com/nightblade99).
+Snake Copyright NightBlade9 ([url]https://twitter.com/nightblade99[/url]).
 Original snake art copyright Joe Williamson.
 Further modified to lighten the outline.
-https://opengameart.org/content/animated-roguelikerpg-
-monsters-from-eman-quest
-https://creativecommons.org/licenses/by-sa/3.0/
+[url]https://opengameart.org/content/animated-roguelikerpg-
+monsters-from-eman-quest[/url]
+[url]https://creativecommons.org/licenses/by-sa/3.0/[/url]
 
-Cactus by NightBlade9 (twitter.com/nightblade99).
-https://opengameart.org/content/animated-walk-cycle-
-monsters-hijabi-from-eman-quest
-https://creativecommons.org/publicdomain/zero/1.0/
+Cactus by NightBlade9 ([url]https://twitter.com/nightblade99[/url]).
+[url]https://opengameart.org/content/animated-walk-cycle-
+monsters-hijabi-from-eman-quest[/url]
+[url]https://creativecommons.org/publicdomain/zero/1.0/[/url]
 
 Whirlwind by Spring Spring
 Cropped to 16 tall.
-https://opengameart.org/content/whirlwind
-https://creativecommons.org/licenses/by/3.0/
-https://creativecommons.org/licenses/by-sa/3.0/
+[url]https://opengameart.org/content/whirlwind[/url]
+[url]https://creativecommons.org/licenses/by/3.0/[/url]
+[url]https://creativecommons.org/licenses/by-sa/3.0/[/url]
 
 Ice tile by Angel
-https://opengameart.org/content/ice-dungeon
-https://static.opengameart.org/OGA-BY-3.0.txt
+[url]https://opengameart.org/content/ice-dungeon[/url]
+[url]https://static.opengameart.org/OGA-BY-3.0.txt[/url]
 
 Clock by MSavioti
-https://opengameart.org/content/simple-clock-16x16
+[url]https://opengameart.org/content/simple-clock-16x16[/url]
 
 Shock by Clint Bellanger
-https://opengameart.org/content/lightning-shock-spell
-https://creativecommons.org/licenses/by/3.0/
+[url]https://opengameart.org/content/lightning-shock-spell[/url]
+[url]https://creativecommons.org/licenses/by/3.0/[/url]
 
 Electricity by Jordan Irwin (AntumDeluge)
-https://opengameart.org/node/165557
-https://creativecommons.org/licenses/by/3.0/
-http://static.opengameart.org/OGA-BY-3.0.txt
+[url]https://opengameart.org/node/165557[/url]
+[url]https://creativecommons.org/licenses/by/3.0/[/url]
+[url]http://static.opengameart.org/OGA-BY-3.0.txt[/url]
 
 Fire by ColorOptimist
-https://opengameart.org/content/2d-pixel-fire-sprite-strip
-https://creativecommons.org/licenses/by/3.0/
+[url]https://opengameart.org/content/2d-pixel-fire-sprite-strip[/url]
+[url]https://creativecommons.org/licenses/by/3.0/[/url]
 
 Explosion by Sogomn
-https://opengameart.org/content/explosion-3
+[url]https://opengameart.org/content/explosion-3[/url]
 
-Font https://burloe.itch.io/bagura-font
+Font [url]https://burloe.itch.io/bagura-font[/url]
 
         Sound
 
 Clock by AntumDeluge
-https://opengameart.org/content/ticking-clock-0
+[url]https://opengameart.org/content/ticking-clock-0[/url]
 
 Torch Fire Spell by spookymodem
-https://opengameart.org/content/torch-fire-spell
-https://creativecommons.org/licenses/by/3.0/
+[url]https://opengameart.org/content/torch-fire-spell[/url]
+[url]https://creativecommons.org/licenses/by/3.0/[/url]
 Fade in and out applied
 
 Fire by dklon
-https://opengameart.org/content/atari-fire
-https://creativecommons.org/licenses/by/3.0/
+[url]https://opengameart.org/content/atari-fire[/url]
+[url]https://creativecommons.org/licenses/by/3.0/[/url]
 
 Little zap - zaps_1a by ani_music
-https://freesound.org/s/219622/
+[url]https://freesound.org/s/219622/[/url]
 License: Attribution 4.0
 Unmodified
 
 Charge up 2 by BrickDeveloper171
-https://freesound.org/s/610562/
+[url]https://freesound.org/s/610562/[/url]
 License: Creative Commons 0
 Tempo increased
 
 Lightning Strike by Timopy
-https://opengameart.org/content/misc-sfx-pack
+[url]https://opengameart.org/content/misc-sfx-pack[/url]
 
 Steam release sounds by bart
-https://opengameart.org/content/steam-release-sounds
+[url]https://opengameart.org/content/steam-release-sounds[/url]
 
 Door by laleksic
-https://opengameart.org/content/various-sound-effects
+[url]https://opengameart.org/content/various-sound-effects[/url]
 
 Button click by Kenney
-https://www.kenney.nl
+[url]https://www.kenney.nl[/url]
 
 No Hope (You died) by Cleyton Kauffman
-https://soundcloud.com/cleytonkauffman
-https://opengameart.org/content/game-over-theme
+[url]https://soundcloud.com/cleytonkauffman[/url]
+[url]https://opengameart.org/content/game-over-theme[/url]
 
 Song: Max Brhon - Humanity [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/Humanity
-Watch: http://youtu.be/OJhqsUnKUWw
+Free Download/Stream: [url]http://ncs.io/Humanity[/url]
+Watch: [url]http://youtu.be/OJhqsUnKUWw[/url]
 
 Song: LOUD ABOUT US! - Goes Like [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: https://ncs.io/GoesLike
-Watch: http://youtu.be/eDcKZpoUc6s
+Free Download/Stream: [url]https://ncs.io/GoesLike[/url]
+Watch: [url]http://youtu.be/eDcKZpoUc6s[/url]
 
 Song: Toxic Joy - All Night [Arcade Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/allnight
-Watch: http://ncs.lnk.to/allnightAT/youtube
+Free Download/Stream: [url]http://ncs.io/allnight[/url]
+Watch: [url]http://ncs.lnk.to/allnightAT/youtube[/url]
 
 Song: Alisky - Grow (feat. VØR) [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://NCS.io/Grow
-Watch: http://youtu.be/ZbnMeTzzjZE
+Free Download/Stream: [url]http://NCS.io/Grow[/url]
+Watch: [url]http://youtu.be/ZbnMeTzzjZE[/url]
 
 Song: JOXION - Talk That Way [Arcade Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/TalkThatWay
-Watch: https://www.youtube.com/watch?v=PMUqriyGW64
+Free Download/Stream: [url]http://ncs.io/TalkThatWay[/url]
+Watch: [url]https://www.youtube.com/watch?v=PMUqriyGW64[/url]
 
 Song: Siberian Express - Talk To Me [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://NCS.io/SETalkToMe
-Watch: http://youtu.be/LKg6P5aI_bQ
+Free Download/Stream: [url]http://NCS.io/SETalkToMe[/url]
+Watch: [url]http://youtu.be/LKg6P5aI_bQ[/url]
 
 Track: NATSUMI - Take Me Away [NCS Release]
 Music provided by NoCopyrightSounds.
-Watch: https://youtu.be/25-ma4FUXuY
-Free Download / Stream: https://ncs.io/TakeMeAway
+Watch: [url]https://youtu.be/25-ma4FUXuY[/url]
+Free Download / Stream: [url]https://ncs.io/TakeMeAway[/url]
 
 Song: SIIK & Alenn - Mess [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/Mess
-Watch: https://www.youtube.com/watch?v=-Kjrf-pxQc4
+Free Download/Stream: [url]http://ncs.io/Mess[/url]
+Watch: [url]https://www.youtube.com/watch?v=-Kjrf-pxQc4[/url]
 
 Song: More Plastic & URBANO - Psycho [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/MPU_Psycho
-Watch: https://www.youtube.com/watch?v=-QKgzYTPSEo
+Free Download/Stream: [url]http://ncs.io/MPU_Psycho[/url]
+Watch: [url]https://www.youtube.com/watch?v=-QKgzYTPSEo[/url]
 
 Song: NOYSE & ÆSTRØ - La Manera De Vivir [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/LMDV
-Watch: https://www.youtube.com/watch?v=z7hLV1JaryA
+Free Download/Stream: [url]http://ncs.io/LMDV[/url]
+Watch: [url]https://www.youtube.com/watch?v=z7hLV1JaryA[/url]
 
 Song: Sam Ourt, AKIAL & Srikar
     - Escape (Juan Dileju & Sam Ourt VIP Mix)
 [NCS Release] Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/Escape_VIP
-Watch: https://www.youtube.com/watch?v=TtFSSfoUVo4
+Free Download/Stream: [url]http://ncs.io/Escape_VIP[/url]
+Watch: [url]https://www.youtube.com/watch?v=TtFSSfoUVo4[/url]
 
 Song: Approaching Nirvana & Alex Holmes
     - Darkness Comes [NCS Release]
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/DarknessComes
-Watch: http://youtu.be/NxpmN_f7AbY
+Free Download/Stream: [url]http://ncs.io/DarknessComes[/url]
+Watch: [url]http://youtu.be/NxpmN_f7AbY[/url]
 
 Song: Zachz, Фрози, Joyful - Boogie
 Music provided by NoCopyrightSounds
-Free Download/Stream: http://ncs.io/Boogie
-Watch: http://ncs.lnk.to/BoogieAT/youtube
+Free Download/Stream: [url]http://ncs.io/Boogie[/url]
+Watch: [url]http://ncs.lnk.to/BoogieAT/youtube[/url]
 
         Playtesting
 
@@ -237,3 +240,5 @@ autowrap_mode = 0
 
 [node name="Camera2D" type="Camera2D" parent="Node2D"]
 unique_name_in_owner = true
+
+[connection signal="meta_clicked" from="CanvasLayer/MarginContainer/HBoxContainer/VBoxContainer/Credits" to="." method="_on_credits_meta_clicked"]
