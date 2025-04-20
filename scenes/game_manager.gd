@@ -104,7 +104,7 @@ func _on_board_next_floor():
 	var timer = Timer.new()
 	timer.autostart = true
 	timer.one_shot = true
-	timer.wait_time = 1
+	timer.wait_time = 0.88
 	timer.timeout.connect(close_ceil)
 	add_child(timer)
 	hud.next_floor()

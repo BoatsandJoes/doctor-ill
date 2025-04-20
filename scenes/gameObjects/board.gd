@@ -27,7 +27,7 @@ var sounds: Dictionary = {
 	&"lightning": preload("res://assets/sfx/LightningStrike.ogg"),
 	&"clock": preload("res://assets/sfx/clock-1.ogg"),
 	&"creak": preload("res://assets/sfx/door_creak_open.ogg"),
-	&"close": preload("res://assets/sfx/doorwood_close.wav")
+	&"close": preload("res://assets/sfx/door_close.ogg")
 }
 var sfx: Array[AudioStreamPlayer] = []
 var Hint = preload("res://scenes/gameObjects/vfx/Hint.tscn")
