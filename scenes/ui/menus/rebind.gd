@@ -207,13 +207,139 @@ func _input(event: InputEvent) -> void:
 		else:
 			pass
 
+func _on_back_mouse_entered():
+	if !listening:
+		vButtonIndex = -1
+		set_cursor_position()
+
 func _on_up_mouse_entered():
 	if !listening:
 		vButtonIndex = 0
 		hButtonIndex = 0
 		set_cursor_position()
 
-func _on_back_mouse_entered():
+func _on_down_mouse_entered() -> void:
 	if !listening:
-		vButtonIndex = -1
+		vButtonIndex = 1
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_left_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 2
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_right_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 3
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_move_one_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 4
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_move_stack_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 5
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_kick_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 6
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_rain_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 7
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_accept_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 4
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_cancel_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 5
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_pause_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 6
+		hButtonIndex = 0
+		set_cursor_position()
+
+func _on_up_1_mouse_entered():
+	if !listening:
+		vButtonIndex = 0
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_down_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 1
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_left_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 2
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_right_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 3
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_move_one_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 4
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_move_stack_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 5
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_kick_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 6
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_rain_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 7
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_accept_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 4
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_cancel_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 5
+		hButtonIndex = 1
+		set_cursor_position()
+
+func _on_pause_1_mouse_entered() -> void:
+	if !listening:
+		vButtonIndex = 6
+		hButtonIndex = 1
 		set_cursor_position()
