@@ -21,7 +21,7 @@ theme_override_constants/separation = -10
 
 [node name="Controls" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2
-theme_override_constants/separation = 40
+theme_override_constants/separation = 30
 
 [node name="Labels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls"]
 unique_name_in_owner = true
@@ -95,7 +95,7 @@ layout_mode = 2
 theme_override_constants/separation = 30
 
 [node name="Buttons1" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
@@ -158,7 +158,7 @@ theme_override_font_sizes/font_size = 24
 text = " "
 
 [node name="Buttons2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
-custom_minimum_size = Vector2(120, 0)
+custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
@@ -215,69 +215,6 @@ theme_override_font_sizes/font_size = 24
 text = " "
 
 [node name="Pause1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Buttons3" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
-custom_minimum_size = Vector2(120, 0)
-layout_mode = 2
-theme_override_constants/separation = 5
-
-[node name="Up2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Down2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Left2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Right2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="MoveOne2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="MoveStack2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Kick2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Rain2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Accept2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Cancel2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
-visible = false
-layout_mode = 2
-theme_override_font_sizes/font_size = 24
-text = " "
-
-[node name="Pause2" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons3"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24

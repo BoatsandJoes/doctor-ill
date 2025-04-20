@@ -98,16 +98,50 @@ func load_binds_to_ui(key: StringName, index: int):
 					binds[key][i].as_text()
 				)
 			elif binds[key][i] is InputEventJoypadButton:
-				%Buttons.get_children()[i].get_children()[index].text = (
-					binds[key][i].as_text().substr(17, 9)
-				)
+				if binds[key][i].as_text().find("(") != -1:
+					%Buttons.get_children()[i].get_children()[index].text = (
+						binds[key][i].as_text().substr(binds[key][i].as_text().find("(") + 1, -1)
+					)
+				else:
+					%Buttons.get_children()[i].get_children()[index].text = (
+						binds[key][i].as_text().substr(0, -1)
+					)
 			elif binds[key][i] is InputEventJoypadMotion:
+				var text: String = ""
+				if binds[key][i].axis == JOY_AXIS_LEFT_X:
+					text = "Left Stick"
+					if binds[key][i].axis_value < 0:
+						text = text + " Left"
+					elif binds[key][i].axis_value > 0:
+						text = text + " Right"
+				elif binds[key][i].axis == JOY_AXIS_LEFT_Y:
+					text = "Left Stick"
+					if binds[key][i].axis_value < 0:
+						text = text + " Up"
+					elif binds[key][i].axis_value > 0:
+						text = text + " Down"
+				elif binds[key][i].axis == JOY_AXIS_RIGHT_X:
+					text = "Right Stick"
+					if binds[key][i].axis_value < 0:
+						text = text + " Left"
+					elif binds[key][i].axis_value > 0:
+						text = text + " Right"
+				elif binds[key][i].axis == JOY_AXIS_RIGHT_Y:
+					text = "Right Stick"
+					if binds[key][i].axis_value < 0:
+						text = text + " Up"
+					elif binds[key][i].axis_value > 0:
+						text = text + " Down"
+				elif binds[key][i].axis == JOY_AXIS_TRIGGER_LEFT:
+					text = "Left Trigger/L2/ZL"
+				elif binds[key][i].axis == JOY_AXIS_TRIGGER_RIGHT:
+					text = "Right Trigger/R2/ZR"
 				%Buttons.get_children()[i].get_children()[index].text = (
-					binds[key][i].as_text().substr(25, 9)
+					text
 				)
-			if %Buttons.get_children()[i].get_children()[index].text.length() > 9:
+			if %Buttons.get_children()[i].get_children()[index].text.length() > 19:
 				%Buttons.get_children()[i].get_children()[index].text = (
-					%Buttons.get_children()[i].get_children()[index].text.substr(0,8) + "-")
+					%Buttons.get_children()[i].get_children()[index].text.substr(0,18) + "-")
 	if binds[key].size() < %Buttons.get_children().size():
 		for i in range(binds[key].size(), %Buttons.get_children().size()):
 			%Buttons.get_children()[i].get_children()[index].text = "<Unbound>"
