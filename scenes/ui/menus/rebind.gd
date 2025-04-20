@@ -12,8 +12,57 @@ var keyboard: bool
 var gameButtons: bool
 var vButtonIndex: int = 0
 var hButtonIndex: int = 0
+var binds: Dictionary[StringName,Array] = {
+	&"up": [],
+	&"down": [],
+	&"left": [],
+	&"right": [],
+	&"pick_up_one": [],
+	&"pick_up_stack": [],
+	&"kick": [],
+	&"another": [],
+	&"accept": [],
+	&"cancel": [],
+	&"pause": [],
+	}
 
 func _ready() -> void:
+	if gameButtons:
+		%Title.text = "Game Buttons  "
+		# show correct buttons/labels
+		for list in %Buttons.get_children():
+			list.get_children()[4].visible = true
+			list.get_children()[5].visible = true
+			list.get_children()[6].visible = true
+			list.get_children()[7].visible = true
+			list.get_children()[8].visible = false
+			list.get_children()[9].visible = false
+			list.get_children()[10].visible = false
+		%Labels.get_children()[4].visible = true
+		%Labels.get_children()[5].visible = true
+		%Labels.get_children()[6].visible = true
+		%Labels.get_children()[7].visible = true
+		%Labels.get_children()[8].visible = false
+		%Labels.get_children()[9].visible = false
+		%Labels.get_children()[10].visible = false
+	else:
+		%Title.text = "Menu Buttons  "
+		# show correct buttons/labels
+		for list in %Buttons.get_children():
+			list.get_children()[4].visible = false
+			list.get_children()[5].visible = false
+			list.get_children()[6].visible = false
+			list.get_children()[7].visible = false
+			list.get_children()[8].visible = true
+			list.get_children()[9].visible = true
+			list.get_children()[10].visible = true
+		%Labels.get_children()[4].visible = false
+		%Labels.get_children()[5].visible = false
+		%Labels.get_children()[6].visible = false
+		%Labels.get_children()[7].visible = false
+		%Labels.get_children()[8].visible = true
+		%Labels.get_children()[9].visible = true
+		%Labels.get_children()[10].visible = true
 	timer.wait_time = 0.01
 	timer.autostart = false
 	timer.timeout.connect(_on_timer_timeout)
@@ -27,6 +76,41 @@ func _ready() -> void:
 	for i in range(0, %Buttons.get_children().size()):
 		for button in %Buttons.get_children().get(i).get_children():
 			button.pressed.connect(_on_button_pressed)
+	#load action mappings into UI
+	for i in range(binds.keys().size()):
+		load_binds_to_ui(binds.keys()[i], i)
+
+func load_binds_to_ui(key: StringName, index: int):
+	# Load into dictionary first
+	for event in InputMap.action_get_events(key):
+		if keyboard && event is InputEventKey:
+			binds[key].append(event)
+		elif !keyboard:
+			if event is InputEventJoypadButton:
+				binds[key].append(event)
+			elif event is InputEventJoypadMotion:
+				binds[key].append(event)
+	# Now put into UI
+	for i in range(binds[key].size()):
+		if i < %Buttons.get_children().size():
+			if binds[key][i] is InputEventKey:
+				%Buttons.get_children()[i].get_children()[index].text = (
+					binds[key][i].as_text()
+				)
+			elif binds[key][i] is InputEventJoypadButton:
+				%Buttons.get_children()[i].get_children()[index].text = (
+					binds[key][i].as_text()
+				)
+			elif binds[key][i] is InputEventJoypadMotion:
+				%Buttons.get_children()[i].get_children()[index].text = (
+					binds[key][i].as_text()
+				)
+			if %Buttons.get_children()[i].get_children()[index].text.length() > 9:
+				%Buttons.get_children()[i].get_children()[index].text = (
+					%Buttons.get_children()[i].get_children()[index].text.substr(0,8) + "-")
+	if binds[key].size() < %Buttons.get_children().size():
+		for i in range(binds[key].size() - 1, %Buttons.get_children().size()):
+			%Buttons.get_children()[i].get_children()[index].text = "<Unbound>"
 
 func _on_timer_timeout():
 	set_cursor_position()
@@ -40,7 +124,14 @@ func set_cursor_position():
 	if vButtonIndex == -1:
 		button = %Back
 	else:
-		button = %Buttons.get_children().get(hButtonIndex).get_children().get(vButtonIndex)
+		var buttonList = %Buttons.get_children().get(hButtonIndex)
+		var j = -1
+		for i in range(buttonList.get_children().size()):
+			if buttonList.get_children()[i].visible:
+				j = j + 1
+			if j == vButtonIndex:
+				button = buttonList.get_children()[i]
+				break
 	cursor.position = button.global_position + Vector2(cursor.width * -1, button.size.y / 2)
 
 func _on_cursor_chosen():
@@ -56,12 +147,13 @@ func _input(event: InputEvent) -> void:
 				cursor.select()
 			elif event.is_action_pressed("up"):
 				if vButtonIndex <= -1:
-					vButtonIndex = %Buttons.get_children().get(hButtonIndex).get_children().size() - 1
+					vButtonIndex = 7 if gameButtons else 6
 				else:
 					vButtonIndex = vButtonIndex - 1
 				set_cursor_position()
 			elif event.is_action_pressed("down"):
-				if vButtonIndex >= %Buttons.get_children().get(hButtonIndex).get_children().size() - 1:
+				var max = 7 if gameButtons else 6
+				if vButtonIndex >= max:
 					vButtonIndex = -1
 				else:
 					vButtonIndex = vButtonIndex + 1

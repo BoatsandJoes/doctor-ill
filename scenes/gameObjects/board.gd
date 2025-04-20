@@ -170,9 +170,6 @@ func generateNextFloor() -> void:
 				add_child(piece)
 				piece.win("")
 		for player in players:
-			# remove and add to change processing order to last
-			remove_child(player)
-			add_child(player)
 			player.gridIndex = player.gridIndex % currentParams[&"width"]
 			board[player.gridIndex] = player
 		updateVisualPositions()
