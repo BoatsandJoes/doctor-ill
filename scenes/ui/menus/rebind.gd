@@ -99,17 +99,17 @@ func load_binds_to_ui(key: StringName, index: int):
 				)
 			elif binds[key][i] is InputEventJoypadButton:
 				%Buttons.get_children()[i].get_children()[index].text = (
-					binds[key][i].as_text()
+					binds[key][i].as_text().substr(17, 9)
 				)
 			elif binds[key][i] is InputEventJoypadMotion:
 				%Buttons.get_children()[i].get_children()[index].text = (
-					binds[key][i].as_text()
+					binds[key][i].as_text().substr(25, 9)
 				)
 			if %Buttons.get_children()[i].get_children()[index].text.length() > 9:
 				%Buttons.get_children()[i].get_children()[index].text = (
 					%Buttons.get_children()[i].get_children()[index].text.substr(0,8) + "-")
 	if binds[key].size() < %Buttons.get_children().size():
-		for i in range(binds[key].size() - 1, %Buttons.get_children().size()):
+		for i in range(binds[key].size(), %Buttons.get_children().size()):
 			%Buttons.get_children()[i].get_children()[index].text = "<Unbound>"
 
 func _on_timer_timeout():
