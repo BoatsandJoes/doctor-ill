@@ -30,11 +30,6 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "How to Play"
 
-[node name="Scores" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Buttons"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 36
-text = "High Scores"
-
 [node name="Credits" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
@@ -58,6 +53,5 @@ theme_override_font_sizes/font_size = 96
 text = "Library"
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Buttons/HowToPlay" to="." method="_on_how_to_play_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Buttons/Scores" to="." method="_on_scores_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Buttons/Credits" to="." method="_on_credits_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Buttons/Back" to="." method="_on_back_mouse_entered"]

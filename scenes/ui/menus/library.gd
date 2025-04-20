@@ -10,7 +10,7 @@ var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var timer: Timer = Timer.new()
 var buttonIndex: int = 0
-var buttonCalls: Array[Callable] = [emit_how_to_play, emit_scores, emit_credits, go_back]
+var buttonCalls: Array[Callable] = [emit_how_to_play, emit_credits, go_back]
 
 func _ready() -> void:
 	timer.wait_time = 0.01
@@ -78,9 +78,9 @@ func _on_scores_mouse_entered():
 	set_cursor_position()
 
 func _on_credits_mouse_entered():
-	buttonIndex = 2
+	buttonIndex = 1
 	set_cursor_position()
 
 func _on_back_mouse_entered():
-	buttonIndex = 3
+	buttonIndex = 2
 	set_cursor_position()
