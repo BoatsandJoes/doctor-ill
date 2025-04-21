@@ -4,6 +4,7 @@ class_name Pause
 signal exit
 signal restart
 
+var queueUnpause: bool = false
 var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var buttonIndex: int = 0
@@ -93,7 +94,7 @@ func _input(event: InputEvent) -> void:
 			|| event.is_action_pressed("cancel")):
 				if %Buttons/Resume.visible:
 					get_viewport().set_input_as_handled()
-					_on_resume_pressed()
+					queueUnpause = true
 			elif event.is_action_pressed("accept"):
 				cursor.select()
 			elif event.is_action_pressed("down"):
@@ -119,6 +120,11 @@ func _input(event: InputEvent) -> void:
 			loseTimer.start(0.01)
 		if !winTimer.is_stopped():
 			winTimer.start(0.01)
+
+func _physics_process(delta: float) -> void:
+	if queueUnpause:
+		queueUnpause = false
+		_on_resume_pressed()
 
 func _on_button_pressed():
 	cursor.select()

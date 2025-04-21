@@ -4,6 +4,7 @@ class_name GameManager
 signal exit(track: int)
 signal restart(track: int, startingDepth: int)
 
+var queuePause: bool = false
 var HUD = preload("res://scenes/ui/HUD.tscn")
 var hud: HUD
 var Board = preload("res://scenes/gameObjects/board.tscn")
@@ -166,9 +167,7 @@ func _input(event: InputEvent) -> void:
 	if event.is_action_pressed("esc") || event.is_action_pressed("pause"):
 		if !pause.visible:
 			get_viewport().set_input_as_handled()
-			boards[0].visible = false
-			pause.get_node("%NowPlaying").text = trackTitles[currentTrack]
-			pause.pause()
+			queuePause = true
 
 func exit_game():
 	emit_signal("exit", currentTrack)
@@ -187,3 +186,8 @@ func play_random_song():
 func _physics_process(delta: float) -> void:
 	if !hatchOpen:
 		hud.update_air(-delta, hud.maxAir)
+	if queuePause:
+		queuePause = false
+		boards[0].visible = false
+		pause.get_node("%NowPlaying").text = trackTitles[currentTrack]
+		pause.pause()
