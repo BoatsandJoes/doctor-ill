@@ -19,6 +19,8 @@ var songs: Dictionary = {
 	&"lose": preload("res://assets/sfx/No Hope.ogg"),
 	&"win": preload("res://assets/music/Joyful, Фрози, Zachz Winner - Boogie [NCS Release].mp3")
 }
+var upReleased = true
+var downReleased = true
 
 func _ready() -> void:
 	music = AudioStreamPlayer.new()
@@ -97,7 +99,8 @@ func _input(event: InputEvent) -> void:
 					queueUnpause = true
 			elif event.is_action_pressed("accept"):
 				cursor.select()
-			elif event.is_action_pressed("down"):
+			elif event.is_action_pressed("down") && downReleased:
+				downReleased = false
 				if buttonIndex >= %Buttons.get_children().size() - 1:
 					if %Buttons/Resume.visible:
 						buttonIndex = 0
@@ -108,13 +111,18 @@ func _input(event: InputEvent) -> void:
 				else:
 					buttonIndex = buttonIndex + 1
 				set_cursor_position()
-			elif event.is_action_pressed("up"):
+			elif event.is_action_pressed("up") && upReleased:
+				upReleased = false
 				if (buttonIndex <= 0 || (!%Buttons/Resume.visible && buttonIndex <= 1)
 				|| (!%Buttons/Restart.visible && buttonIndex <= 2)):
 					buttonIndex = %Buttons.get_children().size() - 1
 				else:
 					buttonIndex = buttonIndex - 1
 				set_cursor_position()
+			elif event.is_action_released("down"):
+				downReleased = true
+			elif event.is_action_released("up"):
+				upReleased = true
 	elif (event.is_action_pressed("pause") || event.is_action_pressed("esc")):
 		if !loseTimer.is_stopped():
 			loseTimer.start(0.01)

@@ -25,6 +25,10 @@ var binds: Dictionary[StringName,Array] = {
 	&"cancel": [],
 	&"pause": [],
 	}
+var upReleased = true
+var downReleased = true
+var leftReleased = true
+var rightReleased = true
 
 func _ready() -> void:
 	if gameButtons:
@@ -189,31 +193,43 @@ func _input(event: InputEvent) -> void:
 				emit_signal("back", keyboard)
 			elif event.is_action_pressed("accept"):
 				cursor.select()
-			elif event.is_action_pressed("up"):
+			elif event.is_action_pressed("up") && upReleased:
+				upReleased = false
 				if vButtonIndex <= -1:
 					vButtonIndex = 7 if gameButtons else 6
 				else:
 					vButtonIndex = vButtonIndex - 1
 				set_cursor_position()
-			elif event.is_action_pressed("down"):
+			elif event.is_action_pressed("down") && downReleased:
+				downReleased = false
 				var max = 7 if gameButtons else 6
 				if vButtonIndex >= max:
 					vButtonIndex = -1
 				else:
 					vButtonIndex = vButtonIndex + 1
 				set_cursor_position()
-			elif event.is_action_pressed("left"):
+			elif event.is_action_pressed("left") && leftReleased:
+				leftReleased = false
 				if hButtonIndex <= 0:
 					hButtonIndex = %Buttons.get_children().size() - 1
 				else:
 					hButtonIndex = hButtonIndex - 1
 				set_cursor_position()
-			elif event.is_action_pressed("right"):
+			elif event.is_action_pressed("right") && rightReleased:
+				rightReleased = false
 				if hButtonIndex >= %Buttons.get_children().size() - 1:
 					hButtonIndex = 0
 				else:
 					hButtonIndex = hButtonIndex + 1
 				set_cursor_position()
+			elif event.is_action_released("down"):
+				downReleased = true
+			elif event.is_action_released("up"):
+				upReleased = true
+			elif event.is_action_released("right"):
+				rightReleased = true
+			elif event.is_action_released("left"):
+				leftReleased = true
 		else:
 			# enter input into map
 			var done = false
@@ -236,14 +252,14 @@ func _input(event: InputEvent) -> void:
 					binds[binds.keys()[index]].append(event)
 				#todo copy binds to map
 				done = true
-			if done:
-				load_binds_to_ui(binds.keys()[index], index)
-				listening = false
-				boundThisFrame = true
 				vButtonIndex = vButtonIndex + 1
 				if vButtonIndex > 7 || (vButtonIndex > 6 && !gameButtons):
 					vButtonIndex = -1
 				set_cursor_position()
+			if done:
+				load_binds_to_ui(binds.keys()[index], index)
+				listening = false
+				boundThisFrame = true
 
 func _on_back_mouse_entered():
 	if !listening && !cursor.is_animating():

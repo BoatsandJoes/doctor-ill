@@ -9,6 +9,8 @@ var cursor: Cursor
 var timer: Timer = Timer.new()
 var depths: Array[int] = [-1, 4, 9]
 var buttonIndex: int = 0
+var upReleased = true
+var downReleased = true
 
 func _ready() -> void:
 	timer.wait_time = 0.05
@@ -62,18 +64,24 @@ func _input(event: InputEvent) -> void:
 			emit_signal("back")
 		elif event.is_action_pressed("accept"):
 			cursor.select()
-		elif event.is_action_pressed("down"):
+		elif event.is_action_pressed("down") && downReleased:
+			downReleased = false
 			if buttonIndex >= %Buttons.get_children().size() - 1:
 				buttonIndex = 0
 			else:
 				buttonIndex = buttonIndex + 1
 			set_cursor_position()
-		elif event.is_action_pressed("up"):
+		elif event.is_action_pressed("up") && upReleased:
+			upReleased = false
 			if buttonIndex <= 0:
 				buttonIndex = %Buttons.get_children().size() - 1
 			else:
 				buttonIndex = buttonIndex - 1
 			set_cursor_position()
+		elif event.is_action_released("down"):
+			downReleased = true
+		elif event.is_action_released("up"):
+			upReleased = true
 
 func _on_button_pressed():
 	cursor.select()
