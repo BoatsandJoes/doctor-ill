@@ -7,7 +7,7 @@ var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var timer: Timer = Timer.new()
 var listening: bool = false
-
+var boundThisFrame: bool = false
 var keyboard: bool
 var gameButtons: bool
 var vButtonIndex: int = 0
@@ -183,7 +183,7 @@ func get_hovered_button() -> Button:
 	return button
 
 func _input(event: InputEvent) -> void:
-	if !cursor.is_animating():
+	if !cursor.is_animating() && !boundThisFrame:
 		if !listening:
 			if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
 				emit_signal("back", keyboard)
@@ -239,6 +239,11 @@ func _input(event: InputEvent) -> void:
 			if done:
 				load_binds_to_ui(binds.keys()[index], index)
 				listening = false
+				boundThisFrame = true
+				vButtonIndex = vButtonIndex + 1
+				if vButtonIndex > 7 || (vButtonIndex > 6 && !gameButtons):
+					vButtonIndex = -1
+				set_cursor_position()
 
 func _on_back_mouse_entered():
 	if !listening && !cursor.is_animating():
@@ -376,3 +381,7 @@ func _on_pause_1_mouse_entered() -> void:
 		vButtonIndex = 6
 		hButtonIndex = 1
 		set_cursor_position()
+
+func _physics_process(delta: float) -> void:
+	if boundThisFrame:
+		boundThisFrame = false
