@@ -33,12 +33,12 @@ func device_selected(keyboard: bool):
 	self.keyboard = keyboard
 	%Devices.visible = false
 	%Types.visible = true
-	%Title.text = "Buttons"
+	%Title.text = "Keyboard" if keyboard else "Controller"
 
 func device_deselected():
 	%Devices.visible = true
 	%Types.visible = false
-	%Title.text = "Device"
+	%Title.text = "Controls"
 	buttonIndex = 0
 	timer.start()
 
@@ -83,19 +83,22 @@ func _on_cursor_chosen():
 	if %Devices.visible:
 		if buttonIndex >= %Devices.get_children().size() - 1:
 			emit_signal("back")
+		elif buttonIndex == 2:
+			%Reset.text = "All Controls Reset & Saved!"
+			InputMap.load_from_project_settings()
 		else:
 			keyboard = buttonIndex == 0
 			buttonIndex = 0
 			%Devices.visible = false
 			%Types.visible = true
-			%Title.text = "Buttons"
+			%Title.text = "Keyboard" if keyboard else "Controller"
 			timer.start()
 	else:
-		if buttonIndex >= %Devices.get_children().size() - 1:
+		if buttonIndex >= %Types.get_children().size() - 1:
 			buttonIndex = 0
 			%Devices.visible = true
 			%Types.visible = false
-			%Title.text = "Device"
+			%Title.text = "Controls"
 			timer.start()
 		else:
 			gameButtons = buttonIndex == 0
@@ -112,7 +115,8 @@ func _input(event: InputEvent) -> void:
 			cursor.select()
 		elif event.is_action_pressed("down") && downReleased:
 			downReleased = false
-			if buttonIndex >= 2:
+			var max = 2 if %Types.visible else 3
+			if buttonIndex >= max:
 				buttonIndex = 0
 			else:
 				buttonIndex = buttonIndex + 1
@@ -120,7 +124,7 @@ func _input(event: InputEvent) -> void:
 		elif event.is_action_pressed("up") && upReleased:
 			upReleased = false
 			if buttonIndex <= 0:
-				buttonIndex = 2
+				buttonIndex = 2 if %Types.visible else 3
 			else:
 				buttonIndex = buttonIndex - 1
 			set_cursor_position()
@@ -131,3 +135,13 @@ func _input(event: InputEvent) -> void:
 
 func _on_button_pressed():
 	cursor.select()
+
+func _on_back_2_mouse_entered() -> void:
+	if !cursor.is_animating():
+		buttonIndex = 3
+		set_cursor_position()
+
+func _on_reset_mouse_entered() -> void:
+	if !cursor.is_animating():
+		buttonIndex = 2
+		set_cursor_position()

@@ -47,7 +47,7 @@ icon = ExtResource("2_w8vgw")
 [node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Buttons"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Save & Exit"
+text = "Save & Back"
 
 [node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
 layout_mode = 2

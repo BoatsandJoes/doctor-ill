@@ -15,227 +15,228 @@ theme_override_constants/margin_left = 10
 theme_override_constants/margin_top = 5
 theme_override_constants/margin_bottom = -30
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+[node name="TitleSpacer" type="VBoxContainer" parent="MarginContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = -10
 
-[node name="Controls" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="Controls" type="HBoxContainer" parent="MarginContainer/TitleSpacer"]
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Labels" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls"]
+[node name="Labels" type="VBoxContainer" parent="MarginContainer/TitleSpacer/Controls"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 1
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Up"
 
-[node name="Label2" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label2" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Down"
 
-[node name="Label3" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label3" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Left"
 
-[node name="Label4" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label4" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Right"
 
-[node name="Label5" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label5" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Move One"
 
-[node name="Label6" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label6" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Move Stack"
 
-[node name="Label7" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label7" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Kick"
 
-[node name="Label8" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label8" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Rain"
 
-[node name="Label9" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label9" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Accept"
 
-[node name="Label10" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label10" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Cancel"
 
-[node name="Label11" type="Label" parent="MarginContainer/VBoxContainer/Controls/Labels"]
+[node name="Label11" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Pause"
 
-[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/VBoxContainer/Controls"]
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/TitleSpacer/Controls"]
 layout_mode = 2
 
-[node name="Buttons" type="HBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer"]
+[node name="Buttons" type="HBoxContainer" parent="MarginContainer/TitleSpacer/Controls/MarginContainer"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_constants/separation = 30
 
-[node name="Buttons1" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
+[node name="Buttons1" type="VBoxContainer" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="Up" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Up" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Down" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Down" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Left" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Left" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Right" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Right" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="MoveOne" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="MoveOne" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="MoveStack" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="MoveStack" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Kick" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Kick" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Rain" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Rain" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Accept" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Accept" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Cancel" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Cancel" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Pause" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1"]
+[node name="Pause" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Buttons2" type="VBoxContainer" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons"]
+[node name="Buttons2" type="VBoxContainer" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons"]
 custom_minimum_size = Vector2(200, 0)
 layout_mode = 2
 theme_override_constants/separation = 5
 
-[node name="Up1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Up1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Down1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Down1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Left1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Left1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Right1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Right1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="MoveOne1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="MoveOne1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="MoveStack1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="MoveStack1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Kick1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Kick1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Rain1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Rain1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Accept1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Accept1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Cancel1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Cancel1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="Pause1" type="Button" parent="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2"]
+[node name="Pause1" type="Button" parent="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2"]
 visible = false
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
 text = " "
 
-[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/VBoxContainer"]
+[node name="HBoxContainer2" type="HBoxContainer" parent="MarginContainer/TitleSpacer"]
 layout_mode = 2
 alignment = 2
 
-[node name="Title" type="Label" parent="MarginContainer/VBoxContainer/HBoxContainer2"]
+[node name="Title" type="Label" parent="MarginContainer/TitleSpacer/HBoxContainer2"]
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 72
-text = "Game Buttons  "
+text = "Game Buttons "
 
 [node name="MarginContainer2" type="MarginContainer" parent="."]
 anchors_preset = 9
 anchor_bottom = 1.0
 offset_right = 80.0
 grow_vertical = 2
-theme_override_constants/margin_left = 5
+theme_override_constants/margin_left = 30
 theme_override_constants/margin_bottom = 10
 
 [node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer2"]
@@ -249,27 +250,27 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Save & Back"
 
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Up" to="." method="_on_up_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Down" to="." method="_on_down_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Left" to="." method="_on_left_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Right" to="." method="_on_right_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/MoveOne" to="." method="_on_move_one_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/MoveStack" to="." method="_on_move_stack_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Kick" to="." method="_on_kick_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Rain" to="." method="_on_rain_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Accept" to="." method="_on_accept_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Cancel" to="." method="_on_cancel_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons1/Pause" to="." method="_on_pause_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Up1" to="." method="_on_up_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Down1" to="." method="_on_down_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Left1" to="." method="_on_left_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Right1" to="." method="_on_right_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/MoveOne1" to="." method="_on_move_one_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/MoveStack1" to="." method="_on_move_stack_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Kick1" to="." method="_on_kick_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Rain1" to="." method="_on_rain_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Accept1" to="." method="_on_accept_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Cancel1" to="." method="_on_cancel_1_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/Controls/MarginContainer/Buttons/Buttons2/Pause1" to="." method="_on_pause_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Up" to="." method="_on_up_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Down" to="." method="_on_down_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Left" to="." method="_on_left_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Right" to="." method="_on_right_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/MoveOne" to="." method="_on_move_one_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/MoveStack" to="." method="_on_move_stack_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Kick" to="." method="_on_kick_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Rain" to="." method="_on_rain_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Accept" to="." method="_on_accept_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Cancel" to="." method="_on_cancel_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons1/Pause" to="." method="_on_pause_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Up1" to="." method="_on_up_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Down1" to="." method="_on_down_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Left1" to="." method="_on_left_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Right1" to="." method="_on_right_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/MoveOne1" to="." method="_on_move_one_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/MoveStack1" to="." method="_on_move_stack_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Kick1" to="." method="_on_kick_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Rain1" to="." method="_on_rain_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Accept1" to="." method="_on_accept_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Cancel1" to="." method="_on_cancel_1_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/TitleSpacer/Controls/MarginContainer/Buttons/Buttons2/Pause1" to="." method="_on_pause_1_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer2/VBoxContainer/Back" to="." method="_on_back_mouse_entered"]
 [connection signal="pressed" from="MarginContainer2/VBoxContainer/Back" to="." method="_on_button_pressed"]

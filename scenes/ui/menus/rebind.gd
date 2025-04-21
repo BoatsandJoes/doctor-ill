@@ -32,7 +32,8 @@ var rightReleased = true
 
 func _ready() -> void:
 	if gameButtons:
-		%Title.text = "Game Buttons  "
+		%Title.text = "Game Buttons "
+		%TitleSpacer.add_theme_constant_override("separation", -10)
 		# show correct buttons/labels
 		for list in %Buttons.get_children():
 			list.get_children()[4].visible = true
@@ -50,7 +51,8 @@ func _ready() -> void:
 		%Labels.get_children()[9].visible = false
 		%Labels.get_children()[10].visible = false
 	else:
-		%Title.text = "Menu Buttons  "
+		%Title.text = "Menu Buttons "
+		%TitleSpacer.add_theme_constant_override("separation", 28)
 		# show correct buttons/labels
 		for list in %Buttons.get_children():
 			list.get_children()[4].visible = false
@@ -86,6 +88,7 @@ func _ready() -> void:
 
 func load_binds_to_ui(key: StringName, index: int):
 	# Load into dictionary first
+	binds[key] = []
 	for event in InputMap.action_get_events(key):
 		if keyboard && event is InputEventKey:
 			binds[key].append(event)
@@ -242,7 +245,7 @@ func _input(event: InputEvent) -> void:
 				done = true
 			elif event.is_action_pressed("del"):
 				binds[binds.keys()[index]].remove_at(hButtonIndex)
-				#todo copy binds to map
+				copy_binds_to_project_settings(index)
 				done = true
 			elif (event.is_pressed() && ((keyboard && (event is InputEventKey)) || (!keyboard &&
 			((event is InputEventJoypadButton) || (event is InputEventJoypadMotion))))):
@@ -250,7 +253,7 @@ func _input(event: InputEvent) -> void:
 					binds[binds.keys()[index]][hButtonIndex] = event
 				else:
 					binds[binds.keys()[index]].append(event)
-				#todo copy binds to map
+				copy_binds_to_project_settings(index)
 				done = true
 				vButtonIndex = vButtonIndex + 1
 				if vButtonIndex > 7 || (vButtonIndex > 6 && !gameButtons):
@@ -260,6 +263,19 @@ func _input(event: InputEvent) -> void:
 				load_binds_to_ui(binds.keys()[index], index)
 				listening = false
 				boundThisFrame = true
+
+func copy_binds_to_project_settings(index: int):
+	var key: StringName = binds.keys()[index]
+	var binds: Array = binds[binds.keys()[index]]
+	# erase all current binds from project map which match the type we're editing
+	var existingEvents: Array[InputEvent] = InputMap.action_get_events(key)
+	for event in existingEvents:
+		if ((keyboard && event is InputEventKey)
+		|| (!keyboard && ((event is InputEventJoypadButton) || (event is InputEventJoypadMotion)))):
+			InputMap.action_erase_event(key, event)
+	# copy our latest binds to map
+	for bind in binds:
+		InputMap.action_add_event(key, bind)
 
 func _on_back_mouse_entered():
 	if !listening && !cursor.is_animating():

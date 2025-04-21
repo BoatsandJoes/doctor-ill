@@ -22,6 +22,7 @@ alignment = 1
 
 [node name="Devices" type="VBoxContainer" parent="MarginContainer/VBoxContainer/HBoxContainer"]
 unique_name_in_owner = true
+custom_minimum_size = Vector2(416, 0)
 layout_mode = 2
 
 [node name="Keyboard" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Devices"]
@@ -34,7 +35,13 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Controller"
 
-[node name="Back" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Devices"]
+[node name="Reset" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Devices"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 36
+text = "Reset All Controls to Default"
+
+[node name="Back2" type="Button" parent="MarginContainer/VBoxContainer/HBoxContainer/Devices"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
 text = "Back"
@@ -70,11 +77,12 @@ layout_mode = 2
 unique_name_in_owner = true
 layout_mode = 2
 theme_override_font_sizes/font_size = 96
-text = "Device"
+text = "Controls"
 
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Keyboard" to="." method="_on_keyboard_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Controller" to="." method="_on_controller_mouse_entered"]
-[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Back" to="." method="_on_back_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Reset" to="." method="_on_reset_mouse_entered"]
+[connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Devices/Back2" to="." method="_on_back_2_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Types/Gameplay" to="." method="_on_gameplay_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Types/Menu" to="." method="_on_menu_mouse_entered"]
 [connection signal="mouse_entered" from="MarginContainer/VBoxContainer/HBoxContainer/Types/Back" to="." method="_on_back_mouse_entered"]
