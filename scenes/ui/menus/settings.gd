@@ -28,20 +28,24 @@ func _ready() -> void:
 	update_scale_label()
 
 func _on_resolution_mouse_entered():
-	buttonIndex = 0
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 0
+		set_cursor_position()
 
 func _on_volume_mouse_entered():
-	buttonIndex = 1
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 1
+		set_cursor_position()
 
 func _on_controls_mouse_entered():
-	buttonIndex = 2
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 2
+		set_cursor_position()
 
 func _on_back_mouse_entered():
-	buttonIndex = 3
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 3
+		set_cursor_position()
 
 func _on_timer_timeout():
 	set_cursor_position()

@@ -70,17 +70,21 @@ func _on_cursor_chosen():
 	buttonCalls[buttonIndex].call()
 
 func _on_how_to_play_mouse_entered():
-	buttonIndex = 0
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 0
+		set_cursor_position()
 
 func _on_scores_mouse_entered():
-	buttonIndex = 1
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 1
+		set_cursor_position()
 
 func _on_credits_mouse_entered():
-	buttonIndex = 1
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 1
+		set_cursor_position()
 
 func _on_back_mouse_entered():
-	buttonIndex = 2
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 2
+		set_cursor_position()

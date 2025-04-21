@@ -145,16 +145,30 @@ func load_binds_to_ui(key: StringName, index: int):
 	if binds[key].size() < %Buttons.get_children().size():
 		for i in range(binds[key].size(), %Buttons.get_children().size()):
 			%Buttons.get_children()[i].get_children()[index].text = "<Unbound>"
+			binds[key].append(null)
 
 func _on_timer_timeout():
 	set_cursor_position()
 	cursor.visible = true
 
 func _on_button_pressed():
-	cursor.select()
+	if !cursor.is_animating() && !listening:
+		cursor.select()
 
 func set_cursor_position():
-	var button
+	var button = get_hovered_button()
+	cursor.position = button.global_position + Vector2(cursor.width * -1, button.size.y / 2)
+
+func _on_cursor_chosen():
+	if vButtonIndex == -1:
+		emit_signal("back", keyboard)
+	else:
+		#start listening
+		listening = true
+		get_hovered_button().text = "esc=back,del=clear"
+
+func get_hovered_button() -> Button:
+	var button: Button
 	if vButtonIndex == -1:
 		button = %Back
 	else:
@@ -166,11 +180,7 @@ func set_cursor_position():
 			if j == vButtonIndex:
 				button = buttonList.get_children()[i]
 				break
-	cursor.position = button.global_position + Vector2(cursor.width * -1, button.size.y / 2)
-
-func _on_cursor_chosen():
-	if vButtonIndex == -1:
-		emit_signal("back", keyboard)
+	return button
 
 func _input(event: InputEvent) -> void:
 	if !cursor.is_animating():
@@ -205,141 +215,164 @@ func _input(event: InputEvent) -> void:
 					hButtonIndex = hButtonIndex + 1
 				set_cursor_position()
 		else:
-			pass
+			# enter input into map
+			var done = false
+			var index: int
+			if vButtonIndex <= 3 || gameButtons:
+				index = vButtonIndex
+			else:
+				index = vButtonIndex + 4
+			if event.is_action_pressed("esc"):
+				done = true
+			elif event.is_action_pressed("del"):
+				binds[binds.keys()[index]].remove_at(hButtonIndex)
+				#todo copy binds to map
+				done = true
+			elif (event.is_pressed() && ((keyboard && (event is InputEventKey)) || (!keyboard &&
+			((event is InputEventJoypadButton) || (event is InputEventJoypadMotion))))):
+				if hButtonIndex < binds[binds.keys()[index]].size():
+					binds[binds.keys()[index]][hButtonIndex] = event
+				else:
+					binds[binds.keys()[index]].append(event)
+				#todo copy binds to map
+				done = true
+			if done:
+				load_binds_to_ui(binds.keys()[index], index)
+				listening = false
 
 func _on_back_mouse_entered():
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = -1
 		set_cursor_position()
 
 func _on_up_mouse_entered():
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 0
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_down_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 1
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_left_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 2
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_right_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 3
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_move_one_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 4
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_move_stack_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 5
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_kick_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 6
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_rain_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 7
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_accept_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 4
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_cancel_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 5
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_pause_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 6
 		hButtonIndex = 0
 		set_cursor_position()
 
 func _on_up_1_mouse_entered():
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 0
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_down_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 1
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_left_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 2
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_right_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 3
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_move_one_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 4
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_move_stack_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 5
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_kick_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 6
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_rain_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 7
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_accept_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 4
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_cancel_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 5
 		hButtonIndex = 1
 		set_cursor_position()
 
 func _on_pause_1_mouse_entered() -> void:
-	if !listening:
+	if !listening && !cursor.is_animating():
 		vButtonIndex = 6
 		hButtonIndex = 1
 		set_cursor_position()

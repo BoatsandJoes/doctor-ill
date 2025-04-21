@@ -27,20 +27,24 @@ func _on_timer_timeout():
 	add_child(cursor)
 
 func _on_easy_mouse_entered():
-	buttonIndex = 2
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 2
+		set_cursor_position()
 
 func _on_medium_mouse_entered():
-	buttonIndex = 1
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 1
+		set_cursor_position()
 
 func _on_hard_mouse_entered():
-	buttonIndex = 0
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 0
+		set_cursor_position()
 
 func _on_back_mouse_entered():
-	buttonIndex = 3
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 3
+		set_cursor_position()
 
 func set_cursor_position():
 	var button = %Buttons.get_children().get(buttonIndex)

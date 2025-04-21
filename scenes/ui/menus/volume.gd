@@ -112,17 +112,21 @@ func _on_cursor_chosen():
 	buttonCalls[buttonIndex].call()
 
 func _on_overall_mouse_entered():
-	buttonIndex = 0
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 0
+		set_cursor_position()
 
 func _on_music_mouse_entered():
-	buttonIndex = 1
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 1
+		set_cursor_position()
 
 func _on_sfx_mouse_entered():
-	buttonIndex = 2
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 2
+		set_cursor_position()
 
 func _on_back_mouse_entered():
-	buttonIndex = 3
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 3
+		set_cursor_position()

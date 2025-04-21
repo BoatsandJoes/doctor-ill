@@ -45,24 +45,29 @@ func _on_timer_timeout():
 	cursor.visible = true
 
 func _on_keyboard_mouse_entered():
-	buttonIndex = 0
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 0
+		set_cursor_position()
 
 func _on_controller_mouse_entered():
-	buttonIndex = 1
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 1
+		set_cursor_position()
 
 func _on_gameplay_mouse_entered():
-	buttonIndex = 0
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 0
+		set_cursor_position()
 
 func _on_menu_mouse_entered():
-	buttonIndex = 1
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 1
+		set_cursor_position()
 
 func _on_back_mouse_entered():
-	buttonIndex = 2
-	set_cursor_position()
+	if !cursor.is_animating():
+		buttonIndex = 2
+		set_cursor_position()
 
 func set_cursor_position():
 	var button
