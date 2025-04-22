@@ -4,13 +4,14 @@ class_name Library
 signal back
 signal credits
 signal how_to_play
+signal advanced
 signal scores
 
 var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var timer: Timer = Timer.new()
 var buttonIndex: int = 0
-var buttonCalls: Array[Callable] = [emit_how_to_play, emit_credits, go_back]
+var buttonCalls: Array[Callable] = [emit_how_to_play, emit_advanced, emit_credits, go_back]
 var upReleased = true
 var downReleased = true
 
@@ -42,6 +43,9 @@ func emit_scores():
 
 func emit_credits():
 	emit_signal("credits")
+
+func emit_advanced():
+	emit_signal("advanced")
 
 func go_back():
 	emit_signal("back")
@@ -89,10 +93,15 @@ func _on_scores_mouse_entered():
 
 func _on_credits_mouse_entered():
 	if !cursor.is_animating():
-		buttonIndex = 1
+		buttonIndex = 2
 		set_cursor_position()
 
 func _on_back_mouse_entered():
 	if !cursor.is_animating():
-		buttonIndex = 2
+		buttonIndex = 3
+		set_cursor_position()
+
+func _on_advanced_mouse_entered() -> void:
+	if !cursor.is_animating():
+		buttonIndex = 1
 		set_cursor_position()

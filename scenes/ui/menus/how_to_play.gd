@@ -10,6 +10,7 @@ var buttonIndex: int = 1
 var buttonCalls: Array[Callable] = [prev, next, go_back]
 var leftReleased = true
 var rightReleased = true
+var advanced: bool = false
 
 func _ready() -> void:
 	timer.wait_time = 0.01
@@ -22,6 +23,12 @@ func _ready() -> void:
 	cursor.chosen.connect(_on_cursor_chosen)
 	for button in %Buttons.get_children():
 		button.pressed.connect(_on_button_pressed)
+
+func advanced_mode():
+	advanced = true
+	%Advanced.visible = true
+	%Slides.visible = false
+	%Title.text = "Bonus Tips"
 
 func _on_timer_timeout():
 	set_cursor_position()
@@ -70,10 +77,11 @@ func _on_cursor_chosen():
 func prev():
 	if !%Prev.disabled:
 		%Next.disabled = false
-		for i in range(%Slides.get_children().size()):
-			if %Slides.get_children()[i].visible:
-				%Slides.get_children()[i].visible = false
-				%Slides.get_children()[i-1].visible = true
+		var container = %Advanced if advanced else %Slides
+		for i in range(container.get_children().size()):
+			if container.get_children()[i].visible:
+				container.get_children()[i].visible = false
+				container.get_children()[i-1].visible = true
 				if i <= 1:
 					%Prev.disabled = true
 				break
@@ -81,11 +89,12 @@ func prev():
 func next():
 	if !%Next.disabled:
 		%Prev.disabled = false
-		for i in range(%Slides.get_children().size()):
-			if %Slides.get_children()[i].visible:
-				%Slides.get_children()[i].visible = false
-				%Slides.get_children()[i+1].visible = true
-				if i >= %Slides.get_children().size() - 2:
+		var container = %Advanced if advanced else %Slides
+		for i in range(container.get_children().size()):
+			if container.get_children()[i].visible:
+				container.get_children()[i].visible = false
+				container.get_children()[i+1].visible = true
+				if i >= container.get_children().size() - 2:
 					%Next.disabled = true
 				break
 

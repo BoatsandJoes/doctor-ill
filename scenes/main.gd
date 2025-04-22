@@ -100,6 +100,13 @@ func go_to_how_to_play():
 	menu.back.connect(_on_menu_credits)
 	add_child(menu)
 
+func go_to_advanced():
+	remove_children()
+	menu = HowToPlay.instantiate()
+	menu.advanced_mode()
+	menu.back.connect(_on_menu_credits)
+	add_child(menu)
+
 func go_to_scores():
 	pass
 
@@ -108,6 +115,7 @@ func _on_menu_credits():
 	menu = Library.instantiate()
 	menu.back.connect(go_to_main_menu)
 	menu.credits.connect(go_to_credits)
+	menu.advanced.connect(go_to_advanced)
 	menu.how_to_play.connect(go_to_how_to_play)
 	menu.scores.connect(go_to_scores)
 	add_child(menu)
