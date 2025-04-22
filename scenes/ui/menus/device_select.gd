@@ -84,8 +84,11 @@ func _on_cursor_chosen():
 		if buttonIndex >= %Devices.get_children().size() - 1:
 			emit_signal("back")
 		elif buttonIndex == 2:
-			%Reset.text = "All Controls Reset & Saved!"
-			InputMap.load_from_project_settings()
+			if %Reset.text == "Definitely reset controls?":
+				%Reset.text = "All Controls Reset & Saved!"
+				InputMap.load_from_project_settings()
+			else:
+				%Reset.text = "Definitely reset controls?"
 		else:
 			keyboard = buttonIndex == 0
 			buttonIndex = 0

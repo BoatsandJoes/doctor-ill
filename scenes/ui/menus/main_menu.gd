@@ -74,7 +74,10 @@ func _on_credits_pressed() -> void:
 	emit_signal("credits")
 
 func _on_exit_pressed() -> void:
-	emit_signal("exit")
+	if %Exit.text == "You sure?":
+		emit_signal("exit")
+	else:
+		%Exit.text = "You sure?"
 
 func _on_play_mouse_entered() -> void:
 	buttonIndex = 0
