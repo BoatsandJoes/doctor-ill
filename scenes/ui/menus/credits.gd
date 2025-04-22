@@ -15,7 +15,7 @@ func _input(event: InputEvent) -> void:
 		emit_signal("exit")
 	elif event.is_action_pressed("accept"):
 		speed = speed + 60
-	elif event.is_action_pressed("cancel"):
+	elif event.is_action_pressed("cancel") || event.is_action_pressed("right_mouse"):
 		speed = speed - 60
 		if speed < 0:
 			emit_signal("exit")

@@ -42,7 +42,7 @@ func _input(event: InputEvent) -> void:
 	if !cursor.is_animating():
 		if event.is_action_pressed("esc"):
 			emit_signal("back")
-		elif event.is_action_pressed("cancel"):
+		elif event.is_action_pressed("cancel") || event.is_action_pressed("right_mouse"):
 			if %Prev.disabled:
 				emit_signal("back")
 			else:

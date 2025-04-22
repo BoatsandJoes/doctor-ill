@@ -109,7 +109,7 @@ func _on_cursor_chosen():
 
 func _input(event: InputEvent) -> void:
 	if !cursor.is_animating():
-		if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
+		if event.is_action_pressed("esc") || event.is_action_pressed("cancel") || event.is_action_pressed("right_mouse"):
 			if %Devices.visible:
 				emit_signal("back")
 			else:

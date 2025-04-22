@@ -90,7 +90,7 @@ func go_back():
 
 func _input(event: InputEvent) -> void:
 	if !cursor.is_animating():
-		if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
+		if event.is_action_pressed("esc") || event.is_action_pressed("cancel") || event.is_action_pressed("right_mouse"):
 			emit_signal("back")
 		elif event.is_action_pressed("accept"):
 			cursor.select()

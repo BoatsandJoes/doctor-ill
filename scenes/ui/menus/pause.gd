@@ -93,7 +93,7 @@ func _input(event: InputEvent) -> void:
 	if loseTimer.is_stopped() && winTimer.is_stopped():
 		if !cursor.is_animating():
 			if (event.is_action_pressed("esc") || event.is_action_pressed("pause")
-			|| event.is_action_pressed("cancel")):
+			|| event.is_action_pressed("cancel") || event.is_action_pressed("right_mouse")):
 				if %Buttons/Resume.visible:
 					get_viewport().set_input_as_handled()
 					queueUnpause = true

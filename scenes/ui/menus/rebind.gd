@@ -192,7 +192,7 @@ func get_hovered_button() -> Button:
 func _input(event: InputEvent) -> void:
 	if !cursor.is_animating() && !boundThisFrame:
 		if !listening:
-			if event.is_action_pressed("esc") || event.is_action_pressed("cancel"):
+			if event.is_action_pressed("esc") || event.is_action_pressed("cancel") || event.is_action_pressed("right_mouse"):
 				emit_signal("back", keyboard)
 			elif event.is_action_pressed("accept"):
 				cursor.select()
