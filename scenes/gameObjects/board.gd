@@ -722,12 +722,10 @@ func clear(clearDicts: Array[Dictionary]):
 			emit_signal("all_clear")
 			allClearHappened = true
 			play_sfx(&"clock")
-			if get_parent().startingDepth + 1 + get_parent().hud.allClears == 13:
-				for jingle in jingle2:
-					play_sfx(jingle)
-			else:
-				for jingle in jingle1:
-					play_sfx(jingle)
+			for jingle in jingle1:
+				play_sfx(jingle)
+			for jingle in jingle2:
+				play_sfx(jingle)
 			var juice = TimeJuice.instantiate()
 			juice.get_node("Label").text = "+10"
 			juice.position = getPositionForIndex(max(0, players[0].gridIndex - currentParams[&"width"]))
