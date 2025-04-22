@@ -120,7 +120,7 @@ func _ready() -> void:
 	pickupTimer.one_shot = false
 	pickupTimer.timeout.connect(showHint)
 	add_child(pickupTimer)
-	if depth != 10 || get_parent().get_parent().graduated:
+	if get_parent().get_parent().graduated:
 		pickupTimer.paused = true
 
 func _on_hatch_timer_timeout():
