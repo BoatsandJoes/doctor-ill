@@ -13,6 +13,7 @@ var DeviceSelect = preload("res://scenes/ui/menus/DeviceSelect.tscn")
 var Rebind = preload("res://scenes/ui/menus/Rebind.tscn")
 var Volume = preload("res://scenes/ui/menus/Volume.tscn")
 var Library = preload("res://scenes/ui/menus/Library.tscn")
+var HowToPlay = preload("res://scenes/ui/menus/HowToPlay.tscn")
 var graduated = false
 
 func _ready():
@@ -94,7 +95,10 @@ func remove_children():
 		menu.queue_free()
 
 func go_to_how_to_play():
-	pass
+	remove_children()
+	menu = HowToPlay.instantiate()
+	menu.back.connect(_on_menu_credits)
+	add_child(menu)
 
 func go_to_scores():
 	pass

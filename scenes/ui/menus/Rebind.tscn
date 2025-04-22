@@ -62,7 +62,7 @@ text = "Move Stack"
 [node name="Label7" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 36
-text = "Kick"
+text = "Push"
 
 [node name="Label8" type="Label" parent="MarginContainer/TitleSpacer/Controls/Labels"]
 layout_mode = 2
