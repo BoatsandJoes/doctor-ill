@@ -27,7 +27,12 @@ var sounds: Dictionary = {
 	&"lightning": preload("res://assets/sfx/LightningStrike.ogg"),
 	&"clock": preload("res://assets/sfx/clock-1.ogg"),
 	&"creak": preload("res://assets/sfx/door_creak_open.ogg"),
-	&"close": preload("res://assets/sfx/door_close.ogg")
+	&"close": preload("res://assets/sfx/door_close.ogg"),
+	&"jingle10": preload("res://assets/sfx/jingles_PIZZI02.ogg"),
+	&"jingle01": preload("res://assets/sfx/jingles_PIZZI10.ogg"),
+	&"jingle20": preload("res://assets/sfx/jingles_STEEL02.ogg"),
+	&"jingle30": preload("res://assets/sfx/jingles_SAX02.ogg"),
+	&"jingle03": preload("res://assets/sfx/jingles_SAX10.ogg")
 }
 var sfx: Array[AudioStreamPlayer] = []
 var Hint = preload("res://scenes/gameObjects/vfx/Hint.tscn")
@@ -74,6 +79,8 @@ var animating: int = 0
 var allClearHappened: bool = false
 var pickupTimer: Timer
 var clockTimer: Timer
+var jingle1: Array[StringName] = [&"jingle01", &"jingle03"]
+var jingle2: Array[StringName] = [&"jingle10", &"jingle20", &"jingle30"]
 
 func _ready() -> void:
 	clockTimer = Timer.new()
@@ -715,6 +722,12 @@ func clear(clearDicts: Array[Dictionary]):
 			emit_signal("all_clear")
 			allClearHappened = true
 			play_sfx(&"clock")
+			if get_parent().startingDepth + 1 + get_parent().hud.allClears == 13:
+				for jingle in jingle2:
+					play_sfx(jingle)
+			else:
+				for jingle in jingle1:
+					play_sfx(jingle)
 			var juice = TimeJuice.instantiate()
 			juice.get_node("Label").text = "+10"
 			juice.position = getPositionForIndex(max(0, players[0].gridIndex - currentParams[&"width"]))
