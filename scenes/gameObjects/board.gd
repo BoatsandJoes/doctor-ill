@@ -306,7 +306,6 @@ func handle_direction(player: Player, direction: Vector2i):
 				elif player.nonBufferedClimb:
 					player.nonBufferedClimb = false
 					# leap to top of stack
-					# todo delay, maybe
 					board[player.gridIndex] = null
 					var target = player.gridIndex
 					var above = player.gridIndex - currentParams[&"width"]
