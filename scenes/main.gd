@@ -116,7 +116,7 @@ func save_and_go_to_main_menu():
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	var error = FileAccess.get_open_error()
 	if error == 0: #Error.OK
-		file.store_8(14) #Version
+		file.store_8(15) #Version
 		if graduated:
 			file.store_8(1)
 		else:

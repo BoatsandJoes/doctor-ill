@@ -44,7 +44,7 @@ theme_override_font_sizes/mono_font_size = 24
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
-text = "Down the Match version 14
+text = "Down the Match version 15
 
 Lead Developer: BoatsAndJoes
 
@@ -241,6 +241,7 @@ itsameliaSMB
 Ardrox
 Raspberry
 Hacker Doggy Kaito
+Timopy
 
 [url]https://godotengine.org/license[/url]"
 fit_content = true
