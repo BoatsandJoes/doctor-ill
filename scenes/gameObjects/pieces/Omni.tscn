@@ -65,6 +65,10 @@ tracks/0/keys = {
 "values": [Vector2(2, 2), Vector2(3, 0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_u16jg"]
+resource_name = "clear_slow"
+length = 0.15
+
 [sub_resource type="Animation" id="Animation_ob7sg"]
 resource_name = "frog"
 length = 0.6667
@@ -96,10 +100,6 @@ tracks/0/keys = {
 "update": 1,
 "values": [0, 1, 2, 3]
 }
-
-[sub_resource type="Animation" id="Animation_u16jg"]
-resource_name = "clear_slow"
-length = 0.15
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_x1phj"]
 _data = {
