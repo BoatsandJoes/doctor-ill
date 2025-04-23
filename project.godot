@@ -13,7 +13,9 @@ config_version=5
 config/name="Down the Match"
 run/main_scene="uid://dvmkbx88vbjd7"
 config/features=PackedStringArray("4.4", "GL Compatibility")
-config/icon="res://icon.svg"
+boot_splash/use_filter=false
+boot_splash/image="uid://day3v8jt5wpyv"
+config/icon="uid://bqha35gywit08"
 
 [display]
 
