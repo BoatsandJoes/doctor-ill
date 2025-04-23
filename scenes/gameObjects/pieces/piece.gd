@@ -23,6 +23,8 @@ var lightningFrameHold: float = 0.1
 var lightingFrameTime: float = lightningFrameHold
 var fireFrameHold: float = 0.1
 var fireFrameTime: float = fireFrameHold
+var target: Vector2i
+var oldPosition: Vector2i
 
 func win(_animation: String):
 	pass
@@ -85,6 +87,13 @@ func bonk():
 	kicked = 0
 	fall_fast()
 
+func clear_slow(target: Vector2i):
+	self.target = target
+	self.oldPosition = position
+	$Sprite2D.modulate = Color(5,5,5)
+	$AnimationPlayer.play("clear_slow")
+	$AnimationPlayer.animation_finished.connect(free_self)
+
 func clear():
 	$Sprite2D.modulate = Color(5,5,5)
 	$AnimationPlayer.play("clear")
@@ -93,6 +102,6 @@ func clear():
 	$Lightning.visible = false
 
 func free_self(animation: String):
-	if animation == "clear":
+	if animation == &"clear" || animation == &"clear_slow":
 		get_parent().remove_child(self)
 		self.queue_free()

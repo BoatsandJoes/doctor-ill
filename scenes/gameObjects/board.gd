@@ -81,6 +81,8 @@ var pickupTimer: Timer
 var clockTimer: Timer
 var jingle1: Array[StringName] = [&"jingle01", &"jingle03"]
 var jingle2: Array[StringName] = [&"jingle10", &"jingle20", &"jingle30"]
+var cellsToFire: Dictionary[int,int] = {}
+var cellsToLight: Dictionary[int,int] = {}
 
 func _ready() -> void:
 	clockTimer = Timer.new()
@@ -588,6 +590,8 @@ func check_clears():
 						dict[&"cells"][i] = true
 					clearDicts.append(dict)
 	clear(clearDicts)
+	cellsToFire = {}
+	cellsToLight = {}
 
 func clear(clearDicts: Array[Dictionary]):
 	#additional consequences based on clear size/type
@@ -602,13 +606,19 @@ func clear(clearDicts: Array[Dictionary]):
 				latestBomb = cell
 		for cell in dict[&"cells"]:
 			cellsToClear[cell] = true
-			if cell == latestBomb && (dict[&"breakfast"] || dict[&"size"] > 3):
-				if dict[&"breakfast"] && dict[&"size"] > 3:
-					cellsToPreserve[cell] = 3
-				elif(dict[&"breakfast"]):
-					cellsToPreserve[cell] = 2
-				elif(dict[&"size"] > 3):
-					cellsToPreserve[cell] = 1
+			if (dict[&"breakfast"] || dict[&"size"] > 3):
+				if cell == latestBomb:
+					if dict[&"breakfast"] && dict[&"size"] > 3:
+						cellsToPreserve[cell] = 3
+					elif(dict[&"breakfast"]):
+						cellsToPreserve[cell] = 2
+					elif(dict[&"size"] > 3):
+						cellsToPreserve[cell] = 1
+				else:
+					if dict[&"breakfast"]:
+						cellsToLight[cell] = latestBomb
+					if dict[&"size"] > 3:
+						cellsToFire[cell] = latestBomb
 	# Actually clear
 	if !cellsToClear.is_empty():
 		pickupTimer.start()
@@ -749,7 +759,17 @@ func clear_cell(cell: int) -> void:
 				emit_signal("destroy_clock", currentParams[&"airContent"], currentParams[&"maxAir"])
 				board[cell].queue_free()
 			else:
-				board[cell].clear()
+				var target = null
+				if cellsToFire.has(cell):
+					board[cell].set_flame(4)
+					target = cellsToFire[cell]
+				if cellsToLight.has(cell):
+					board[cell].set_lightning()
+					target = cellsToLight[cell]
+				if target != null:
+					board[cell].clear_slow(getPositionForIndex(target))
+				else:
+					board[cell].clear()
 			board[cell] = null
 
 func get_matches_in_direction(cell: int, vector: Vector2i) -> Array[int]:

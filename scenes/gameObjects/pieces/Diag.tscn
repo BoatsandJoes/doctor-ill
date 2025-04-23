@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://cgtxgq00j1723"]
+[gd_scene load_steps=13 format=3 uid="uid://cgtxgq00j1723"]
 
 [ext_resource type="Script" uid="uid://bu20jrnpuv42c" path="res://scenes/gameObjects/pieces/diag.gd" id="1_hektf"]
 [ext_resource type="Texture2D" uid="uid://bnnduyqdk8pqq" path="res://assets/sprites/ice is nice.png" id="2_b0s54"]
@@ -97,11 +97,16 @@ tracks/0/keys = {
 "values": [0, 1, 2, 0]
 }
 
+[sub_resource type="Animation" id="Animation_qn8dj"]
+resource_name = "clear_slow"
+length = 0.15
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_yui5c"]
 _data = {
 &"RESET": SubResource("Animation_foblr"),
 &"bat": SubResource("Animation_08l6t"),
 &"clear": SubResource("Animation_yui5c"),
+&"clear_slow": SubResource("Animation_qn8dj"),
 &"fairy": SubResource("Animation_8ahfa"),
 &"ghost": SubResource("Animation_r0smc")
 }

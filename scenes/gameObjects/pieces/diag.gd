@@ -63,3 +63,8 @@ func _physics_process(delta: float) -> void:
 			if $Fire.frame >= 6:
 				$Fire.frame = 0
 			else: $Fire.frame = $Fire.frame + 1
+	if ($AnimationPlayer.current_animation == &"clear_slow" && $AnimationPlayer.current_animation_length != null
+	&& $AnimationPlayer.current_animation_length > 0.0 && $AnimationPlayer.current_animation_position != null):
+		position = (oldPosition + Vector2i((target - oldPosition) *
+		ease(1 - ($AnimationPlayer.current_animation_length - $AnimationPlayer.current_animation_position)
+		/ $AnimationPlayer.current_animation_length, -4)))
