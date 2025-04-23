@@ -18,6 +18,7 @@ var Volume = preload("res://scenes/ui/menus/Volume.tscn")
 var Library = preload("res://scenes/ui/menus/Library.tscn")
 var HowToPlay = preload("res://scenes/ui/menus/HowToPlay.tscn")
 var graduated = false
+var oldGraduated = false
 
 func _ready():
 	load_save()
@@ -32,6 +33,10 @@ func load_save():
 		var error = FileAccess.get_open_error()
 		if error == 0: #Error.OK
 			file.get_8() #Version
+			var g = file.get_8()
+			if g == 1:
+				oldGraduated = true
+				graduated = true
 			#Volume
 			var vol = file.get_float()
 			if vol != null:
@@ -112,6 +117,10 @@ func save_and_go_to_main_menu():
 	var error = FileAccess.get_open_error()
 	if error == 0: #Error.OK
 		file.store_8(14) #Version
+		if graduated:
+			file.store_8(1)
+		else:
+			file.store_8(0)
 		#Volume
 		file.store_float(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("Master")))
 		file.store_float(AudioServer.get_bus_volume_linear(AudioServer.get_bus_index("music_vol")))
@@ -160,13 +169,17 @@ func save_and_go_to_main_menu():
 	go_to_main_menu()
 
 func go_to_main_menu():
-	remove_children()
-	menu = MainMenu.instantiate()
-	menu.exit.connect(_on_main_menu_exit)
-	menu.play.connect(_on_main_menu_play)
-	menu.credits.connect(_on_menu_credits)
-	menu.settings.connect(go_to_settings)
-	add_child(menu)
+	if graduated && !oldGraduated:
+		oldGraduated = true
+		save_and_go_to_main_menu()
+	else:
+		remove_children()
+		menu = MainMenu.instantiate()
+		menu.exit.connect(_on_main_menu_exit)
+		menu.play.connect(_on_main_menu_play)
+		menu.credits.connect(_on_menu_credits)
+		menu.settings.connect(go_to_settings)
+		add_child(menu)
 
 func go_to_settings():
 	remove_children()
