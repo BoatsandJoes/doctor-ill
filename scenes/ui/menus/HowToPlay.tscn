@@ -1,7 +1,14 @@
-[gd_scene load_steps=3 format=3 uid="uid://dfcd4yaey88db"]
+[gd_scene load_steps=10 format=3 uid="uid://dfcd4yaey88db"]
 
 [ext_resource type="Script" uid="uid://djeurjfujoctr" path="res://scenes/ui/menus/how_to_play.gd" id="1_40ho5"]
 [ext_resource type="Texture2D" uid="uid://2vvumlmr4u4" path="res://assets/how_to_play/1.png" id="2_7xsf7"]
+[ext_resource type="Texture2D" uid="uid://b48bqh3wnw0ej" path="res://assets/how_to_play/2.png" id="3_vpob2"]
+[ext_resource type="Texture2D" uid="uid://bkn4ldh5yp633" path="res://assets/how_to_play/3.png" id="4_pndmi"]
+[ext_resource type="Texture2D" uid="uid://douekpb180fby" path="res://assets/how_to_play/4.png" id="5_xosyt"]
+[ext_resource type="Texture2D" uid="uid://pqihnwjt6ox7" path="res://assets/how_to_play/5.png" id="6_fql1v"]
+[ext_resource type="Texture2D" uid="uid://ti3pnmypckco" path="res://assets/how_to_play/6.png" id="7_voaoa"]
+[ext_resource type="Texture2D" uid="uid://h8evicht2tlq" path="res://assets/how_to_play/7.png" id="8_mwe31"]
+[ext_resource type="Texture2D" uid="uid://cx7c8p2nbl1im" path="res://assets/how_to_play/8.png" id="9_03tlo"]
 
 [node name="HowToPlay" type="CanvasLayer"]
 script = ExtResource("1_40ho5")
@@ -64,11 +71,17 @@ theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "Grounded guys can
 match in any direction.
+
 Flying guys can
 only match diagonally."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Slides/HFlowContainer3"]
+layout_mode = 2
+texture = ExtResource("3_vpob2")
+stretch_mode = 2
 
 [node name="HFlowContainer4" type="HFlowContainer" parent="MarginContainer/PanelContainer/Slides"]
 visible = false
@@ -88,6 +101,11 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Slides/HFlowContainer4"]
+layout_mode = 2
+texture = ExtResource("4_pndmi")
+stretch_mode = 2
+
 [node name="HFlowContainer5" type="HFlowContainer" parent="MarginContainer/PanelContainer/Slides"]
 visible = false
 layout_mode = 2
@@ -100,13 +118,17 @@ theme_override_font_sizes/mono_font_size = 48
 theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
-text = "Make a crisscross
-to get a lightning guy.
-They zap a whole
+text = "Make a crisscross to get a
+lightning guy. They zap a whole
 column + row when matched."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Slides/HFlowContainer5"]
+layout_mode = 2
+texture = ExtResource("5_xosyt")
+stretch_mode = 2
 
 [node name="HFlowContainer6" type="HFlowContainer" parent="MarginContainer/PanelContainer/Slides"]
 visible = false
@@ -126,6 +148,11 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Slides/HFlowContainer6"]
+layout_mode = 2
+texture = ExtResource("6_fql1v")
+stretch_mode = 2
+
 [node name="HFlowContainer9" type="HFlowContainer" parent="MarginContainer/PanelContainer/Slides"]
 visible = false
 layout_mode = 2
@@ -138,15 +165,21 @@ theme_override_font_sizes/mono_font_size = 48
 theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
-text = "Pick up a clock to get
-an extra 40 seconds."
+text = "Pick up a clock to get an extra
+40 seconds (capped at 99)."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HFlowContainer7" type="HFlowContainer" parent="MarginContainer/PanelContainer/Slides"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Slides/HFlowContainer9"]
+layout_mode = 2
+texture = ExtResource("7_voaoa")
+stretch_mode = 2
+
+[node name="HFlowContainer7" type="VBoxContainer" parent="MarginContainer/PanelContainer/Slides"]
 visible = false
 layout_mode = 2
+theme_override_constants/separation = -40
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Slides/HFlowContainer7"]
 layout_mode = 2
@@ -163,6 +196,19 @@ little guys underneath."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="MarginContainer" type="MarginContainer" parent="MarginContainer/PanelContainer/Slides/HFlowContainer7"]
+layout_mode = 2
+theme_override_constants/margin_right = 60
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Slides/HFlowContainer7/MarginContainer"]
+layout_mode = 2
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Slides/HFlowContainer7/MarginContainer/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("8_mwe31")
+stretch_mode = 2
 
 [node name="Controls" type="HFlowContainer" parent="MarginContainer/PanelContainer/Slides"]
 visible = false
@@ -258,9 +304,10 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HFlowContainer2" type="HFlowContainer" parent="MarginContainer/PanelContainer/Slides"]
+[node name="HFlowContainer2" type="VBoxContainer" parent="MarginContainer/PanelContainer/Slides"]
 visible = false
 layout_mode = 2
+theme_override_constants/separation = 50
 
 [node name="RichTextLabel4" type="RichTextLabel" parent="MarginContainer/PanelContainer/Slides/HFlowContainer2"]
 layout_mode = 2
@@ -276,6 +323,15 @@ Reach depth 14 to win!"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Slides/HFlowContainer2"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Slides/HFlowContainer2/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("9_03tlo")
+stretch_mode = 2
 
 [node name="Advanced" type="MarginContainer" parent="MarginContainer/PanelContainer"]
 unique_name_in_owner = true
