@@ -49,23 +49,23 @@ func _input(event: InputEvent) -> void:
 				prev()
 		elif event.is_action_pressed("accept"):
 			cursor.select()
-		elif event.is_action_pressed("right") && rightReleased:
+		elif (event.is_action_pressed("right") || event.is_action_pressed("down")) && rightReleased:
 			rightReleased = false
 			if buttonIndex >= %Buttons.get_children().size() - 1:
 				buttonIndex = 0
 			else:
 				buttonIndex = buttonIndex + 1
 			set_cursor_position()
-		elif event.is_action_pressed("left") && leftReleased:
+		elif (event.is_action_pressed("left") || event.is_action_pressed("up")) && leftReleased:
 			leftReleased = false
 			if buttonIndex <= 0:
 				buttonIndex = %Buttons.get_children().size() - 1
 			else:
 				buttonIndex = buttonIndex - 1
 			set_cursor_position()
-		elif event.is_action_released("left"):
+		elif event.is_action_released("left") || event.is_action_released("up"):
 			leftReleased = true
-		elif event.is_action_released("right"):
+		elif event.is_action_released("right") || event.is_action_released("down"):
 			rightReleased = true
 
 func _on_button_pressed():

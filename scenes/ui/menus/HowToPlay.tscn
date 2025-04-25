@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://dfcd4yaey88db"]
+[gd_scene load_steps=17 format=3 uid="uid://dfcd4yaey88db"]
 
 [ext_resource type="Script" uid="uid://djeurjfujoctr" path="res://scenes/ui/menus/how_to_play.gd" id="1_40ho5"]
 [ext_resource type="Texture2D" uid="uid://2vvumlmr4u4" path="res://assets/how_to_play/1.png" id="2_7xsf7"]
@@ -9,6 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://ti3pnmypckco" path="res://assets/how_to_play/6.png" id="7_voaoa"]
 [ext_resource type="Texture2D" uid="uid://h8evicht2tlq" path="res://assets/how_to_play/7.png" id="8_mwe31"]
 [ext_resource type="Texture2D" uid="uid://cx7c8p2nbl1im" path="res://assets/how_to_play/8.png" id="9_03tlo"]
+[ext_resource type="Texture2D" uid="uid://fr8iljax0wyj" path="res://assets/how_to_play/a.png" id="10_5oj4l"]
+[ext_resource type="Texture2D" uid="uid://bn1rmblnwvh6q" path="res://assets/how_to_play/b.png" id="11_vb013"]
+[ext_resource type="Texture2D" uid="uid://qpbwkuvcyqmu" path="res://assets/how_to_play/c.png" id="12_vb013"]
+[ext_resource type="Texture2D" uid="uid://ofql0me7t284" path="res://assets/how_to_play/d.png" id="13_ueqad"]
+[ext_resource type="Texture2D" uid="uid://ck3jlrgw3i68n" path="res://assets/how_to_play/e.png" id="14_wm3uc"]
+[ext_resource type="Texture2D" uid="uid://btcrb6tvfcg0a" path="res://assets/how_to_play/f.png" id="15_lantp"]
+[ext_resource type="Texture2D" uid="uid://baevf4g5ufpit" path="res://assets/how_to_play/g.png" id="16_feyvy"]
 
 [node name="HowToPlay" type="CanvasLayer"]
 script = ExtResource("1_40ho5")
@@ -166,7 +173,7 @@ theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "Pick up a clock to get an extra
-40 seconds (capped at 99)."
+40 seconds."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -341,7 +348,7 @@ theme_override_constants/margin_left = 3
 theme_override_constants/margin_right = 3
 theme_override_constants/margin_bottom = 3
 
-[node name="HFlowContainer6" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
+[node name="HFlowContainer6" type="VBoxContainer" parent="MarginContainer/PanelContainer/Advanced"]
 layout_mode = 2
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer6"]
@@ -358,9 +365,19 @@ fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HFlowContainer14" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer6"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer6/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("10_5oj4l")
+stretch_mode = 2
+
+[node name="HFlowContainer14" type="VBoxContainer" parent="MarginContainer/PanelContainer/Advanced"]
 visible = false
 layout_mode = 2
+theme_override_constants/separation = -4
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer14"]
 layout_mode = 2
@@ -370,12 +387,20 @@ theme_override_font_sizes/mono_font_size = 48
 theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
-text = "There's a button to pick up one,
-and a button to pick up a whole
-stack. Both are useful!"
+text = "There's a button to pick up one
+guy, and a button to pick up a
+whole stack. Both are useful!"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer14"]
+layout_mode = 2
+alignment = 2
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer14/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("11_vb013")
 
 [node name="HFlowContainer7" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
 visible = false
@@ -389,16 +414,21 @@ theme_override_font_sizes/mono_font_size = 48
 theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
-text = "There's a button to rain down
-more little guys. This can help
-make fire and lightning!"
+text = "There's a button to
+rain down more little
+guys if you need them."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HFlowContainer8" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer7"]
+layout_mode = 2
+texture = ExtResource("12_vb013")
+
+[node name="HFlowContainer8" type="VBoxContainer" parent="MarginContainer/PanelContainer/Advanced"]
 visible = false
 layout_mode = 2
+theme_override_constants/separation = 50
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer8"]
 layout_mode = 2
@@ -409,12 +439,21 @@ theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "There's a button to push a
-little guy. This can save time."
+little guy."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HFlowContainer9" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
+[node name="VBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer8"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer8/VBoxContainer"]
+layout_mode = 2
+texture = ExtResource("13_ueqad")
+stretch_mode = 2
+
+[node name="HFlowContainer9" type="VBoxContainer" parent="MarginContainer/PanelContainer/Advanced"]
 visible = false
 layout_mode = 2
 
@@ -427,37 +466,24 @@ theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "Little guys only match if you've
-picked them up. Pushing won't
-activate, and picking up a
-stack will only activate the
-bottom guy."
+picked them up."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HFlowContainer16" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer9"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer9/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("14_wm3uc")
+stretch_mode = 2
+
+[node name="HFlowContainer12" type="VBoxContainer" parent="MarginContainer/PanelContainer/Advanced"]
 visible = false
 layout_mode = 2
-
-[node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer16"]
-layout_mode = 2
-theme_override_font_sizes/bold_italics_font_size = 48
-theme_override_font_sizes/italics_font_size = 48
-theme_override_font_sizes/mono_font_size = 48
-theme_override_font_sizes/normal_font_size = 48
-theme_override_font_sizes/bold_font_size = 48
-bbcode_enabled = true
-text = "You can pick up one guy at the
-bottom of a stack and put them
-back or even run forward
-before the stack falls."
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="HFlowContainer12" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
-visible = false
-layout_mode = 2
+theme_override_constants/separation = 5
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer12"]
 layout_mode = 2
@@ -468,15 +494,24 @@ theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "You don't have to clear every
-little guy. Stacking them is very
-effective."
+little guy. Try stacking them!"
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
 
-[node name="HFlowContainer13" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer12"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer12/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("15_lantp")
+stretch_mode = 2
+
+[node name="HFlowContainer13" type="VBoxContainer" parent="MarginContainer/PanelContainer/Advanced"]
 visible = false
 layout_mode = 2
+theme_override_constants/separation = -50
 
 [node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer13"]
 layout_mode = 2
@@ -487,11 +522,20 @@ theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "Remember that you can run up
-the side of a stack and pull from
+the side of a stack and pick from
 the middle."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer13"]
+layout_mode = 2
+alignment = 1
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer13/HBoxContainer"]
+layout_mode = 2
+texture = ExtResource("16_feyvy")
+stretch_mode = 2
 
 [node name="HFlowContainer10" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
 visible = false
@@ -509,28 +553,6 @@ text = "When forming fire or lightning
 guys, the guy you picked up
 most recently is the one that
 becomes fire or lightning."
-fit_content = true
-scroll_active = false
-autowrap_mode = 0
-
-[node name="HFlowContainer15" type="HFlowContainer" parent="MarginContainer/PanelContainer/Advanced"]
-visible = false
-layout_mode = 2
-
-[node name="RichTextLabel5" type="RichTextLabel" parent="MarginContainer/PanelContainer/Advanced/HFlowContainer15"]
-layout_mode = 2
-theme_override_font_sizes/bold_italics_font_size = 48
-theme_override_font_sizes/italics_font_size = 48
-theme_override_font_sizes/mono_font_size = 48
-theme_override_font_sizes/normal_font_size = 48
-theme_override_font_sizes/bold_font_size = 48
-bbcode_enabled = true
-text = "Hard starts on depth 1, where
-there are many types of guy.
-Medium starts on depth 6, where
-there are few (more explosions).
-Easy starts on depth 11,
-which hits neither extreme."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -553,7 +575,7 @@ challenges:
 [ul]
 Destroy clocks (get half time)
 Clear EVERY guy in a depth
-Lower your completion time
+Faster! Faster!
 [/ul]"
 fit_content = true
 scroll_active = false
