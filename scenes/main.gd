@@ -46,12 +46,12 @@ func load_save():
 			var mvol = file.get_float()
 			if mvol != null:
 				AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("music_vol"), mvol)
-				if vol <= 0.0:
+				if mvol <= 0.0:
 					AudioServer.set_bus_mute(AudioServer.get_bus_index("music_vol"), true)
 			var svol = file.get_float()
 			if svol != null:
 				AudioServer.set_bus_volume_linear(AudioServer.get_bus_index("sfx_vol"), svol)
-				if vol <= 0.0:
+				if svol <= 0.0:
 					AudioServer.set_bus_mute(AudioServer.get_bus_index("sfx_vol"), true)
 			setVolume = false
 			# Resolution
@@ -116,7 +116,7 @@ func save_and_go_to_main_menu():
 	var file := FileAccess.open(save_path, FileAccess.WRITE)
 	var error = FileAccess.get_open_error()
 	if error == 0: #Error.OK
-		file.store_8(17) #Version
+		file.store_8(18) #Version
 		if graduated:
 			file.store_8(1)
 		else:

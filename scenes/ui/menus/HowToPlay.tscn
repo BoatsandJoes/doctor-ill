@@ -324,7 +324,7 @@ theme_override_font_sizes/mono_font_size = 48
 theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
-text = "Open a hatch in the floor
+text = "Grab + open a hatch in the floor
 to go down to the next depth.
 Reach depth 14 to win!"
 fit_content = true
@@ -416,7 +416,8 @@ theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "There's a button to
 rain down more little
-guys if you need them."
+guys (This button is
+secretly really good)."
 fit_content = true
 scroll_active = false
 autowrap_mode = 0
@@ -522,7 +523,7 @@ theme_override_font_sizes/normal_font_size = 48
 theme_override_font_sizes/bold_font_size = 48
 bbcode_enabled = true
 text = "Remember that you can run up
-the side of a stack and pick from
+the side of a stack and grab from
 the middle."
 fit_content = true
 scroll_active = false
