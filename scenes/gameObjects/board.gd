@@ -71,6 +71,34 @@ var paramsList: Array[Dictionary] = [
 	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 4,
 	&"airHeight": 5, &"airContent": 40.0, &"maxAir": 99.99, &"rain": 5.0}
 ]
+var chillParams: Array[Dictionary] = [
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 4,
+	&"airHeight": 5, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni,Diag], &"colors": 2,
+	&"airHeight": 5, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 4,
+	&"airHeight": 5, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 3,
+	&"airHeight": 2, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 3,
+	&"airHeight": 3, &"airContent": 40.0, &"maxAir": 99.99, &"iceRow": 4},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 2,
+	&"airHeight": 2, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 2,
+	&"airHeight": 6, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 1,
+	&"airHeight": 3, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 6,
+	&"airHeight": 4, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 6,
+ 	&"airHeight": 4, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni, Diag], &"colors": 3,
+	&"airHeight": 4, &"airContent": 40.0, &"maxAir": 99.99},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Diag], &"colors": 5,
+	&"airHeight": 2, &"airContent": 40.0, &"maxAir": 99.99, &"spireHeight": 4},
+	{&"width": 7, &"height": 7, &"buffer": 4, &"types": [Omni], &"colors": 5,
+	&"airHeight": 3, &"airContent": 40.0, &"maxAir": 99.99}
+]
 var currentParams: Dictionary = paramsList[depth + 1]
 var secondsElapsed: float = 0.0
 var rainCounter: float = 5.0
@@ -167,6 +195,9 @@ func generateNextFloor() -> void:
 	if pickupTimer != null:
 		pickupTimer.paused = true
 	depth = depth + 1
+	if depth < 0:
+		depth = 0
+		paramsList = chillParams
 	if depth >= paramsList.size():
 		for piece in board:
 			if piece != null && !(piece is Player):
@@ -815,34 +846,37 @@ func _physics_process(delta: float) -> void:
 		handle_player_state(players[0], delta)
 		if currentParams.has(&"rain"):
 			rainCounter = rainCounter - delta
-			if rainCounter <= 0.0:
+		if rainCounter <= 0.0:
+			if currentParams.has(&"rain"):
 				rainCounter = currentParams[&"rain"]
-				var options: Array = []
-				for i in range(currentParams[&"width"]):
-					if board[i] == null:
-						options.append(i)
-				if options.is_empty():
-					lose()
-				else:
-					var target = options[randi_range(0, options.size() - 1)]
-					var types: Dictionary[Array, bool] = {}
-					for i in range(board.size()):
-						if board[i] != null && !(board[i] is Player) && !(board[i] is Air):
-							types[[board[i].type, board[i].variety]] = true
-					if !types.is_empty():
-						var result = types.keys()[randi_range(0, types.keys().size() - 1)]
-						var rain
-						for mon in currentParams[&"types"]:
-							rain = mon.instantiate()
-							add_child(rain)
-							if rain.variety == result[1]:
-								break
-							else:
-								remove_child(rain)
-								rain.queue_free()
-						rain.set_type(result[0])
-						rain.gridIndex = target
-						move(rain, target)
+			else:
+				rainCounter = 5.0
+			var options: Array = []
+			for i in range(currentParams[&"width"]):
+				if board[i] == null:
+					options.append(i)
+			if options.is_empty():
+				lose()
+			else:
+				var target = options[randi_range(0, options.size() - 1)]
+				var types: Dictionary[Array, bool] = {}
+				for i in range(board.size()):
+					if board[i] != null && !(board[i] is Player) && !(board[i] is Air):
+						types[[board[i].type, board[i].variety]] = true
+				if !types.is_empty():
+					var result = types.keys()[randi_range(0, types.keys().size() - 1)]
+					var rain
+					for mon in currentParams[&"types"]:
+						rain = mon.instantiate()
+						add_child(rain)
+						if rain.variety == result[1]:
+							break
+						else:
+							remove_child(rain)
+							rain.queue_free()
+					rain.set_type(result[0])
+					rain.gridIndex = target
+					move(rain, target)
 		for i in range(board.size()):
 			var piece: Piece = board[i]
 			var belowIndex: int = i + currentParams[&"width"]
@@ -897,7 +931,8 @@ func _physics_process(delta: float) -> void:
 			players[0].position.y = players[0].position.y + delta * tilePixels * 5
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("another") && rainCounter < currentParams[&"rain"] - 0.1:
+	if event.is_action_pressed("another") && (!currentParams.has(&"rain")
+	|| rainCounter < currentParams[&"rain"] - 0.1):
 		var free = false
 		for i in range(currentParams[&"width"]):
 			if board[i] == null:

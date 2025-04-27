@@ -44,7 +44,7 @@ theme_override_font_sizes/mono_font_size = 24
 theme_override_font_sizes/normal_font_size = 24
 theme_override_font_sizes/bold_font_size = 24
 bbcode_enabled = true
-text = "Down the Match version 18
+text = "Down the Match version 19
 
 Lead Developer: BoatsAndJoes
 
@@ -246,6 +246,7 @@ Timopy
         Special Thanks
 Ratttz
 Timopy
+David
 
 [url]https://godotengine.org/license[/url]"
 fit_content = true

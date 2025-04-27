@@ -7,7 +7,7 @@ signal back
 var Cursor = preload("res://scenes/ui/cursor.tscn")
 var cursor: Cursor
 var timer: Timer = Timer.new()
-var depths: Array[int] = [-1, 4, 9]
+var depths: Array[int] = [-1, 4, 9, -2]
 var buttonIndex: int = 0
 var upReleased = true
 var downReleased = true
@@ -45,7 +45,7 @@ func _on_hard_mouse_entered():
 
 func _on_back_mouse_entered():
 	if !cursor.is_animating():
-		buttonIndex = 3
+		buttonIndex = 4
 		set_cursor_position()
 
 func set_cursor_position():
@@ -85,3 +85,8 @@ func _input(event: InputEvent) -> void:
 
 func _on_button_pressed():
 	cursor.select()
+
+func _on_chill_mouse_entered() -> void:
+	if !cursor.is_animating():
+		buttonIndex = 3
+		set_cursor_position()

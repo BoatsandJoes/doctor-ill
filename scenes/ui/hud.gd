@@ -8,23 +8,30 @@ var air: float = maxAir
 var floor: int = 13
 var allClears: int = 0
 var clocksDestroyed: int = 0
+var chill = false
 
 func _ready() -> void:
 	$AnimationPlayer.play("platino")
 
 func update_air(delta: float, max: float):
-	maxAir = max
-	air = min(air + delta, maxAir)
+	maxAir = max if !chill else 1000
+	if !chill || delta > 0:
+		air = min(air + delta, maxAir)
 	if air < 0:
 		air = 0
 		emit_signal("out_of_air")
 	elif air >= 11.0:
 		%Air.modulate = Color(1,1,1)
-	else:
+	elif !chill:
 		%Air.modulate = Color(1, 0.4, 0.4)
 	%Air.text = str(int(air))
 
 func set_floor(floor: int):
+	if floor == 0:
+		floor = 1
+		#%TimeLabel.text = "Score"
+		chill = true
+		air = 0.99
 	self.floor = floor
 	%Floor.text = str(floor)
 

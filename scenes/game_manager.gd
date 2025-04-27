@@ -77,6 +77,8 @@ func _ready() -> void:
 		pause.difficulty = "Easy"
 	elif startingDepth == 4:
 		pause.difficulty = "Medium"
+	elif startingDepth == -2:
+		pause.difficulty = "Chill"
 	add_child(pause)
 
 func formatSeconds(seconds: float) -> String:
